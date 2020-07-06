@@ -1,0 +1,126 @@
+<mat-card>
+  <mat-card-title>Add a Report</mat-card-title>
+
+  <mat-card-content>
+    <form novalidate [formGroup]="form" class="add_report_form">
+
+      <div *ngIf="formSubmitted && form.invalid" class="bg-danger">
+        <ul>
+          <!-- Show Validation Errors -->
+          <li *ngFor="let error of form.getAllValidationMessages()">
+            {{error}}
+          </li>
+        </ul>
+      </div>
+
+
+      <mat-form-field>
+          <mat-label>Enter Report Name</mat-label>
+
+          <!-- Use the matInput for input fields when inside the <mat-form-field>....</mat-form-field> tag -->
+          <input matInput type="text" formControlName="name" #name />
+      </mat-form-field>
+      <br/>
+
+
+      <ng-container *ngIf="(reportSourceObs | async) as report_sources; else loadingReportSources">
+        <mat-form-field style="margin-top: 20px">
+          <mat-label>Choose Source</mat-label>
+
+          <!-- Use the matNativeControl for select and input fields inside <mat-form-field>...</mat-form-field> tag -->
+          <select matNativeControl formControlName="source">
+              <option [value]=null>-Select Source-</option>
+              <option *ngFor="let source of report_sources"  value="{{source.id}}">{{source.name}}</option>
+          </select>
+        </mat-form-field>
+      </ng-container>
+      <ng-template #loadingReportSources>
+          <!-- Report Sources are loading message -->
+          <p style="margin-top: 20px"><i class="fa fa-spin fa-spinner"></i> Loading Report Sources...</p>
+        </ng-template>
+      <br/>
+
+
+      <ng-container *ngIf="(prioritiesObs.dataObs | async) as priorities; else loadingPrioritiesOrError">
+        <!-- Priorities are fully loaded -->
+        <mat-form-field style="margin-top: 20px">
+          <mat-label>Choose Priority</mat-label>
+
+          <!-- Priorities Drop Down -->
+          <mat-select formControlName="priority">
+            <mat-option [value]=null>-Select Priority-</mat-option>
+            <mat-option *ngFor="let priority of priorities"  value="{{priority.id}}">{{priority.name}}</mat-option>
+          </mat-select>
+
+        </mat-form-field>
+      </ng-container>
+
+      <ng-template #loadingPrioritiesOrError>
+        <div *ngIf="prioritiesObs.errorLoadingObs | async; else loadingPriorities">
+            Error loading the list of priorities.  Please try again later.
+        </div>
+
+        <ng-template #loadingPriorities>
+            <!-- Priorities are loading message -->
+           <p style="margin-top: 20px"><i class="fa fa-spin fa-spinner"></i> Loading Priorities...</p>
+        </ng-template>
+      </ng-template>
+      <br/>
+
+      <ng-container *ngIf="(authorsObs | async) as authors; else loadingAuthors">
+        <!-- Authors are loaded -->
+        <mat-form-field style="margin-top: 20px">
+            <mat-label>Choose Authors</mat-label>
+
+            <mat-select multiple formControlName="authors">
+              <mat-option *ngFor="let author of authors"  value="{{author.id}}">{{author.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+      </ng-container>
+      <ng-template #loadingAuthors>
+        <!-- Authors are loading message -->
+        <p style="margin-top: 20px"><i class="fa fa-spin fa-spinner"></i> Loading Authors...</p>
+      </ng-template>
+      <br/>
+
+
+      <mat-form-field style="margin-top: 20px;">
+        <mat-label>Set Report Start Date</mat-label>
+
+        <div class="date_container">
+          <input  matInput name="start.date" formControlName="start_date" [matDatepicker]="startDatePicker" >
+             <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
+             <mat-datepicker #startDatePicker [startAt]="defaultReportStartDate" ></mat-datepicker>
+        </div>
+
+      </mat-form-field>
+
+      <mat-form-field style="margin-left: 40px">
+        <mat-label>Set Report End Date</mat-label>
+
+        <div class="date_container">
+          <input  matInput name="end.date" formControlName="end_date" [matDatepicker]="endDatePicker" >
+          <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </div>
+
+      </mat-form-field>
+      <br/>
+
+
+      <!-- Reset Button -->
+      <button type="button" (click)="reset()" style="margin-top: 20px" mat-raised-button>
+        <i class="fa fa-backspace"></i>
+        Reset
+      </button>&nbsp;&nbsp;
+
+      <!-- Save Button -->
+      <button type="button" (click)="save()" mat-raised-button color="primary" [disabled]="formSubmitted && form.invalid">
+        <i class="fa fa-plus"></i>
+        Save
+      </button>
+
+    </form>
+  </mat-card-content>
+
+</mat-card>

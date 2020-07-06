@@ -1,0 +1,45 @@
+<div class="header">
+
+  <div fxFlex fxLayout="row" fxLayoutGap="0">
+      <!-- Left Side of the Header -->
+      <div fxFlex fxLayoutAlign="left center" fxLayout="row" fxLayoutGap="0">
+
+          <!-- Search Hourglass -->
+          <a class="button" (click)="toggleAppNavbar()">
+            <i class="fa fa-search"></i>
+          </a>
+
+          <!-- Separator -->
+          &nbsp;&nbsp;&nbsp;&nbsp;
+
+          <!-- App Navbar -->
+          <a class="button" (click)="toggleAppNavbar()">
+            Sections
+            <i class="fa fa-bars"></i>
+          </a>
+      </div>
+
+
+      <!-- Center Part of the Header -->
+      <div fxFlex  fxLayoutAlign="center center">
+
+        <!-- fxLayoutAlign="center center" is center-aligned horizontally and centered vertically   -->
+
+        <!-- Application Title -->
+       <h1 class="app1Logo clickable" [routerLink]="'/'">Angular App1</h1>
+      </div>
+
+
+      <!-- Right Side of the Header -->
+      <div fxFlex fxLayoutAlign="end center">
+        <!-- fxLayoutAlign="end center" is right-aligned horizontally and centered vertically   -->
+
+        <!-- User Menu -->
+        <a class="button" (click)="toggleUserNavbar()">
+          <span class="username">John.Smith</span>&nbsp;
+          <span class="fa fa-user"></span>
+        </a>
+      </div>
+  </div>
+
+</div>

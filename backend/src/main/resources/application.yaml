@@ -1,0 +1,37 @@
+##########################################################
+# application.yaml   (used for development purposes)
+#
+# NOTE:  Make sure there are no leading spaces on any of these lines
+##########################################################
+name: app1
+server.servlet.context-path: /app1
+server.port: 8080
+
+
+
+# Disable cors check because we are running in local dev mode
+disable.cors: true
+
+# Set the Active profile to be dev
+spring.profiles.active: dev
+
+# Tell Spring to disable DataSource Auto Configuration (so you can run a springboot app without a datasource
+spring.autoconfigure:
+  exclude:
+  - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+
+spring.flyway.enabled: true
+spring.flyway.schemas: app1_db
+
+
+###########################################################
+# Database Settings
+##########################################################
+app.datasource:
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/app1_db
+  username: app1_user
+  password: secret
+  maxPoolSize: 10
