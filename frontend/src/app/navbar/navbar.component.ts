@@ -1,45 +1,18 @@
-import {Component, OnDestroy} from '@angular/core';
-import {Subscription} from "rxjs";
-import {NavigationEnd, Router} from "@angular/router";
-import {filter} from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnDestroy {
-
-  public reportsNavGroupClosed: boolean = true;
+export class NavbarComponent implements OnInit {
+  public reportsNavGroupClosed: boolean = false;
   public analyticsGroupClosed: boolean = true;
-  private routeSubscription: Subscription;
 
+  constructor() { }
 
-  constructor(private router: Router) {
-    this.routeSubscription =  router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      // The user has navigated to a different page (or opened a new browser to that page)
-
-      if ((event.url == '/page/addReport') || (event.url == '/page/viewReports') ) {
-        // User is going to one of the Report navbar pages
-        this.analyticsGroupClosed = true;
-        this.reportsNavGroupClosed = false;
-      }
-      else if ((event.url == '/page/chart1') || (event.url == '/page/chart2') ) {
-        // User is going to one of the Analytics navbar pages
-        this.analyticsGroupClosed = false;
-        this.reportsNavGroupClosed = true;
-      }
-    });
+  ngOnInit(): void {
   }
-
-  public ngOnDestroy(): void {
-    this.routeSubscription.unsubscribe();
-  }
-
-
-
 
   public toggleNavGroup(aNavGroupNumber: number) {
     if (aNavGroupNumber == 1) {
@@ -57,4 +30,5 @@ export class NavbarComponent implements OnDestroy {
       this.analyticsGroupClosed = ! this.analyticsGroupClosed;
     }
   }
+
 }

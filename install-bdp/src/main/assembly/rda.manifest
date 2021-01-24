@@ -1,0 +1,26 @@
+{
+    "name":        "App1",
+    "description": "A web application containing....",
+    "appKey":      "bogus.app4",
+    "version":     "1.0.0-SNAPSHOT",
+    "components": [
+        {
+            "type": "web-service",
+            "name": "App1",
+            "description": "Some webapp that does something",
+            "config": {
+                "context": "/app1",
+                "files": [
+                    {
+                        "src": "webapp"
+                    },
+                    {
+                        "src": "config/application.yaml",
+                        "template": true
+                    }
+                ]
+            }
+
+        }
+    ]
+}

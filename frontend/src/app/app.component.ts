@@ -1,7 +1,6 @@
-import {Component, HostBinding, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {NavbarService} from "./services/navbar.service";
-
 
 @Component({
   selector: 'app-root',
@@ -23,16 +22,17 @@ export class AppComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
 
     // This app-component will listen for messages from the navbarService
-    this.showNavSubscription = this.navbarService.getNavbarStateAsObservable().subscribe((navbarState) => {
-      // We received a message from the navbarService
-      // -- Someone has toggled the one of the navbars
+    this.showNavSubscription =
+      this.navbarService.getNavbarStateAsObservable().subscribe((navbarState) => {
+        // We received a message from the navbarService
+        // -- Someone has toggled the one of the navbars
 
-      // Set the public properties based on the navbarState properties returned
-      this.isAppNavVisible = navbarState.isAppNavbarDisplayed;
-      this.isUserNavVisible = navbarState.isUserNavbarDisplayed;
-    });
-
+        // Set the public properties based on the navbarState properties returned
+        this.isAppNavVisible = navbarState.isAppNavbarDisplayed;
+        this.isUserNavVisible = navbarState.isUserNavbarDisplayed;
+      });
   }
+
 
   public ngOnDestroy() {
     this.showNavSubscription.unsubscribe();

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +37,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/api/time", method=RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_SUPERUSER')")
     public ResponseEntity<?> getDateTime() {
         logger.debug("getDateTime() started.");
 
@@ -48,6 +50,23 @@ public class HomeController {
                     .status(HttpStatus.OK)
                     .contentType(MediaType.TEXT_PLAIN)
                     .body(formattedDateTime);
+    }
+
+
+    @RequestMapping(value = "/api/time2", method=RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_AMAZING_USER')")
+    public ResponseEntity<?> getDateTime2() {
+        logger.debug("getDateTime() started.");
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd HH:mm:ss");
+        Date date = new Date();
+        String formattedDateTime = dateFormat.format(date);
+
+        // Return the date/time string as plain text
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(formattedDateTime);
     }
 
 }

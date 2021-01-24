@@ -2,6 +2,7 @@ package com.lessons.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,9 @@ public class DataSourceConfig {
     @Value("${app.datasource.maxPoolSize:20}")
     private int maxPoolSize;
 
+    @Value("${app.datasource.schema}")
+    private String schemaName;
+
     @Bean
     public DataSource dataSource() {
         HikariConfig hikariConfig = new HikariConfig();
@@ -39,6 +43,18 @@ public class DataSourceConfig {
         hikariConfig.setPoolName("app1_jdbc_connection_pool");
 
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
+
+        // Use the dataSource to initialize the flyway object
+        Flyway flyway = Flyway.configure()
+                .dataSource(dataSource)
+                .schemas(schemaName)
+                .load();
+
+        // Use the flyway object to do a migrate on webapp startup
+        flyway.migrate();
+
+
         return dataSource;
     }
 

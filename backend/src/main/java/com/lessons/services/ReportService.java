@@ -16,6 +16,7 @@ public class ReportService {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportService.class);
 
+
     @Resource
     private DataSource dataSource;
 
@@ -53,4 +54,6 @@ public class ReportService {
 
         logger.debug("addReport() finished.");
     }
+
+
 }

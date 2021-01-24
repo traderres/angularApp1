@@ -14,10 +14,13 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/static",
-            "index": "src/index.html",
+            "index": {
+              "input": "src/index.html.dev",
+              "output": "index.html"
+            },
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "tsConfig": "other/tsconfig.app.json",
             "aot": true,
             "assets": [
               "src/favicon.ico",
@@ -26,14 +29,18 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "./node_modules/@fortawesome/fontawesome-free/css/all.css",
-              "./node_modules/ag-grid-community/dist/styles/ag-grid.css",
-              "./node_modules/ag-grid-community/dist/styles/ag-theme-alpine-dark.css",
+              "./node_modules/ag-grid-enterprise/dist/styles/ag-grid.css",
+              "./node_modules/ag-grid-enterprise/dist/styles/ag-theme-alpine-dark.css",
               "src/styles.css"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
+              "index": {
+                "input": "src/index.html.prod",
+                "output": "index.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -60,6 +67,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "localprod": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.localprod.ts"
+                }
+              ]
             }
           }
         },
@@ -71,6 +86,9 @@
           "configurations": {
             "production": {
               "browserTarget": "frontend:build:production"
+            },
+            "localprod": {
+              "browserTarget": "frontend:build:localprod"
             }
           }
         },
@@ -102,7 +120,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
+              "other/tsconfig.app.json",
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
@@ -126,5 +144,8 @@
       }
     }
   },
-  "defaultProject": "frontend"
+  "defaultProject": "frontend",
+  "cli": {
+    "analytics": false
+  }
 }

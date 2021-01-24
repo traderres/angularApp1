@@ -1,0 +1,38 @@
+<div id="topSection"> </div>
+
+<div style="text-align: center">
+  <a (click)="this.scrollToTarget('bottomSection')"  class="clickable">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-exclamation fa-stack-2x fa-inverse" style="font-size:1.5em; padding-top:.2em"></i>
+                  <i class="fa fa-exclamation-triangle fa-stack-2x" style="color:yellow;"></i>
+                </span>
+  </a>
+</div>
+
+
+<mat-card class="mat-elevation-z5">
+  <!-- Large Details Section -->
+  <mat-card-title>Large Details Section</mat-card-title>
+
+  <mat-card-content>
+
+    <p style="height: 1000px">
+      This is a long details section
+    </p>
+
+  </mat-card-content>
+</mat-card>
+
+
+
+<div id="bottomSection">
+  <!-- Bottom Section -->
+  <mat-card class="mat-elevation-z5" style="margin-top: 10px; margin-bottom: 10px">
+    <mat-card-title>Bottom Section</mat-card-title>
+
+  </mat-card>
+</div>
+
+<div style="text-align: center">
+  <a (click)="this.scrollToTarget('topSection')" class="clickable" style="text-decoration: none" >[Back to Top]</a>
+</div>

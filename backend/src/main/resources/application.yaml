@@ -7,8 +7,6 @@ name: app1
 server.servlet.context-path: /app1
 server.port: 8080
 
-
-
 # Disable cors check because we are running in local dev mode
 disable.cors: true
 
@@ -22,11 +20,26 @@ spring.autoconfigure:
   - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 
 
-spring.flyway.enabled: true
-spring.flyway.schemas: app1_db
+# Disable spring flyway automatic integration
+# We will do manual integration
+spring.flyway.enabled: false
+
+##########################################################
+# File Upload Settings
+##########################################################
+spring.servlet.multipart.enabled: true
+
+# Set the maximum file upload size for one file
+spring.servlet.multipart.max-file-size: 300MB
+
+# Set the maximum request size
+# If a user uploads 5 files of 1 MB, then the entire request size is 5 MB
+spring.servlet.multipart.max-request-size: 400MB
 
 
-###########################################################
+
+
+##########################################################
 # Database Settings
 ##########################################################
 app.datasource:
@@ -34,4 +47,39 @@ app.datasource:
   url: jdbc:postgresql://localhost:5432/app1_db
   username: app1_user
   password: secret
+  schema: app1_db
   maxPoolSize: 10
+
+
+###########################################################
+# ElasticSearch Settings
+##########################################################
+es:
+  url: http://localhost:9201
+  ssl_enabled: false
+
+
+---
+#######################################
+# P R O D        P R O F I L E
+#######################################
+spring.profiles: prod
+
+# We are running "prod mode" locally, get the CN info from the PKI cert
+# On the BDP, we run "prod mode" to get CN info from the header
+ssl.security.mode: pki
+
+server:
+  port: 8443
+  ssl:
+    key-store: backend/src/main/dev_resources/myKeystore.jks
+    key-store-password: changeit
+    key-store-type: JKS
+    client-auth: need
+    trust-store: backend/src/main/dev_resources/myTruststore.jks
+    trust-store-password: changeit
+    trust-store-type: JKS
+
+# Secure the cookies
+server.servlet.session.cookie.secure: true
+server.servlet.session.cookie.http-only: true

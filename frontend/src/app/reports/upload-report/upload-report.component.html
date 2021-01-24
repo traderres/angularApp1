@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-title>Upload Report</mat-card-title>
+
+  <mat-card-content>
+    <br/>
+    <input type="file" name="file" ng2FileSelect [uploader]="uploader" />
+
+    <button type="button" class="btn btn-success btn-s"
+            (click)="uploader.uploadAll()"
+            [disabled]="!uploader.getNotUploadedItems().length" >
+      Upload a file
+    </button>
+
+    <!-- Progress Bar -->
+    <mat-progress-bar *ngIf="uploader.progress > 0" style="margin-top: 5px" [value]="uploader.progress"></mat-progress-bar>
+
+  </mat-card-content>
+</mat-card>

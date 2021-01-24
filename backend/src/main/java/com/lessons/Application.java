@@ -15,6 +15,6 @@ public class Application {
         // Startup Spring Boot
         SpringApplication.run(Application.class, args);
 
-        logger.debug("main() finished.");
+        logger.debug("WebApp is Up.");
     }
 }

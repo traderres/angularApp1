@@ -24,4 +24,5 @@ export class ReportService {
     // NOTE:  The REST call is not invoked until someone calls subscribe() on this observable
     return this.httpClient.post(restUrl, report, {responseType: 'text'});
   }
+
 }

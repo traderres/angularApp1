@@ -1,0 +1,16 @@
+<div class="searchBoxWrapper fa-border">
+
+  <!-- Search Box -->
+  <input matInput type="text" id="searchBox"
+         placeholder="Search for..."
+         [formControl]="this.searchTextBox"
+         (keydown.enter)="this.runSearch()"
+  />
+
+  <!-- Search Icon -->
+  <span class="searchBoxIcon">
+			  <i class="fa fa-search" (click)="this.runSearch()"></i>
+	</span>
+
+
+</div>

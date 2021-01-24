@@ -30,7 +30,7 @@ export class NavbarService  {
   }
 
 
- public toggleUserNavbar(): void {
+  public toggleUserNavbar(): void {
     this.navbarState.isUserNavbarDisplayed = !this.navbarState.isUserNavbarDisplayed;
 
     if ((this.navbarState.isUserNavbarDisplayed) && (this.navbarState.isAppNavbarDisplayed)) {

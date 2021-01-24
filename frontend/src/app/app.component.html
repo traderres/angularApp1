@@ -6,22 +6,29 @@
   </div>
 
 
+  <!-- The overflow: auto ensures that the scrollbars
+       appear only in the content window if needed -->
   <div fxFlex fxLayout="row" fxLayoutGap="0px" style="overflow: auto">
 
-    <!-- The sidenav container must fill the entire column -->
-    <mat-sidenav-container fxFlexFill hasBackdrop="false"  >
+    <!-- The sidenav container must have fxFlexFill to use
+         the entire width -->
+    <mat-sidenav-container fxFlexFill hasBackdrop="false" >
 
-      <mat-sidenav position="start" mode="side" [opened]="this.isAppNavVisible">
+      <mat-sidenav position="start" mode="side"
+                   [opened]="this.isAppNavVisible">
         <!-- Left Side Navigation -->
         <app-navbar></app-navbar>
       </mat-sidenav>
+
 
       <div>
         <!-- Main Viewing Area -->
         <router-outlet></router-outlet>
       </div>
 
-      <mat-sidenav position="end" mode="side" [opened]="this.isUserNavVisible">
+
+      <mat-sidenav position="end" mode="side"
+                   [opened]="this.isUserNavVisible">
         <!-- Right Side Navigation -->
         <app-user-navbar></app-user-navbar>
       </mat-sidenav>

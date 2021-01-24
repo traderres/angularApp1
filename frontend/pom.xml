@@ -88,16 +88,6 @@
                 </configuration>
               </execution>
 
-              <execution>
-                <id>prod</id>
-                <goals>
-                  <goal>npm</goal>
-                </goals>
-                <configuration>
-                  <arguments>run-script build</arguments>
-                </configuration>
-                <phase>generate-resources</phase>
-              </execution>
             </executions>
           </plugin>
         </plugins>
@@ -157,21 +147,13 @@
                 </configuration>
               </execution>
 
-              <execution>
-                <id>prod</id>
-                <goals>
-                  <goal>npm</goal>
-                </goals>
-                <configuration>
-                  <arguments>run-script build</arguments>
-                </configuration>
-                <phase>generate-resources</phase>
-              </execution>
             </executions>
           </plugin>
         </plugins>
       </build>
     </profile>
+
+
   </profiles>
 
 </project>

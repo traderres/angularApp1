@@ -38,6 +38,14 @@ export class AddReportComponent implements OnInit, AfterViewInit {
   { }
 
   ngOnInit(): void {
+    let myVal: number | null;  // myVal can be null
+
+
+    myVal = 25;
+    if (this.authorsObs) {
+      myVal = null;
+    }
+
 
     // Get an observable to the priorities
     // NOTE:  The AsyncPipe will subscribe and unsubscribe from this observable

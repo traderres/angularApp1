@@ -86,26 +86,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-top: 8px;
 }
 
-/*.body {*/
-/*  !* Needed to ensure that only the content area has a scrollbar *!*/
-/*  height: 100vh;*/
-/*  background-color: bisque;*/
-/*  margin: 0;*/
-/*}*/
-
-
 .clickable {
   cursor: pointer;
 }
 
 
-
-/*.md-sidenav-backdrop {*/
-/*  opacity: 0 !important;*/
-/*}*/
-
-/*.md-sidenav.md-closed-add,*/
-/*.md-sidenav.md-closed-remove {*/
-/*  -webkit-transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;*/
-/*  transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;*/
-/*}*/

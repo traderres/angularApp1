@@ -1,5 +1,5 @@
 .navbar {
-  background: #364150;
+  background: #111;
   color: white;
   height: 100%;
   overflow: hidden;
@@ -19,16 +19,6 @@
   background: linear-gradient(to right, #5e6b7b, rgba(94, 107, 123, 0));
   font-weight: bold;
 }
-
-
-.navGroup {
-  opacity: 1;
-}
-
-.navGroupClosed {
-  display: none;
-}
-
 
 .navHeader{
   /* The navHeader as a gradient that goes to the left */
@@ -62,7 +52,7 @@
 }
 
 .navItemIcon {
-  /* By default, the navItemIcon is invithubsible (It's the same color as the navbar background) */
+  /* By default, the navItemIcon is invisible (It's the same color as the navbar background) */
   color: #364150
 }
 
@@ -71,4 +61,6 @@
   color: #999
 }
 
-
+.navGroupClosed {
+  display: none;
+}

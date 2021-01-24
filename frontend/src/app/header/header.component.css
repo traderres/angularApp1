@@ -2,10 +2,9 @@
   background: #111;
   color: white;
   height: 100%;
-  padding-left: 16px;
+  padding-left: 5px;
   padding-right: 16px;
 }
-
 
 .app1Logo {
   color: #fff;
@@ -18,7 +17,6 @@
   /* Outline of zero gets rid of the annoying box around the link */
   outline: 0;
 }
-
 
 a.button {
   background-color: #1f1f1f;
