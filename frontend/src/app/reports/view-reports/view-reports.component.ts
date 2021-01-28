@@ -12,8 +12,9 @@ import {GridOptions} from "ag-grid-community";
 export class ViewReportsComponent implements OnInit {
 
   public gridOptions: GridOptions = {
+    rowModelType: 'clientSide',    // Possible options are 'clientSide', 'infinite', 'viewport', and 'serverSide'
     pagination: true,
-    paginationPageSize: 20,
+    paginationPageSize: 10,
     rowGroupPanelShow: 'always'    // Possible options are 'never', 'always', and 'onlyWhenGrouping'
   };
 
