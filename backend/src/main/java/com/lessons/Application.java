@@ -2,6 +2,7 @@ package com.lessons;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,8 +13,10 @@ public class Application {
     public static void main(String[] args) {
         logger.debug("main() started.");
 
-        // Startup Spring Boot
-        SpringApplication.run(Application.class, args);
+        // Start up Spring Boot but disable the banner
+        SpringApplication app = new SpringApplication(Application.class);
+        app.setBannerMode(Banner.Mode.OFF);
+        app.run(args);
 
         logger.debug("WebApp is Up.");
     }
