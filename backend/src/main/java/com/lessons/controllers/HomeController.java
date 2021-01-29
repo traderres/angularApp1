@@ -1,7 +1,10 @@
 package com.lessons.controllers;
 
+import com.lessons.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,5 +72,34 @@ public class HomeController {
                 .contentType(MediaType.TEXT_PLAIN)
                 .body(formattedDateTime);
     }
+
+
+    /*
+     * GET /api/help
+     * Allow users to download an internally-stored help.pdf file
+     */
+    @RequestMapping(value = "/api/help", method = RequestMethod.GET)
+    public  ResponseEntity<?>  downloadHelpFile() {
+        logger.debug("downloadHelpFile started.");
+
+        // Read the /src/main/resources/help.pdf as an inputStream
+        InputStream inputStream =  Application.class.getResourceAsStream("/help.pdf");
+
+        // Convert the InputStream into an InputStreamResource
+        InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
+
+        // Create an HttpHeaders object  (this holds your list of headers)
+        HttpHeaders headers = new HttpHeaders();
+
+        // Set a header with the default name to save this file as
+        // -- So, the browser will do a Save As….
+        headers.setContentDispositionFormData("attachment", "help.pdf");
+
+        // Return the inputStreamResource back
+        return new ResponseEntity<InputStreamResource>(inputStreamResource, headers, HttpStatus.OK);
+    }
+
+
+
 
 }

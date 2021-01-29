@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NavbarService} from "../services/navbar.service";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-header',
@@ -21,5 +23,10 @@ export class HeaderComponent implements OnInit {
 
   public toggleUserNavbar(): void {
     this.navbarService.toggleUserNavbar();
+  }
+
+  public downloadHelp(): void {
+    const url = environment.baseUrl + '/api/help';
+    window.open(url);
   }
 }
