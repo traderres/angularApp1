@@ -1,15 +1,42 @@
-<div style="height: 60px">
-  <mat-card style="box-shadow: none">
+<div fxFlexFill fxLayout="column" style="margin: 0; padding: 0;">
 
-    <!-- Page Title -->
-    <mat-card-title>Search Results for {{this.query}}</mat-card-title>
+  <div fxFlex fxLayout="row" fxLayoutGap="0" style="margin: 0; padding: 0;">
 
-    <!-- Page Buttons -->
-    <mat-card-content>
-    </mat-card-content>
-  </mat-card>
+    <!-- Left Side of the Top Row -->
+    <div fxFlex="45%" fxLayoutAlign="left center" fxLayout="row" fxLayoutGap="0" style="margin:0; border: 0">
+      Search Results for {{this.query}}
+    </div>
+
+
+    <!-- Center Side of the Top Row -->
+    <div fxFlex="10%" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="0" style="margin:0; border: 0">
+      &nbsp;
+    </div>
+
+
+    <!-- Right Side of the Top Row -->
+    <div fxFlex="45%" fxLayoutAlign="end center"  style="margin:0; border: 0">
+
+      <!-- Save Search Button -->
+      <button mat-stroked-button color="primary" (click)="this.openSaveSearchDialog()">
+        <i class="fa fa-plus"></i> Save Search
+      </button>
+
+    </div>
+
+  </div>  <!-- End of top row -->
+
+
+  <!-- Start of the second row -->
+  <div fxFlex fxLayoutGap="0">
+
+    <!-- Progress Bar  (to show for all REST calls on this page)  -->
+    <mat-progress-bar *ngIf="this.showProgressBar" mode="indeterminate"></mat-progress-bar>
+
+  </div>
 </div>
 
+<br/>
 
 <!-- Set the grid to use the entire height (except for 60px for header and 60px for the content above -->
 <div style="height: calc(100vh - 120px);">

@@ -31,7 +31,7 @@ export class UploadReportComponent implements OnInit {
 
       // Send a message to the user letting him know if it worked
       let message = " status=" + status + "   response=" + response;
-      this.messageService.sendMessage(message);
+      this.messageService.showSuccessMessage(message);
     };
 
     this.uploader.onProgressItem = (progress: any) => {

@@ -78,7 +78,7 @@ export class AddReportComponent implements OnInit, AfterViewInit {
 
     // Reset the form back to pristine/untouched condition
     this.form.reset();
-    this.messageService.sendMessage("Successfully saved this report");
+    this.messageService.showSuccessMessage("Successfully saved this report");
   }
 
   public save(): void {
@@ -105,7 +105,7 @@ export class AddReportComponent implements OnInit, AfterViewInit {
     // Invoke a service to add a report record
     this.reportService.add(report).subscribe(response => {
         // REST call succeeded
-        this.messageService.sendMessage("Successfully added a new report.");
+        this.messageService.showSuccessMessage("Successfully added a new report.");
 
         // Reset the form
         this.form.reset();
@@ -114,7 +114,7 @@ export class AddReportComponent implements OnInit, AfterViewInit {
       response => {
         // REST call failed
         console.error('Failed to create a new report.  Error is ', response?.error);
-        this.messageService.sendMessage(`Failed to create a new report.  Error is ${response?.error}`);
+        this.messageService.showErrorMessage(`Failed to create a new report.  Error is ${response?.error}`);
       }).add(() =>
       {
         // REST call has finished (either with failure or success)

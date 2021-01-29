@@ -1,0 +1,52 @@
+<form #form="ngForm" novalidate="true">
+  <h2 mat-dialog-title>Save this Search</h2>
+
+  <div mat-dialog-content>
+
+    <mat-form-field>
+      <mat-label>Search Name</mat-label>
+      <input matInput type="text" name="data.name"  [(ngModel)]="this.data.name" required />
+
+      <mat-error>
+        <!-- This mat-error tag is displayed if this form field is invalid AND touched -->
+        This search name is required
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-label>Is Default Search?</mat-label>
+
+      <mat-select name="data.is_default" [(ngModel)]="this.data.is_default" required >
+        <mat-option value=true>Yes, show this search by default</mat-option>
+        <mat-option value=false>No, not default</mat-option>
+      </mat-select>
+
+      <mat-error>
+        <!-- This mat-error tag is displayed if this form field is invalid AND touched -->
+        This is-default option is required
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div mat-dialog-actions>
+      <!-- Dialog Buttons Placed Here -->
+      <button mat-button mat-raised-button color="primary" class="button-class"
+              (click)="this.onCancelClick()">
+        Cancel
+      </button>
+
+      <!-- [mat-dialog-close]="data" will close the dialog no matter what value is clicked
+           The data is an optional result that *might* be returned
+           If user presses 'No Thanks', then the returned result in afterClosed().subscribe() is undefined
+           If user presses 'Save,       then the returned result in afterClosed().subscribe() is data object
+       -->
+      <button mat-button mat-raised-button color="primary" class="button-class"
+              (click)="this.onSubmitClick(form)"
+              ocdkFocusInitial>
+        Save
+      </button>
+    </div>
+
+</form>

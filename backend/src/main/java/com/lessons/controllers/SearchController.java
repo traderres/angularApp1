@@ -1,8 +1,10 @@
 package com.lessons.controllers;
 
+import com.lessons.models.AddUserSearchDTO;
 import com.lessons.models.AutoCompleteDTO;
 import com.lessons.models.SearchQueryDTO;
 import com.lessons.models.SearchResultDTO;
+import com.lessons.services.DatabaseService;
 import com.lessons.services.ElasticSearchService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,13 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller("com.lessons.controllers.SearchController")
 public class SearchController {
     private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
+
+    @Resource
+    private DatabaseService databaseService;
 
     @Resource
     private ElasticSearchService elasticSearchService;
@@ -107,23 +111,34 @@ public class SearchController {
 
 
     /**
-     * REST endpoint /api/search/autocomplete
-     * @return
-     * @throws Exception
+     * REST endpoint /api/user/search
+     * @return 200 status OK if everything works (but no json body)
      */
-    @RequestMapping(value = "/api/search/autocomplete", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<?> runAutoComplete(@RequestBody AutoCompleteDTO aAutoCompleteDTO) throws Exception {
+    @RequestMapping(value = "/api/user/search", method = RequestMethod.POST)
+    public ResponseEntity<?> addSearch(@RequestBody AddUserSearchDTO aAddUserSearchDTO)  {
 
-        logger.debug("runAutoComplete() started.");
+        logger.debug("addSearch() started.");
 
-        return null;
-//        // Read the mapping from the src/main/resources/repots.json file into this string
-//        List<String> matches = elasticSearchService.runAutoComplete(aAutoCompleteDTO);
-//
-//        // Return a list of matches (or an empty list if there are no matches)
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(matches);
+        if (StringUtils.isBlank(aAddUserSearchDTO.getDisplayName() )) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .body("The passed-in display name is blank");
+        }
+        else if (StringUtils.isBlank(aAddUserSearchDTO.getPageName() )) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .body("The passed-in page name is blank");
+        }
+
+        // Save the information to the database
+        this.databaseService.addSearch(aAddUserSearchDTO);
+
+        // Return an empty string and 200 status
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("");
     }
 
 

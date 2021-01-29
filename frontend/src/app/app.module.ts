@@ -41,6 +41,8 @@ import { ViewReportsComponent } from './reports/view-reports/view-reports.compon
 import { LongReportComponent } from './reports/long-report/long-report.component';
 import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
+import { SaveSearchDialogComponent } from './dialogs/save-search-dialog/save-search-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 const appRoutes: Routes = [
   { path: 'page/addReport',    component: AddReportComponent },
@@ -68,39 +70,41 @@ const appRoutes: Routes = [
     ViewReportsComponent,
     LongReportComponent,
     SearchBoxComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    SaveSearchDialogComponent
   ],
-  imports: [
-    HighchartsChartModule,
-    BrowserAnimationsModule,
-    BrowserModule,
-    AgGridModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    FileUploadModule,
-    FormsModule,
-    HttpClientModule,
-    MatAutocompleteModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatGridListModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatIconModule,
-    RouterModule.forRoot(appRoutes),
-    ReactiveFormsModule,
-    LayoutModule,
-    MatProgressBarModule,
-    MatListModule,
-    FlexLayoutModule
-  ],
+    imports: [
+        HighchartsChartModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        AgGridModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        FileUploadModule,
+        FormsModule,
+        HttpClientModule,
+        MatAutocompleteModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSnackBarModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatGridListModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatIconModule,
+        RouterModule.forRoot(appRoutes),
+        ReactiveFormsModule,
+        LayoutModule,
+        MatProgressBarModule,
+        MatListModule,
+        FlexLayoutModule,
+        MatDialogModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

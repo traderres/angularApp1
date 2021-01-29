@@ -1,0 +1,8 @@
+.button-class{
+  width: 75px!important;
+  min-width: unset!important;
+}
+
+::ng-deep  .mat-dialog-container {
+  overflow-y: hidden !important;
+}
