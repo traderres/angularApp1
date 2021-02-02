@@ -43,14 +43,17 @@ import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { SaveSearchDialogComponent } from './dialogs/save-search-dialog/save-search-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {PageGuard} from "./guards/page.guard";
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 const appRoutes: Routes = [
-  { path: 'page/addReport',    component: AddReportComponent },
-  { path: 'page/longReport',   component: LongReportComponent },
-  { path: 'page/viewReports',   component: ViewReportsComponent },
-  { path: 'page/searchResults',   component: SearchResultsComponent },
-  { path: '',    redirectTo: 'page/viewReports', pathMatch: 'full' }, // By default, redirect the user to this page (url does change)
-  { path: '**',                component: NotFoundComponent}        // No routes match, so take the user to the "NotFoundComponent"
+  { path: 'page/addReport',    component: AddReportComponent,  canActivate: [PageGuard] },
+  { path: 'page/longReport',   component: LongReportComponent, canActivate: [PageGuard] },
+  { path: 'page/viewReports',   component: ViewReportsComponent, canActivate: [PageGuard] },
+  { path: 'page/searchResults',   component: SearchResultsComponent, canActivate: [PageGuard] },
+  { path: '',                    redirectTo: 'page/viewReports', pathMatch: 'full' }, // By default, redirect the user to this page (url does change)
+  { path: 'page/403',          component: ForbiddenComponent},        // No routes match, so take the user to the "NotFoundComponent"
+  { path: '**',                component: NotFoundComponent}       // No routes match, so take the user to the "NotFoundComponent"
 ];
 
 
@@ -71,7 +74,8 @@ const appRoutes: Routes = [
     LongReportComponent,
     SearchBoxComponent,
     SearchResultsComponent,
-    SaveSearchDialogComponent
+    SaveSearchDialogComponent,
+    ForbiddenComponent
   ],
     imports: [
         HighchartsChartModule,
