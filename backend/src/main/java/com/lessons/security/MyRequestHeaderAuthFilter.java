@@ -19,17 +19,8 @@ public class MyRequestHeaderAuthFilter extends RequestHeaderAuthenticationFilter
     @Resource
     private MyAuthenticationManager myAuthenticationManager;
 
-    /**
-     * The authorization mode being
-     * Possible values:  pki    (if user is sending PKI certificate directly to the spring boot webapp)
-     *                   header (if a proxy is sending the PKI certificate info as headers to the spring boot webapp)
-     *                   null   (if not using ssl)
-     */
-    @Value("${ssl.security.mode:}")
-    private String sslSecurityMode;
-
-    @Value("${spring.profiles.active}")
-    private String activeProfileName;
+    @Value("${use.hardcoded.principal}")
+    private boolean useHardcodePrincipal;
 
     @PostConstruct
     public void init() {
@@ -56,10 +47,9 @@ public class MyRequestHeaderAuthFilter extends RequestHeaderAuthenticationFilter
         logger.debug("userDnFromHeader from header -->{}<---", userDnFromHeader);
 
         if (userDnFromHeader == null) {
-            if ((activeProfileName.equalsIgnoreCase("dev")) ||
-                ((activeProfileName.equalsIgnoreCase("prod" )) && (sslSecurityMode.equalsIgnoreCase("pki")))) {
+            if (useHardcodePrincipal) {
                 // No header was found, but I am in dev mode or "local prod" mode.  So, set a hard-coded user name
-                logger.debug("No header was found, so husing hard-dcoded header 'Bogus_user'");
+                logger.debug("No header was found, so using hard-dcoded header 'Bogus_user'");
                 userDnFromHeader = "Bogus_user";
             }
         }

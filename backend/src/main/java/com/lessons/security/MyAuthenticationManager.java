@@ -33,8 +33,8 @@ public class MyAuthenticationManager implements AuthenticationManager {
     @Resource
     private HttpServletRequest httpServletRequest;
 
-    @Value("${spring.profiles.active:}")             // If not found, then holds an empty string
-    private String activeProfileName;
+    @Value("${use.hardcoded.principal}")
+    private boolean useHardcodePrincipal;
 
 
     @Override
@@ -49,7 +49,7 @@ public class MyAuthenticationManager implements AuthenticationManager {
         UserDetails userDetails;
 
         // We are really authenticating in the UserDetailService -- so do nothing here
-        if ( activeProfileName.equalsIgnoreCase("prod") ) {
+        if (! this.useHardcodePrincipal) {
             // Get the user details from *real* source -- e.g., ActiveDirectory or a database
             userDetails = loadUserDetailsFromRealSource(authentication);
         }
@@ -158,7 +158,7 @@ public class MyAuthenticationManager implements AuthenticationManager {
 
         // Create a list of granted authorities
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_SUPERUSER"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER_FOUND_IN_VALID_LIST_OF_USERS"));
 
         // Create a bogus UserInfo object

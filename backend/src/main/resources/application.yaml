@@ -24,6 +24,11 @@ spring.autoconfigure:
 # We will do manual integration
 spring.flyway.enabled: false
 
+
+# Tell security to use a hard-coded principal
+use.hardcoded.principal: true
+
+
 ##########################################################
 # File Upload Settings
 ##########################################################

@@ -22,6 +22,9 @@ spring.autoconfigure:
 spring.flyway.enabled: true
 spring.flyway.schemas: app1_db
 
+# Tell security to not use a hard-coded principal
+use.hardcoded.principal: false
+
 
 ###########################################################
 # ElasticSearch Settings

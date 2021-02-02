@@ -27,8 +27,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpringSecurityConfig.class);
 
 
-    @Value("${spring.profiles.active}")
-    private String activeProfileName;
+    @Value("${use.hardcoded.principal}")
+    private boolean useHardcodePrincipal;
 
     /**
      * The authorization mode being
@@ -63,7 +63,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @PostConstruct
     public void init() {
-        if (activeProfileName.equalsIgnoreCase("prod")) {
+        if (! useHardcodePrincipal) {
             if (sslSecurityMode == null) {
                 throw new RuntimeException("Critical Error in SpringSecurityConfig:   ssl.security.mode is null.  ssl.security.mode is invalid.  The active profile is prod so ssl.security.mode must be 'pki' or 'header'");
             }
@@ -88,7 +88,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity aHttpSecurity) throws Exception {
         logger.debug("configure() started.");
 
-        if (activeProfileName.equalsIgnoreCase("prod")) {
+        if (! this.useHardcodePrincipal) {
             // Running in prod mode
             javax.servlet.Filter filter = null;
 
