@@ -1,9 +1,9 @@
 package com.lessons.security;
 
+import com.lessons.services.DatabaseService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -16,10 +16,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,9 +35,16 @@ public class MyAuthenticationManager implements AuthenticationManager {
     @Resource
     private HttpServletRequest httpServletRequest;
 
+    @Resource
+    private DatabaseService databaseService;
+
     @Value("${use.hardcoded.principal}")
     private boolean useHardcodePrincipal;
 
+    @PostConstruct
+    public void init() {
+        logger.debug("init() started.");
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -89,12 +98,7 @@ public class MyAuthenticationManager implements AuthenticationManager {
             // Get the list of roles from the header
             List<GrantedAuthority> grantedRoleAuthorities = getAuthoritiesFromHeaderValue();
 
-            if ((grantedRoleAuthorities != null) && (grantedRoleAuthorities.size() > 0)) {
-                // This user has atleast one role found in my authorizatoin service
-                // NOTE:  All granted authorities must start with the "ROLE_" prefix
-                grantedRoleAuthorities.add(new SimpleGrantedAuthority("ROLE_USER_FOUND_IN_VALID_LIST_OF_USERS"));
-            }
-            else {
+            if ((grantedRoleAuthorities != null) && (grantedRoleAuthorities.size() == 0)) {
                 // This user has no roles so throw a runtime exception
                 throw new RuntimeException("No roles were found for this user: " + userUID);
             }
@@ -109,16 +113,21 @@ public class MyAuthenticationManager implements AuthenticationManager {
 
             logger.debug("loadUserDetailsFromRealSource() about to return new UserInfo object");
 
+            // Get the user's granted map roles
+            Map<String, Boolean> uiControlAccesMap = databaseService.getUiControlAccessMap(grantedRoleAuthorities);
+
             // We *MUST* set the database ID in the UserInfo object here
             return new UserInfo()
                     .withId(userId)
                     .withUsernameDn(userDN)
                     .withUsernameUID(userUID)
-                    .withGrantedAuthorities(grantedRoleAuthorities);
+                    .withGrantedAuthorities(grantedRoleAuthorities)
+                    .withUiControlAccessMap(uiControlAccesMap);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Exception raised in loadUserDetailsFromRealSource():  This user will definitely not login", e);
         }
     }
+
 
     /**
      * header(X-BDP-User) holds -AUTH:FOUO;AUTH:U;AUTH:USA;GROUP:BDPUSERS;NAME:bdptest_u_fouo;ROLE:ANALYTIC_RUNNER;ROLE:BDP_ADMIN;ROLE:CITE_USER;ROLE:DATA_ADMIN;ROLE:KIBANA_ADMIN;ROLE:LOGS;ROLE:METRICS;ROLE:OWF_ADMIN;ROLE:OWF_USER;ROLE:UNITY_ADMIN<---
@@ -158,8 +167,11 @@ public class MyAuthenticationManager implements AuthenticationManager {
 
         // Create a list of granted authorities
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER_FOUND_IN_VALID_LIST_OF_USERS"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_READER"));
+
+        // Get the user's granted map roles
+        Map<String, Boolean> uiControlAccesMap = databaseService.getUiControlAccessMap(grantedAuthorities);
 
         // Create a bogus UserInfo object
         // NOTE:  I am hard-coding the user's userid=25
@@ -167,7 +179,8 @@ public class MyAuthenticationManager implements AuthenticationManager {
                 .withId(25)
                 .withUsernameUID(userUID)
                 .withUsernameDn(userDN)
-                .withGrantedAuthorities(grantedAuthorities);
+                .withGrantedAuthorities(grantedAuthorities)
+                .withUiControlAccessMap(uiControlAccesMap);
         return anonymousUserInfo;
     }
 

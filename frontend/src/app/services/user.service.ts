@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, of} from "rxjs";
+import {EMPTY, Observable, of} from "rxjs";
 import {UserInfoDTO} from "../models/user-info-dto";
 import {environment} from "../../environments/environment";
-
-
+import {catchError, map, shareReplay} from "rxjs/operators";
 
 
 @Injectable({
@@ -14,14 +13,43 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
+  // Internal cache of the userInfo object
+  private cachedObservable: Observable<UserInfoDTO> | null = null;
+
   /*
-  * Return an observable that holds an object with information about the user -- e.g., user's name, user's role
-  */
+   * Return an observable that holds an object with information about the user -- e.g., user's name, user's role
+   */
   public getUserInfo(): Observable<UserInfoDTO>  {
 
-    const restUrl = environment.baseUrl + '/api/user/me';
+    if (this.cachedObservable != null) {
+      // This observable is in the cache.  So, return it from the cache
+      return this.cachedObservable;
+    }
 
-    return this.httpClient.get <UserInfoDTO>(restUrl);
+    const restUrl = environment.baseUrl + '/api/users/me';
+
+
+    // Setup this observable so that it calls shareReplay(1) to replay the previous value
+    this.cachedObservable = this.httpClient.get <UserInfoDTO>(restUrl).pipe(
+      map( (userInfoDTO: UserInfoDTO) => {
+
+        // Convert the userInfoDTO.pageRoutes into a map
+        // So that the PageGuard does not have to do it repeatedly
+        let mapPageRoutes: Map<string, boolean> = new Map(Object.entries(userInfoDTO.pageRoutes));
+        userInfoDTO.pageRoutes = mapPageRoutes;
+        return userInfoDTO;
+      }),
+      shareReplay(1),
+      catchError(err => {
+        console.error('There was an error getting user info.   Error is ', err);
+
+        // Clear the cache
+        this.cachedObservable = null;
+
+        return EMPTY;
+      }));
+
+    return this.cachedObservable;
   }
 
 

@@ -54,10 +54,10 @@ insert into roles(id, name) values(2, 'READER');
 --
 -- Add the uicontrols records
 --
-insert into uicontrols(id, name) values(1001, '/page/viewReports');
-insert into uicontrols(id, name) values(1002, '/page/addReport');
-insert into uicontrols(id, name) values(1003, '/page/longReport');
-insert into uicontrols(id, name) values(1004, '/page/searchResults');
+insert into uicontrols(id, name) values(1001, 'page/viewReports');
+insert into uicontrols(id, name) values(1002, 'page/addReport');
+insert into uicontrols(id, name) values(1003, 'page/longReport');
+insert into uicontrols(id, name) values(1004, 'page/searchResults');
 
 
 -- Assign ui controls for the 'admin' role

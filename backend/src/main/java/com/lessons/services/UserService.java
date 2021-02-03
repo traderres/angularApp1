@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service("com.lessons.services.UserService")
 public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
@@ -43,5 +45,10 @@ public class UserService {
     public Integer getLoggedInUserId() {
         UserInfo userInfo = getUserInfo();
         return userInfo.getId();
+    }
+
+    public Map<String,Boolean> getAccessMapForUser() {
+        UserInfo userInfo = getUserInfo();
+        return userInfo.getUiControlAccessMap();
     }
 }

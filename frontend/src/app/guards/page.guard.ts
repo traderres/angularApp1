@@ -21,7 +21,7 @@ export class PageGuard implements CanActivate {
    */
   public canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
-    return this.userService.getUserInfoHardCoded().pipe(
+    return this.userService.getUserInfo().pipe(
       map((userInfoDTO: UserInfoDTO) => {
 
         // Get the next url from the routeConfig
