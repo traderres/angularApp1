@@ -78,7 +78,7 @@ public class MyAuthenticationManager implements AuthenticationManager {
     private UserDetails loadUserDetailsFromRealSource(Authentication authentication) {
         logger.debug("loadUserDetailsFromRealSource() started authentication={}", authentication);
         String userDN;
-        PreAuthenticatedAuthenticationToken token = null;
+        PreAuthenticatedAuthenticationToken token;
 
         if (authentication.getPrincipal() instanceof String) {
             userDN = authentication.getPrincipal().toString();
@@ -168,7 +168,7 @@ public class MyAuthenticationManager implements AuthenticationManager {
         // Create a list of granted authorities
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER_FOUND_IN_VALID_LIST_OF_USERS"));
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_READER"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
         // Get the user's granted map roles
         Map<String, Boolean> uiControlAccesMap = databaseService.getUiControlAccessMap(grantedAuthorities);
