@@ -22,7 +22,7 @@
         <appender-ref ref="CONSOLE"/>
     </logger>
 
-    <logger name="com.ning" level="DEBUG" additivity="false">
+    <logger name="com.ning" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 
