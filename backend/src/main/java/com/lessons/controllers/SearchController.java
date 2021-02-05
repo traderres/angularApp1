@@ -1,9 +1,10 @@
 package com.lessons.controllers;
 
 import com.lessons.models.AddUserSearchDTO;
-import com.lessons.models.AutoCompleteDTO;
 import com.lessons.models.SearchQueryDTO;
 import com.lessons.models.SearchResultDTO;
+import com.lessons.models.grid.AgGridGetRowsRequestDTO;
+import com.lessons.models.grid.AgGridGetRowsResponseDTO;
 import com.lessons.services.DatabaseService;
 import com.lessons.services.ElasticSearchService;
 import org.apache.commons.lang3.StringUtils;
@@ -21,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import java.util.List;
 
+
 @Controller("com.lessons.controllers.SearchController")
 public class SearchController {
     private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
-
 
     @Resource
     private DatabaseService databaseService;
@@ -176,6 +177,24 @@ public class SearchController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(searchResults);
+    }
+
+
+    /**
+     * The Grid has made a request to get more rows.  So, run a search, get the rows, and return it back to the front end
+     * @param aRequest holds the AG-Grid request DTO
+     * @return AgGridGetRowsResponseDTO object with the AG-Grid response
+     */
+    @RequestMapping(value = "/api/search/get_rows", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<?> getRows(@RequestBody AgGridGetRowsRequestDTO aRequest) {
+
+        // Build the query, execute the query, and generate the response object
+        AgGridGetRowsResponseDTO responseDTO = this.elasticSearchService.getGridDataHardCoded(aRequest);
+
+        // Return a response back to the frontend
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseDTO);
     }
 
 }

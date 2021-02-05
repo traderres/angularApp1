@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lessons.config.ElasticSearchResources;
 import com.lessons.models.SearchQueryDTO;
 import com.lessons.models.SearchResultDTO;
+import com.lessons.models.grid.AgGridGetRowsRequestDTO;
+import com.lessons.models.grid.AgGridGetRowsResponseDTO;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
 import org.apache.commons.lang3.StringUtils;
@@ -17,9 +19,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service("com.lessons.services.ElasticSearchService")
 public class ElasticSearchService {
@@ -273,6 +274,31 @@ public class ElasticSearchService {
     }
 
 
+    public AgGridGetRowsResponseDTO getGridDataHardCoded(AgGridGetRowsRequestDTO aRequestDTO) {
+        List<String> secondaryColumnFields = new ArrayList<>();
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        int startingRecordNumber = aRequestDTO.getStartRow();
+        int endingReecordNumber = aRequestDTO.getEndRow();
+
+        for (int i=startingRecordNumber; i<=endingReecordNumber; i++) {
+            Map<String, Object> recordMap = new HashMap<>();
+            recordMap.put("id", i);
+            recordMap.put("name", "record " + i);
+            data.add(recordMap);
+        }
+
+        int lastRowNumber = endingReecordNumber;
+
+        // Make a hard-coded response
+        AgGridGetRowsResponseDTO responseDTO = new AgGridGetRowsResponseDTO(data, lastRowNumber, secondaryColumnFields);
+
+        return responseDTO;
+    }
 
 
+    private int getRandomIntBetween(int minInt, int maxInt) {
+        int randomNum = ThreadLocalRandom.current().nextInt(minInt, maxInt + 1);
+        return randomNum;
+    }
 }

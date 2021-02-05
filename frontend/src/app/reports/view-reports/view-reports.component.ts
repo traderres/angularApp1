@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import "ag-grid-enterprise";                        // Give us access to the License Manager
-import {GridOptions} from "ag-grid-community";
+import {GridOptions, IServerSideDatasource, IServerSideGetRowsParams} from "ag-grid-community";
+import {ServerSideDataSource} from "../../grid/server-side-data-source";
+import {ElasticsearchService} from "../../services/elasticsearch.service";
+import {takeUntil} from "rxjs/operators";
+
 
 
 
@@ -11,12 +15,21 @@ import {GridOptions} from "ag-grid-community";
 })
 export class ViewReportsComponent implements OnInit {
 
+
+
+  constructor(private elasticsearchService: ElasticsearchService) {
+
+  }
+
+
+  // Tell AG-Grid to run in serverSide mode and give it the data source
   public gridOptions: GridOptions = {
-    rowModelType: 'clientSide',    // Possible options are 'clientSide', 'infinite', 'viewport', and 'serverSide'
-    pagination: true,
-    paginationPageSize: 10,
-    rowGroupPanelShow: 'always'    // Possible options are 'never', 'always', and 'onlyWhenGrouping'
+    rowModelType: 'serverSide',    // Possible options are 'clientSide', 'infinite', 'viewport', and 'serverSide'
+    serverSideDatasource: this.createServerSideDataSource();
+    pagination: false,
+    rowGroupPanelShow: 'never'    // Possible options are 'never', 'always', and 'onlyWhenGrouping'
   };
+
 
   public defaultColDefs: any = {
     flex: 1,
@@ -116,11 +129,39 @@ export class ViewReportsComponent implements OnInit {
 
 
 
-  constructor() {
-
-  }
-
   ngOnInit(): void {
   }
 
+  private createServerSideDataSource(): IServerSideDatasource {
+
+    let dataSource: IServerSideDatasource = {
+      // called by the grid when more rows are required
+      getRows: (params: IServerSideGetRowsParams) => {
+        data.startRow = params.request.startRow + 1;
+        data.endRow = params.request.endRow;
+        data.sortModel = params.request.sortModel;
+        var response = this.getGridData(data);
+        response
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(data => {
+            const immutableData: FundDetail = JSON.parse(JSON.stringify(data));
+            setTimeout(() => {
+              let lastRow = -1;
+              if (immutableData.totalRows <= params.request.endRow) {
+                lastRow = immutableData.totalRows;
+              }
+              if (immutableData.rows.length === 0) {
+                this.gridOptions.api.showNoRowsOverlay()
+              }
+              params.successCallback(immutableData.rows, lastRow);
+            }), 500
+          }, (err) => {
+            params.failCallback();
+            this.toastrService.error(err);
+          });
+      }
+    };
+
+    return dataSource;
+  }
 }

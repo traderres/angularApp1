@@ -4,6 +4,7 @@ import {Observable, of} from "rxjs";
 import {SearchQueryDTO} from "../models/search-query-dto";
 import {SearchResultDTO} from "../models/search-result-dto";
 import {environment} from "../../environments/environment";
+import {IServerSideGetRowsParams} from "ag-grid-community";
 
 @Injectable({
   providedIn: 'root'
@@ -60,4 +61,5 @@ export class ElasticsearchService {
     return this.httpClient.post <SearchResultDTO[]>(restUrl, aSearchQueryDTO);
   }
 
+  public runSearchGetRows(aParams: IServerSideGetRowsParams): Observable<ISer>
 }
