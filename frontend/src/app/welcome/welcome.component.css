@@ -1,0 +1,13 @@
+mat-card{
+  width: 100%;
+}
+
+.my-title {
+  font-weight: 500 !important;
+  font-size: 18px !important;
+  color: #56aee2;
+}
+
+.border {
+  border: 1px solid black;
+}

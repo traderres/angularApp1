@@ -45,15 +45,21 @@ import { SaveSearchDialogComponent } from './dialogs/save-search-dialog/save-sea
 import {MatDialogModule} from "@angular/material/dialog";
 import {PageGuard} from "./guards/page.guard";
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { HoverClassDirective } from './directives/hover-class.directive';
+import { LongPageComponent } from './long-page/long-page.component';
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 const appRoutes: Routes = [
   { path: 'page/addReport',    component: AddReportComponent,  canActivate: [PageGuard] },
   { path: 'page/longReport',   component: LongReportComponent, canActivate: [PageGuard] },
   { path: 'page/viewReports',   component: ViewReportsComponent, canActivate: [PageGuard] },
   { path: 'page/searchResults',   component: SearchResultsComponent, canActivate: [PageGuard] },
-  { path: '',                    redirectTo: 'page/viewReports', pathMatch: 'full' }, // By default, redirect the user to this page (url does change)
   { path: 'page/403',          component: ForbiddenComponent},        // No routes match, so take the user to the "NotFoundComponent"
-  { path: '**',                component: NotFoundComponent}       // No routes match, so take the user to the "NotFoundComponent"
+  { path: 'page/welcome',   component: WelcomeComponent },
+  { path: 'page/longPage',  component: LongPageComponent },
+  //{ path: '',   redirectTo: 'page/welcome', pathMatch: 'full'},
+   { path: '',                    redirectTo: 'page/longPage', pathMatch: 'full' }, // By default, redirect the user to this page (url does change)
+   { path: '**',                component: NotFoundComponent}       // No routes match, so take the user to the "NotFoundComponent"
 ];
 
 
@@ -75,40 +81,43 @@ const appRoutes: Routes = [
     SearchBoxComponent,
     SearchResultsComponent,
     SaveSearchDialogComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    HoverClassDirective,
+    LongPageComponent
   ],
-    imports: [
-        HighchartsChartModule,
-        BrowserAnimationsModule,
-        BrowserModule,
-        AgGridModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        FileUploadModule,
-        FormsModule,
-        HttpClientModule,
-        MatAutocompleteModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatSnackBarModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatGridListModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatIconModule,
-        RouterModule.forRoot(appRoutes),
-        ReactiveFormsModule,
-        LayoutModule,
-        MatProgressBarModule,
-        MatListModule,
-        FlexLayoutModule,
-        MatDialogModule
-    ],
+  imports: [
+    HighchartsChartModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    AgGridModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    FileUploadModule,
+    FormsModule,
+    HttpClientModule,
+    MatAutocompleteModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule,
+    LayoutModule,
+    MatProgressBarModule,
+    MatListModule,
+    FlexLayoutModule,
+    MatDialogModule,
+    ScrollingModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

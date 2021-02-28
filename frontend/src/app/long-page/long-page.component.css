@@ -1,0 +1,5 @@
+
+.fixed {
+  position: fixed;
+  width: 200px; /* should have same width as the column */
+}

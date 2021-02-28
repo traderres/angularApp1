@@ -20,6 +20,17 @@
         </div>
       </mat-list-item>
 
+
+      <!-- Long Page -->
+      <mat-list-item class="navItem" [routerLink]="'page/longPage'" routerLinkActive="active">
+        <a title="View Reports">Long Page</a>
+        <div fxFlex fxLayoutAlign="end end">
+          <a [routerLink]="'page/longPage'" target="_blank">
+            <i class="fas fa-external-link-alt navItemIcon" title="Open 'Long Page' in a new window"></i>
+          </a>
+        </div>
+      </mat-list-item>
+
       <!-- Add Report -->
       <mat-list-item class="navItem" [routerLink]="'page/addReport'" routerLinkActive="active">
         <a title="Add Report">Add Report</a>
@@ -30,12 +41,12 @@
         </div>
       </mat-list-item>
 
-      <!-- View Long Report -->
-      <mat-list-item class="navItem" [routerLink]="'page/longReport'" routerLinkActive="active">
-        <a title="View Long Report">View Long Report</a>
+      <!-- View Long Page -->
+      <mat-list-item class="navItem" [routerLink]="'page/longPage'" routerLinkActive="active">
+        <a title="View Long Page">View Long Page</a>
         <div fxFlex fxLayoutAlign="end end">
-          <a [routerLink]="'page/longReport'" target="_blank">
-            <i class="fas fa-external-link-alt navItemIcon" title="Open 'View Long Report' in a new window"></i>
+          <a [routerLink]="'page/longPage'" target="_blank">
+            <i class="fas fa-external-link-alt navItemIcon" title="Open 'View Long Page' in a new window"></i>
           </a>
         </div>
       </mat-list-item>
