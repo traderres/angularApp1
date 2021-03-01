@@ -3,3 +3,24 @@
   position: fixed;
   width: 200px; /* should have same width as the column */
 }
+
+ul {
+  list-style-type: none;
+  margin: 5px;
+  padding: 5px;
+}
+
+a {
+  /* The user is not hovering over an anchor on this page */
+  font-size: 1.5em;
+  margin: 0;
+  font-family: "Verdana", san-serif;
+}
+
+a:hover {
+  /* The user has hovered over any anchor on this page */
+  color: #007bff;
+  font-size: 1.5em;
+  margin: 0;
+  font-family: "Verdana", san-serif;
+}

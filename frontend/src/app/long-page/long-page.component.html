@@ -57,16 +57,19 @@
   </div>
 
 
-  <div fxFlex="200px" style="border: 1px solid green;">
+  <div fxFlex="200px">
     <!-- Right Column that is always 200 pixels wide -->
     <div class="fixed">
 
-      <div fxLayout="column" fxFlexFill style="height: 100%">
+      <div fxLayout="column" fxFlexFill>
         <!-- Internal Navigation Links -->
-        <a (click)="this.scrollToTarget('titleSection')" class="clickable">Title Section</a>
-        <a (click)="this.scrollToTarget('section1')" class="clickable">Section 1</a>
-        <a (click)="this.scrollToTarget('section2')" class="clickable">Section 2</a>
-        <a (click)="this.scrollToTarget('section3')" class="clickable">Section 3</a>
+        <ul>
+          <li><a (click)="this.scrollToTarget('titleSection')" class="clickable">Title Section</a></li>
+          <li><a (click)="this.scrollToTarget('section1')" class="clickable">Section 1</a></li>
+          <li><a (click)="this.scrollToTarget('section2')" class="clickable">Section 2</a></li>
+          <li><a (click)="this.scrollToTarget('section3')" class="clickable">Section 3</a></li>
+        </ul>
+
       </div>
 
     </div>
