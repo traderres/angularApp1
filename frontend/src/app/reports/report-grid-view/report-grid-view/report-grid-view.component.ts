@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import "ag-grid-enterprise";
 import {GridService} from "../../../services/grid.service";
 import {ReportRowDataDTO} from "../../../models/report-row-data-dto";
@@ -8,13 +8,16 @@ import {ReportGridActionCellRendererComponent} from "../report-grid-action-cell-
 import {MatDialog} from "@angular/material/dialog";
 import {UpdatePriorityDialogFormData} from "../../../models/update-priority-dialog-form-data";
 import {UpdatePriorityDialogComponent} from "../update-priority-dialog-component/update-priority-dialog.component";
+import {ThemeService} from "../../../services/theme.service";
+import {Subscription} from "rxjs";
+import {ThemeOptionDTO} from "../../../models/theme-option-dto";
 
 @Component({
   selector: 'app-report-grid-view',
   templateUrl: './report-grid-view.component.html',
   styleUrls: ['./report-grid-view.component.css']
 })
-export class ReportGridViewComponent implements OnInit {
+export class ReportGridViewComponent implements OnInit, OnDestroy {
 
   public gridOptions: GridOptions = {
     debug: true,
@@ -77,12 +80,28 @@ export class ReportGridViewComponent implements OnInit {
   private gridColumnApi: ColumnApi;
   public  totalRowsSelected: number;
   public  updateButtonLabel: string;
+  private themeStateSubscription: Subscription;
+  public currentTheme: ThemeOptionDTO;
 
   constructor(private gridService: GridService,
+              private themeService: ThemeService,
               private matDialog: MatDialog) {}
 
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+
+    // Listen for changes from the theme service
+    this.themeStateSubscription = this.themeService.getThemeStateAsObservable().subscribe( (aNewTheme: ThemeOptionDTO) => {
+      // The theme has changed.
+      this.currentTheme = aNewTheme;
+    });
+
+  }
+
+  public ngOnDestroy(): void {
+    if (this.themeStateSubscription) {
+      this.themeStateSubscription.unsubscribe();
+    }
   }
 
 

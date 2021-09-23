@@ -11,6 +11,8 @@ import {environment} from "../../../environments/environment";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {NavbarService} from "../../services/navbar.service";
 import {Subscription} from "rxjs";
+import {ThemeOptionDTO} from "../../models/theme-option-dto";
+import {ThemeService} from "../../services/theme.service";
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -38,7 +40,13 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   private previousLeftPageWidth: number;
   private previousRightPageWidth: number;
 
-  constructor(private navbarService: NavbarService) { }
+
+  private themeStateSubscription: Subscription;
+  public  pdfViewerBackgroundColor: string;
+
+
+  constructor(private navbarService: NavbarService,
+              private themeService: ThemeService) { }
 
 
 
@@ -49,6 +57,20 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   public ngOnInit(): void {
+
+    // Listen for changes from the theme service
+    this.themeStateSubscription = this.themeService.getThemeStateAsObservable().subscribe( (aNewTheme: ThemeOptionDTO) => {
+      // The theme has changed.
+
+      if (aNewTheme.isLightMode) {
+        // Set a light background color for PDF Viewer
+        this.pdfViewerBackgroundColor = "#dcdcdc";
+      }
+      else {
+        // Set a dark background color for PDF Viewer
+        this.pdfViewerBackgroundColor = "#303030";
+      }
+    });
 
     // Setup the path of the sample directory path
     if (environment.production) {
@@ -83,6 +105,10 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   public ngOnDestroy(): void {
+    if (this.themeStateSubscription) {
+      this.themeStateSubscription.unsubscribe();
+    }
+
     if (this.navbarSubscription) {
       this.navbarSubscription.unsubscribe();
     }

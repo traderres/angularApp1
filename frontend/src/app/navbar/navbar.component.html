@@ -1,4 +1,8 @@
-<div class="navbar" style="width:200px">
+<div  style="width:250px"
+      [ngClass]="{
+					'light':   this.currentTheme.isLightMode == true,
+					'dark':    this.currentTheme.isLightMode == false
+        }">
 
   <ng-container *ngIf="(this.userInfoObs | async) as userInfo">
     <!-- The UserInfoObs data has come in.  So, show the navbar -->
@@ -108,7 +112,7 @@
                          *ngIf="userInfo.pageRoutes.get(constants.REPORT_SUBMIT_MARKDOWN)">
             <a title="Report Submit Markdown">Report Submit Markdown</a>
             <div fxFlex fxLayoutAlign="end end" >
-              <a [routerLink]="constants.REPORTS_GRID_VIEW_ROUTE" target="_blank">
+              <a [routerLink]="constants.REPORT_SUBMIT_MARKDOWN" target="_blank">
                 <i class="fas fa-external-link-alt navItemIcon" title="Open 'Report Submit Markdown' a new window"></i>
               </a>
             </div>
