@@ -66,6 +66,7 @@ import { ThemeChangerMenuComponent } from './theme-changer-menu/theme-changer-me
 import {MatMenuModule} from "@angular/material/menu";
 import {MatRadioModule} from "@angular/material/radio";
 import { TabGroupComponent } from './tab-group/tab-group.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -154,6 +155,7 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatSidenavModule,
     MatSnackBarModule,
+    MatTabsModule,
     MatToolbarModule,
     NgxExtendedPdfViewerModule,
     QuillModule.forRoot(),
