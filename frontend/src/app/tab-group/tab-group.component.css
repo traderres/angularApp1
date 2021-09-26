@@ -1,13 +1,15 @@
 
 ::ng-deep .mat-tab-label{
   /* label style */
+  min-width: 175px !important;
   color: white;
-  width: 100%;
 
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
   font-size: 17px;
+
+  margin: 5px;
 }
 
 
@@ -19,13 +21,8 @@
 ::ng-deep .mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
 ::ng-deep .mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
   /* Set color when tab loses focus */
-
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#2a2a72+21,f1ca0a+22,f1ca0a+22,1876ab+24,2a2a72+47,2a2a72+53,1876ab+75,f1ca0a+76,2a2a72+78 */
-  background: #2a2a72; /* Old browsers */
-  background: -moz-linear-gradient(-45deg,  #2a2a72 21%, #f1ca0a 22%, #f1ca0a 22%, #1876ab 24%, #2a2a72 47%, #2a2a72 53%, #1876ab 75%, #f1ca0a 76%, #2a2a72 78%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg,  #2a2a72 21%,#f1ca0a 22%,#f1ca0a 22%,#1876ab 24%,#2a2a72 47%,#2a2a72 53%,#1876ab 75%,#f1ca0a 76%,#2a2a72 78%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg,  #2a2a72 21%,#f1ca0a 22%,#f1ca0a 22%,#1876ab 24%,#2a2a72 47%,#2a2a72 53%,#1876ab 75%,#f1ca0a 76%,#2a2a72 78%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2a2a72', endColorstr='#2a2a72',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background-color: #2a2a72;
+  background-image: linear-gradient(315deg, #009ffd 0%, #2a2a72 77%, #f1ca0a 98%);
 
   opacity: 1;
 }
@@ -42,7 +39,19 @@
 }
 
 
-::ng-deep .mat-tab-label.mat-tab-label-active {
-  /* Styles for the active tab label */
-  border: 0;
+::ng-deep .mat-tab-label {
+  /* Set a border of 2px that has the same color as the background on all labels     */
+  /* NOTE:  This is needed because on hover, we are going to change the border color */
+  border: 2px solid #2a2a72;
+  box-sizing: border-box;
+  border-radius: 20px;
 }
+
+
+::ng-deep  .mat-tab-label:hover:not(.mat-tab-label-active) {
+  /* Show a gold border when the user hovers over an Inactive tab                                  */
+  /* NOTE:  The border should already exist otherwise the tabs will bump a little and it looks bad */
+  border-color: #c0da00;
+  opacity: 1 !important;       /* The opacity is reduced for inactive tabs by default */
+}
+
