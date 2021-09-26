@@ -20,10 +20,10 @@
 ::ng-deep .mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
 ::ng-deep .mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
   /* Set color when tab loses focus */
-  background-color: #2a2a72;
-  background-image: linear-gradient(45deg, #009ffd 5%, #2a2a72 54%, #f1ca0a 98%);
+  background: radial-gradient(closest-side, #000000 0%,  #2a2a72 50%, #009ffd 100%);
   opacity: 1;
 }
+
 
 ::ng-deep .mat-tab-header{
   /* Set the default background color of the header */
@@ -42,5 +42,4 @@
   box-sizing: border-box;
   border-radius: 20px;
 }
-
 
