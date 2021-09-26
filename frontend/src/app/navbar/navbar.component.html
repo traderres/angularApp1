@@ -101,7 +101,7 @@
             <a title="Long View Report">Report Grid View</a>
             <div fxFlex fxLayoutAlign="end end" >
               <a [routerLink]="constants.REPORTS_GRID_VIEW_ROUTE" target="_blank">
-                <i class="fas fa-external-link-alt navItemIcon" title="Open 'Report Grid View' a new window"></i>
+                <i class="fas fa-external-link-alt navItemIcon" title="Open 'Report Grid View' in a new window"></i>
               </a>
             </div>
           </mat-list-item>
@@ -113,7 +113,7 @@
             <a title="Report Submit Markdown">Report Submit Markdown</a>
             <div fxFlex fxLayoutAlign="end end" >
               <a [routerLink]="constants.REPORT_SUBMIT_MARKDOWN" target="_blank">
-                <i class="fas fa-external-link-alt navItemIcon" title="Open 'Report Submit Markdown' a new window"></i>
+                <i class="fas fa-external-link-alt navItemIcon" title="Open 'Report Submit Markdown' in a new window"></i>
               </a>
             </div>
           </mat-list-item>
@@ -124,11 +124,22 @@
             <a title="PDF Viewer">PDF Viewer</a>
             <div fxFlex fxLayoutAlign="end end" >
               <a [routerLink]="constants.REPORT_PDFVIEWER_ROUTE" target="_blank">
-                <i class="fas fa-external-link-alt navItemIcon" title="Open PDF Viewer a new window"></i>
+                <i class="fas fa-external-link-alt navItemIcon" title="Open PDF Viewer in a new window"></i>
               </a>
             </div>
           </mat-list-item>
 
+
+          <!-- Tab Group Page -->
+          <mat-list-item class="navItem" [routerLink]="constants.TAB_GROUP_ROUTE" routerLinkActive="active"
+                         *ngIf="userInfo.pageRoutes.get(constants.TAB_GROUP_ROUTE)">
+            <a title="PDF Viewer">Tab Group Page</a>
+            <div fxFlex fxLayoutAlign="end end" >
+              <a [routerLink]="constants.TAB_GROUP_ROUTE" target="_blank">
+                <i class="fas fa-external-link-alt navItemIcon" title="Open Tab Group Page in a new window"></i>
+              </a>
+            </div>
+          </mat-list-item>
 
         </div>  <!-- End of navMenuGroup -->
       </ng-container>

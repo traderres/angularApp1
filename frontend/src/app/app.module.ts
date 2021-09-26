@@ -65,6 +65,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ThemeChangerMenuComponent } from './theme-changer-menu/theme-changer-menu.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatRadioModule} from "@angular/material/radio";
+import { TabGroupComponent } from './tab-group/tab-group.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -84,6 +85,7 @@ const appRoutes: Routes = [
   { path: Constants.REPORT_SUBMIT_MARKDOWN,     component: ReportSubmitMarkdownComponent,  canActivate: [PageGuard] },
   { path: Constants.LONGVIEW_REPORT,     component: LongViewOuterReportComponent,  canActivate: [PageGuard] },
   { path: Constants.REPORT_PDFVIEWER_ROUTE,   component: PdfViewerComponent,  canActivate: [PageGuard] },
+  { path: Constants.TAB_GROUP_ROUTE,   component: TabGroupComponent, canActivate: [PageGuard] },
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
   { path: '',                  component: WelcomeComponent},
   { path: '**',                component: NotFoundComponent}
@@ -121,7 +123,8 @@ const appRoutes: Routes = [
     UpdatePriorityDialogComponent,
     ReportSubmitMarkdownComponent,
     PdfViewerComponent,
-    ThemeChangerMenuComponent
+    ThemeChangerMenuComponent,
+    TabGroupComponent
   ],
   imports: [
     AppRoutingModule,
