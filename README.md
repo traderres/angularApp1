@@ -1,4 +1,4 @@
-Angular App1 Lesson 26a
+Angular App1 Lesson 26b
 -----------------------
 
 
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson26a/server-side-grid/page
+    unix> git checkout lesson26b/server-side-grid/rest-call
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
