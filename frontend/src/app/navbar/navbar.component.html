@@ -141,6 +141,19 @@
             </div>
           </mat-list-item>
 
+          <!-- Server Side Grid Page -->
+          <mat-list-item class="navItem"
+                         [routerLink]="constants.SERVER_SIDE_GRID_ROUTE"
+                         routerLinkActive="active"
+                         *ngIf="userInfo.pageRoutes.get(constants.SERVER_SIDE_GRID_ROUTE)">
+            <a title="Tab Group Page">Server Side Grid Page</a>
+            <div fxFlex fxLayoutAlign="end end" >
+              <a [routerLink]="constants.SERVER_SIDE_GRID_ROUTE" target="_blank">
+                <i class="fas fa-external-link-alt navItemIcon" title="Open Server Side Grid Page in a new window"></i>
+              </a>
+            </div>
+          </mat-list-item>
+
         </div>  <!-- End of navMenuGroup -->
       </ng-container>
 

@@ -67,6 +67,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatRadioModule} from "@angular/material/radio";
 import { TabGroupComponent } from './tab-group/tab-group.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import { ServerSideGridComponent } from './reports/server-side-grid/server-side-grid.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -88,6 +89,7 @@ const appRoutes: Routes = [
   { path: Constants.REPORT_PDFVIEWER_ROUTE,   component: PdfViewerComponent,  canActivate: [PageGuard] },
   { path: Constants.TAB_GROUP_ROUTE,   component: TabGroupComponent, canActivate: [PageGuard] },
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
+  { path: Constants.SERVER_SIDE_GRID_ROUTE,   component: ServerSideGridComponent, canActivate: [PageGuard] },
   { path: '',                  component: WelcomeComponent},
   { path: '**',                component: NotFoundComponent}
 ];
@@ -125,7 +127,8 @@ const appRoutes: Routes = [
     ReportSubmitMarkdownComponent,
     PdfViewerComponent,
     ThemeChangerMenuComponent,
-    TabGroupComponent
+    TabGroupComponent,
+    ServerSideGridComponent
   ],
   imports: [
     AppRoutingModule,
