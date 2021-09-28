@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import {ReportRowDataDTO} from "../models/report-row-data-dto";
 import {Observable, of} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {GridGetRowsRequestDTO} from "../models/grid/grid-get-rows-request-dto";
+import {GridGetRowsResponseDTO} from "../models/grid/grid-get-rows-response-dto";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GridService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   public getReportData(): Observable<ReportRowDataDTO[]> {
     let data: ReportRowDataDTO[] = [
@@ -42,5 +46,15 @@ export class GridService {
     return of(data);
   }
 
+  /*
+   * This is the REST endpoint used for the server-side ag-grid
+   */
+  public getServerSideData(aGridGetRowsRequestDTO: GridGetRowsRequestDTO): Observable<GridGetRowsResponseDTO> {
+    // Construct the URL of the REST call
+    const restUrl = environment.baseUrl + '/api/grid/getRows';
+
+    // Use a POST call to send a JSON body of info
+    return this.httpClient.post <GridGetRowsResponseDTO> (restUrl, aGridGetRowsRequestDTO, {} );
+  }
 
 }
