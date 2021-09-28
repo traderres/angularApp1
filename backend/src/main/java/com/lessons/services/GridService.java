@@ -22,7 +22,7 @@ public class GridService {
      *  4. Return the GridGetRowsResponseDTO object
      *
      * @param aGridRequestDTO holds information about the request
-     * @return holds the response object (that holds the list of data, p
+     * @return holds the response object (that holds the list of data and meta data)
      */
     public GridGetRowsResponseDTO getPageOfData(String aIndexName, List<String> aFieldsToSearch, GridGetRowsRequestDTO aGridRequestDTO) throws Exception {
 
@@ -31,29 +31,25 @@ public class GridService {
 
         Map<String, Object> map1 = new HashMap<>();
         map1.put("id", 1);
-        map1.put("name", "Report 1");
+        map1.put("display_name", "Report 1");
         map1.put("priority", "low");
-        map1.put("start_date", "05/02/2021");
-        map1.put("end_date",   "06/03/2021");
+        map1.put("description", "This is the description of report 1");
 
         Map<String, Object> map2 = new HashMap<>();
         map2.put("id", 2);
-        map2.put("name", "Report 2");
-        map1.put("priority", "low");
-        map2.put("start_date", "05/02/2022");
-        map2.put("end_date",   "06/03/2022");
+        map2.put("display_name", "Report 2");
+        map2.put("priority", "low");
+        map2.put("description", "This is the description of report 2");
 
         Map<String, Object> map3 = new HashMap<>();
         map3.put("id", 3);
-        map3.put("name", "Report 3");
-        map1.put("priority", "medium");
-        map3.put("start_date", "05/02/2023");
-        map3.put("end_date",   "06/03/2023");
+        map3.put("display_name", "Report 3");
+        map3.put("priority", "medium");
+        map3.put("description", "This is the description of report 3");
 
         List<Map<String, Object>> listOfData = Arrays.asList(map1, map2, map3);
 
         int totalMatches = 3;
-
 
 
         int agGridLastRow;
@@ -70,7 +66,7 @@ public class GridService {
 
 
         // Create a responseDTO object that has the information that ag-grid needs
-        GridGetRowsResponseDTO responseDTO = new GridGetRowsResponseDTO(listOfData, agGridLastRow, null);
+        GridGetRowsResponseDTO responseDTO = new GridGetRowsResponseDTO(listOfData, totalMatches, agGridLastRow, null);
 
         return responseDTO;
     }
