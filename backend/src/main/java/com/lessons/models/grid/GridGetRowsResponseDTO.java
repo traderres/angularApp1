@@ -24,10 +24,9 @@ public class GridGetRowsResponseDTO {
 
     // --------------- Constructor, Getters, and Setters -------------------------------/
 
-    public GridGetRowsResponseDTO(List<Map<String, Object>> data, Integer totalMatches, Integer aLastRow, String aSearchAfterClause) {
+    public GridGetRowsResponseDTO(List<Map<String, Object>> data, Integer totalMatches, String aSearchAfterClause) {
         this.data = data;
         this.totalMatches = totalMatches;
-        this.lastRow = aLastRow;
         this.searchAfterClause = aSearchAfterClause;
     }
 
