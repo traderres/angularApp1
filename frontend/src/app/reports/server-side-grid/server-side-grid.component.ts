@@ -71,9 +71,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     this.clearGridCache();
 
     // Clear all sorting
-    this.gridColumnApi.resetColumnState();
-    const emptyColumnState = {}
-    this.gridColumnApi.applyColumnState(emptyColumnState);
+    this.gridApi.setSortModel(null);
 
     // Clear the filters
     this.gridApi.setFilterModel(null);
@@ -97,9 +95,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     this.clearGridCache();
 
     // Clear all sorting
-    this.gridColumnApi.resetColumnState();
-    const emptyColumnState = {}
-    this.gridColumnApi.applyColumnState(emptyColumnState)
+    this.gridApi.setSortModel(null);
 
     // Clear the filters
     this.gridApi.setFilterModel(null);
