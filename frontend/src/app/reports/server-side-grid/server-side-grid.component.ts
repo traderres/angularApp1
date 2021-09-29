@@ -21,7 +21,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
   private searchAfterClause: string | null;
   public  totalMatches: number = 0;
   public  rawSearchQuery: string = "";
-
+  public  isValidQuery: boolean = true;
 
   public gridOptions: GridOptions = {
     debug: false,
@@ -133,6 +133,25 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
       this.gridService.getServerSideData(getRowsRequestDTO)
         .subscribe((response: GridGetRowsResponseDTO) => {
           // REST Call finished successfully
+
+          this.isValidQuery = response.isValidQuery;
+
+          if (! response.isValidQuery) {
+            // The user entered an invalid search
+
+            // Set the flag to false (so the search box changes color)
+            this.isValidQuery = false;
+
+            // Update total matches on the screen
+            this.totalMatches = 0;
+
+            // Show the 'no matches were found'
+            this.gridApi.showNoRowsOverlay();
+
+            // Tell the ag-grid that there were no results
+            params.successCallback([], 0);
+            return;
+          }
 
           // Save the additional sort fields  (we will use when getting the next page)
           this.searchAfterClause = response.searchAfterClause;

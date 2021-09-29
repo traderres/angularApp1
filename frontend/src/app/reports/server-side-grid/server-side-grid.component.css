@@ -1,6 +1,6 @@
 
 /**********   L I G H T      M O D E  **********/
-.light .searchBox {
+.light .searchBoxValid  {
   width: 250px;     /* Set the width of the search box */
   padding: 6px 0 6px 10px;
   background-color: #dcdcdc;   /* light white color */
@@ -11,8 +11,36 @@
 }
 
 
-.light .searchBoxWrapper {
+.light .searchBoxInvalid  {
+  width: 250px;     /* Set the width of the search box */
+  padding: 6px 0 6px 10px;
+  background-color: red;   /* light white color */
+  color: white;
+  caret-color: white;
+  border: 0;
+
+  /* Remove the outline that appears when clicking in textbox */
+  outline: none;
+}
+
+
+.light .searchBoxWrapperValid  {
   background-color: #dcdcdc;
+  border-radius: 8px;      /* Controls the rounded corners */
+  border: 0;
+
+  /* Center the search box and the icon */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  margin-left: 10px;
+}
+
+
+.light .searchBoxWrapperInvalid {
+  background-color: red;
+  color: white;
   border-radius: 8px;      /* Controls the rounded corners */
   border: 0;
 
@@ -37,7 +65,7 @@
 
 
 /**********   D A R K       M O D E  **********/
-.dark .searchBox {
+.dark .searchBoxValid {
   width: 250px;     /* Set the width of the search box */
   padding: 6px 0 6px 10px;
   background-color: #111111;   /* light white color */
@@ -50,8 +78,36 @@
 }
 
 
-.dark .searchBoxWrapper {
+.dark .searchBoxInvalid {
+  width: 250px;     /* Set the width of the search box */
+  padding: 6px 0 6px 10px;
+  background-color: red;   /* light white color */
+  color: white;
+  caret-color: white;
+  border: 0;
+
+  /* Remove the outline that appears when clicking in textbox */
+  outline: none;
+}
+
+
+.dark .searchBoxWrapperValid {
   background-color: #111111;
+  caret-color: white;
+  border-radius: 8px;      /* Controls the rounded corners */
+  border: 0;
+
+  /* Center the search box and the icon */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  margin-left: 10px;
+}
+
+
+.dark .searchBoxWrapperInvalid {
+  background-color: red;
   caret-color: white;
   border-radius: 8px;      /* Controls the rounded corners */
   border: 0;
@@ -72,5 +128,8 @@
   border: 0;
   background-color: transparent;
 }
+
+
+
 
 

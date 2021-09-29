@@ -573,4 +573,36 @@ public class ElasticSearchService {
         return returnedStirng;
     }
 
+    public boolean isQueryValid(String aIndexName, String aJsonBodyForQuery) throws Exception {
+        if (StringUtils.isEmpty(aIndexName)) {
+            throw new RuntimeException("The passed-in aIndexName is null or empty.");
+        }
+        else if (StringUtils.isEmpty(aJsonBodyForQuery)) {
+            throw new RuntimeException("The passed-in aJsonBody is null or empty.");
+        }
+
+        // Make a synchronous POST call to run a _validate/query Call -- to see if this query is valid
+        Response response = this.asyncHttpClient.prepareGet(this.elasticSearchUrl + "/" + aIndexName + "/_validate/query")
+                .setRequestTimeout(this.ES_REQUEST_TIMEOUT_IN_MILLISECS)
+                .setHeader("accept", "application/json")
+                .setHeader("Content-Type", "application/json")
+                .setBody(aJsonBodyForQuery)
+                .execute()
+                .get();
+
+        if (response.getStatusCode() != 200) {
+            throw new RuntimeException("Critical error in isQueryValid():  ElasticSearch returned a response status code of " +
+                    response.getStatusCode() + ".  Response message is " + response.getResponseBody() + "\n\n" + aJsonBodyForQuery);
+        }
+
+        // Get the JSON response from the response object
+        String jsonResponse = response.getResponseBody();
+
+        // Convert the response JSON string into a map and examine it to see if the request really worked
+        Map<String, Object> mapResponse = objectMapper.readValue(jsonResponse, new TypeReference<Map<String, Object>>() {});
+
+        boolean isQueryValid = (boolean) mapResponse.get("valid");
+
+        return isQueryValid;
+    }
 }
