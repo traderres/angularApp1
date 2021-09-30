@@ -129,10 +129,7 @@ public class GridService {
             fieldsClause = "\"fields\": [\"" + StringUtils.join(aFieldsToSearch, "\",\"") + "\"],\n";
         }
 
-        // Get the cleaned query
-        String cleanedQuery = this.elasticSearchService.cleanupQuery(aCleaneQuery );
-
-        if (StringUtils.isEmpty(cleanedQuery)) {
+        if (StringUtils.isEmpty(aCleaneQuery)) {
             // There is no query.  So, use ElasticSearch's match_all to run a search with no query
             queryStringClause = "  \"match_all\": {}\n";
         }
@@ -140,7 +137,7 @@ public class GridService {
             // There is a query, so return a query_string clause
             queryStringClause = "  \"query_string\": {\n" +
                     fieldsClause +
-                    "    \"query\": \"" + cleanedQuery + "\"\n" +
+                    "    \"query\": \"" + aCleaneQuery + "\"\n" +
                     "     }\n";
         }
 
