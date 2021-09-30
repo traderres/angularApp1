@@ -1,4 +1,6 @@
 export enum Constants {
+  COLUMN_STATE_PREFERENCE_NAME = "grid_column_state",
+
   FORBIDDEN_ROUTE              = "page/403",
   AUDIT_HISTORY_ROUTE          = "page/auditHistory",
   ADD_REPORTS_ROUTE            = "page/reports/add",

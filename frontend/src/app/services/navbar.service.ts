@@ -25,9 +25,10 @@ export class NavbarService  {
     // The UserNavBar will not be visible on startup
     this.navbarState.isUserNavbarDisplayed = false;
 
-    // Start of the navbar state with an initial value
-    this.navbarStateSubject = new BehaviorSubject(this.navbarState)
+    // Initialize the navbar state subject
+    this.navbarStateSubject = new BehaviorSubject(this.navbarState);
   }
+
 
 
   public getNavbarStateAsObservable(): Observable<NavbarState> {
