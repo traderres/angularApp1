@@ -68,6 +68,9 @@ import {MatRadioModule} from "@angular/material/radio";
 import { TabGroupComponent } from './tab-group/tab-group.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import { ServerSideGridComponent } from './reports/server-side-grid/server-side-grid.component';
+import { TimelineComponent } from './timeline/timeline.component';
+import { TimelineItemComponent } from './timeline-item/timeline-item.component';
+import { TabHistoryComponent } from './tab-history/tab-history.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -128,7 +131,10 @@ const appRoutes: Routes = [
     PdfViewerComponent,
     ThemeChangerMenuComponent,
     TabGroupComponent,
-    ServerSideGridComponent
+    ServerSideGridComponent,
+    TimelineComponent,
+    TimelineItemComponent,
+    TabHistoryComponent
   ],
   imports: [
     AppRoutingModule,
