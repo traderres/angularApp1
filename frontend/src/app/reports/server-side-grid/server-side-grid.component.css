@@ -1,19 +1,21 @@
 
 /**********   L I G H T      M O D E  **********/
 .light .searchBoxValid  {
-  width: 250px;     /* Set the width of the search box */
-  padding: 6px 0 6px 10px;
+  width: 250px;                /* Set the width of the search box */
+  padding: 6px 0 6px 8px;      /* The last padding value determines how far indented the textbox appears in the wrapper */
   background-color: #dcdcdc;   /* light white color */
   border: 0;
 
   /* Remove the outline that appears when clicking in textbox */
   outline: none;
+
+  margin-left: 3px;   /* Push the searchbox to the right inside the wrapper */
 }
 
 
 .light .searchBoxInvalid  {
-  width: 250px;     /* Set the width of the search box */
-  padding: 6px 0 6px 10px;
+  width: 250px;            /* Set the width of the search box */
+  padding: 6px 0 6px 8px;
   background-color: red;   /* light white color */
   color: white;
   caret-color: white;
@@ -21,6 +23,8 @@
 
   /* Remove the outline that appears when clicking in textbox */
   outline: none;
+
+  margin-left: 3px;   /* Push the searchbox to the right inside the wrapper */
 }
 
 
@@ -33,8 +37,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  margin-left: 10px;
 }
 
 
@@ -48,8 +50,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  margin-left: 10px;
 }
 
 
@@ -66,28 +66,32 @@
 
 /**********   D A R K       M O D E  **********/
 .dark .searchBoxValid {
-  width: 250px;     /* Set the width of the search box */
-  padding: 6px 0 6px 10px;
-  background-color: #111111;   /* light white color */
+  width: 250px;                   /* Set the width of the search box */
+  padding: 6px 0 6px 8px;         /* The last padding value determines how far indented the textbox appears in the wrapper */
+  background-color: transparent;  /* The searchboxWrapper sets the background-color */
   color: white;
   caret-color: white;
   border: 0;
 
   /* Remove the outline that appears when clicking in textbox */
   outline: none;
+
+  margin-left: 3px;   /* Push the searchbox to the right inside the wrapper */
 }
 
 
 .dark .searchBoxInvalid {
-  width: 250px;     /* Set the width of the search box */
-  padding: 6px 0 6px 10px;
-  background-color: red;   /* light white color */
+  width: 250px;            /* Set the width of the search box */
+  padding: 6px 0 6px 8px;
+  background-color: red;   /* invalid background color */
   color: white;
   caret-color: white;
   border: 0;
 
   /* Remove the outline that appears when clicking in textbox */
   outline: none;
+
+  margin-left: 3px;   /* Push the searchbox to the right inside the wrapper */
 }
 
 
@@ -101,8 +105,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  margin-left: 10px;
 }
 
 
@@ -116,8 +118,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  margin-left: 10px;
 }
 
 
@@ -128,8 +128,5 @@
   border: 0;
   background-color: transparent;
 }
-
-
-
 
 
