@@ -1,8 +1,10 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {HistoryService} from "../services/history.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {HistoryEntryDto} from "../models/history-entry-dto";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {ThemeService} from "../services/theme.service";
+import {ThemeOptionDTO} from "../models/theme-option-dto";
 
 @Component({
   selector: 'app-tab-history',
@@ -14,13 +16,21 @@ export class TabHistoryComponent implements OnInit, OnDestroy {
 
   public  historyEntriesObs: Observable<HistoryEntryDto[]>;
   public  myForm: FormGroup;
-
+  public currentTheme: ThemeOptionDTO;
+  private themeStateSubscription: Subscription;
 
   constructor(private historyService: HistoryService,
+              private themeService: ThemeService,
               private formBuilder: FormBuilder) { }
 
 
   public ngOnInit(): void {
+
+    // Listen for changes from the themeService
+    this.themeStateSubscription = this.themeService.getThemeStateAsObservable().subscribe( (aNewTheme: ThemeOptionDTO) => {
+      // The theme has changed
+      this.currentTheme = aNewTheme;
+    });
 
     // Get an observable to the list of history entries   (for the history tab)
     // NOTE:  The Async Pipe will subscribe and unsubscribe to this observable
@@ -36,6 +46,8 @@ export class TabHistoryComponent implements OnInit, OnDestroy {
 
 
   public ngOnDestroy(): void {
-
+    if (this.themeStateSubscription) {
+      this.themeStateSubscription.unsubscribe();
+    }
   }
 }
