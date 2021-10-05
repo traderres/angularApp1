@@ -1,5 +1,13 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ColumnApi, GridApi, GridOptions, IServerSideDatasource, IServerSideGetRowsParams, ServerSideStoreType} from "ag-grid-community";
+import {
+  ColumnApi,
+  ColumnState,
+  GridApi,
+  GridOptions,
+  IServerSideDatasource,
+  IServerSideGetRowsParams,
+  ServerSideStoreType
+} from "ag-grid-community";
 import {GridGetRowsResponseDTO} from "../../models/grid/grid-get-rows-response-dto";
 import {ServerSideGridRowDataDTO} from "../../models/grid/server-side-grid-row-data-dto";
 import {GridService} from "../../services/grid.service";
@@ -11,6 +19,7 @@ import {PreferenceService} from "../../services/preference.service";
 import {Constants} from "../../utilities/constants";
 import {debounceTime, switchMap} from "rxjs/operators";
 import {GetOnePreferenceDTO} from "../../models/get-one-preference-dto";
+import {ApplyColumnStateParams} from "ag-grid-community/dist/lib/columnController/columnApi";
 
 @Component({
   selector: 'app-server-side-grid',
@@ -105,6 +114,19 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   /*
+   * Clear all grid sorting
+   */
+  private clearGridSorting(): void {
+    let columnState: ApplyColumnStateParams = new class implements ApplyColumnStateParams {
+      applyOrder: boolean;
+      defaultState: ColumnState;
+      state: ColumnState[];
+    }
+    this.gridColumnApi.applyColumnState(columnState);
+  }
+
+
+  /*
    * User pressed the Reset Button
    *  1. Clear the grid cache
    *  2. Clear all sorting
@@ -117,7 +139,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     this.clearGridCache();
 
     // Clear all sorting
-    this.gridApi.setSortModel(null);
+    this.clearGridSorting();
 
     // Clear the filters
     this.gridApi.setFilterModel(null);
@@ -128,6 +150,8 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     // Force the grid to invoke the REST endpoint
     this.gridApi.onFilterChanged();
   }
+
+
 
 
   /*
@@ -141,7 +165,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     this.clearGridCache();
 
     // Clear all sorting
-    this.gridApi.setSortModel(null);
+    this.clearGridSorting();
 
     // Clear the filters
     this.gridApi.setFilterModel(null);
@@ -359,8 +383,8 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
         // Set the grid to use past column state
         this.gridColumnApi.setColumnState(storedColumnStateObject);
 
-        // Clear out any sorting
-        this.gridApi.setSortModel(null);
+        // Clear all sorting
+        this.clearGridSorting();
 
         // Clear any filtering
         this.gridApi.setFilterModel(null);
