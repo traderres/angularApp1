@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   ColumnApi,
-  ColumnState,
   GridApi,
   GridOptions,
   IServerSideDatasource,
@@ -19,7 +18,6 @@ import {PreferenceService} from "../../services/preference.service";
 import {Constants} from "../../utilities/constants";
 import {debounceTime, switchMap} from "rxjs/operators";
 import {GetOnePreferenceDTO} from "../../models/get-one-preference-dto";
-import {ApplyColumnStateParams} from "ag-grid-community/dist/lib/columnController/columnApi";
 
 @Component({
   selector: 'app-server-side-grid',
@@ -117,12 +115,12 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
    * Clear all grid sorting
    */
   private clearGridSorting(): void {
-    let columnState: ApplyColumnStateParams = new class implements ApplyColumnStateParams {
-      applyOrder: boolean;
-      defaultState: ColumnState;
-      state: ColumnState[];
-    }
-    this.gridColumnApi.applyColumnState(columnState);
+
+    // Tell the grid to clear sorting on all columns
+    this.gridColumnApi.applyColumnState({
+      defaultState: { sort: null }
+    });
+
   }
 
 
