@@ -125,7 +125,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             aHttpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                     .and()
                     .authorizeRequests()    // Filters out any URLs that are ignored.  This should be before any authorization filters
-                    .antMatchers("/resources/**", "/app1/resources/**", "/error").permitAll()
+                    .antMatchers("/resources/**",  "/error").permitAll()
                     .antMatchers("/**").access("hasRole('ROLE_USER_FOUND_IN_VALID_LIST_OF_USERS')")   // All users must have the grantedAuthority called ROLE_UserFoundInLdap to view all pages
                     .and()
                     .requiresChannel().antMatchers("/**").requiresSecure()    // Redirect http to https
@@ -140,7 +140,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             aHttpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                     .and()
                     .authorizeRequests()     // Filters out any URLs that are ignored.  This should be before any authorization filters
-                    .antMatchers("/resources/**", "/app1/resources/**", "/app1/error", "/error").permitAll()
+                    .antMatchers("/resources/**",  "/error").permitAll()
                     .antMatchers("/**").access("hasRole('ROLE_USER_FOUND_IN_VALID_LIST_OF_USERS')")   // All users must have the grantedAuthority called ROLE_USER_FOUND_IN_VALID_LIST_OF_USERS to view all pages
                     .anyRequest().authenticated()
                     .and()
