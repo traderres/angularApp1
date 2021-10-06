@@ -21,8 +21,8 @@ spring.autoconfigure:
     - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
     - org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
-# Disable the white label page
-server.error.whitelabel.enabled: true
+# Disable the white label page by excluding ErrorMvcAutoConfiguration and setting this to false
+server.error.whitelabel.enabled: false
 
 # Tell Spring to not run flyway
 # NOTE:  In the DataSourceConfig, there is code to run flyway migrate on webapp startup

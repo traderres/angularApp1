@@ -20,8 +20,11 @@ spring.autoconfigure:
   exclude:
     - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
     - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+    - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+    - org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
+# Disable the white label page by excluding ErrorMvcAutoConfiguration and setting this to false
+server.error.whitelabel.enabled: false
 
 ###########################################################
 # ElasticSearch Settings
