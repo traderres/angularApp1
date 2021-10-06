@@ -58,6 +58,30 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                             </descriptors>
                         </configuration>
                     </plugin>
+
+
+                    <plugin>
+                        <!-- This plugin restores the developer application.yaml to the backend/target/classes/application.yaml               -->
+                        <!-- With this plugin added, a user can build the webapp using buildRda and then active the debugger and it all works -->
+                        <!-- NOTE:  This plugin must appear *AFTER* the above plugin that creates the RDA                                     -->
+                        <groupId>com.coderplus.maven.plugins</groupId>
+                        <artifactId>copy-rename-maven-plugin</artifactId>
+                        <version>1.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>restore-dev-application-yaml</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>../backend/src/main/resources/application.yaml</sourceFile>
+                                    <destinationFile>../backend/target/classes/application.yaml</destinationFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>
