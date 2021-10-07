@@ -103,8 +103,13 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   private clearGridCache(): void {
-    // Move the scrollbar to the top
-    this.gridApi.ensureIndexVisible(0, 'top');
+
+    if (this.totalMatches > 0) {
+      // The last search had matches and we re clearing the grid cache.
+
+      // So, move the scrollbar to the top
+      this.gridApi.ensureIndexVisible(0, 'top');
+    }
 
     // Clear the cache
     this.gridApi?.setServerSideDatasource(this.serverSideDataSource);
