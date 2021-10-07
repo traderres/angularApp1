@@ -26,6 +26,11 @@ spring.autoconfigure:
 # Disable the white label page by excluding ErrorMvcAutoConfiguration and setting this to false
 server.error.whitelabel.enabled: false
 
+
+# Show Exception info to local developers
+exception_handler.return_dev_info: true
+
+
 ###########################################################
 # ElasticSearch Settings
 ##########################################################
