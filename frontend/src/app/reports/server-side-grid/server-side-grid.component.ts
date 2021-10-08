@@ -1,12 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {
-  ColumnApi,
-  GridApi,
-  GridOptions,
-  IServerSideDatasource,
-  IServerSideGetRowsParams,
-  ServerSideStoreType
-} from "ag-grid-community";
+import {ColumnApi, GridApi, GridOptions, IServerSideDatasource, IServerSideGetRowsParams, ServerSideStoreType} from "ag-grid-community";
 import {GridGetRowsResponseDTO} from "../../models/grid/grid-get-rows-response-dto";
 import {ServerSideGridRowDataDTO} from "../../models/grid/server-side-grid-row-data-dto";
 import {GridService} from "../../services/grid.service";
@@ -105,7 +98,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
   private clearGridCache(): void {
 
     if (this.totalMatches > 0) {
-      // The last search had matches and we re clearing the grid cache.
+      // The last search had matches and we are clearing the grid cache.
 
       // So, move the scrollbar to the top
       this.gridApi.ensureIndexVisible(0, 'top');
@@ -153,8 +146,6 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     // Force the grid to invoke the REST endpoint
     this.gridApi.onFilterChanged();
   }
-
-
 
 
   /*
@@ -383,8 +374,8 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
         // There is past column state
         let storedColumnStateObject = JSON.parse(aPreference.value);
 
-        // Set the grid to use past column state
-        this.gridColumnApi.applyColumnState( { state: storedColumnStateObject} );
+        // Set the grid state -- e.g., set the column widths, column order, visible columns
+        this.gridColumnApi.applyColumnState( { state: storedColumnStateObject,  applyOrder: true} );
 
         // Clear all sorting
         this.clearGridSorting();
