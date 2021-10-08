@@ -39,7 +39,6 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
   public  totalMatches: number = 0;
   public  rawSearchQuery: string = "";
   public  isValidQuery: boolean = true;
-  private gridIsInitialized: boolean = false;
 
   public gridOptions: GridOptions = {
     debug: false,
@@ -62,10 +61,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
     onSortChanged: () => {
       // The user changed a sort.  So, clear the grid cache before the REST endpoint is invoked
-      if (this.gridIsInitialized) {
-
-        this.clearGridCache();
-      }
+      this.clearGridCache();
     },
 
     onDragStopped: () => {
@@ -388,7 +384,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
         let storedColumnStateObject = JSON.parse(aPreference.value);
 
         // Set the grid to use past column state
-        this.gridColumnApi.setColumnState(storedColumnStateObject);
+        this.gridColumnApi.applyColumnState( { state: storedColumnStateObject} );
 
         // Clear all sorting
         this.clearGridSorting();
@@ -402,8 +398,6 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
       // Set the server-side data source
       // NOTE:  The grid will asynchronously call getRows() as it needs to load data
       this.gridApi.setServerSideDatasource(this.serverSideDataSource);
-
-      this.gridIsInitialized = true;
     });
 
   }  // end of onGridReady()
