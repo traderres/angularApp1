@@ -31,7 +31,7 @@ export class ReportGridViewComponent implements OnInit, OnDestroy {
 
 
   public gridOptions: GridOptions = {
-    debug: true,
+    debug: false,
     suppressCellSelection: true,
     rowSelection: 'multiple',      // Possible values are 'single' and 'multiple'
     domLayout: 'normal',
