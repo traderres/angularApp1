@@ -145,6 +145,9 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
     // Force the grid to invoke the REST endpoint
     this.gridApi.onFilterChanged();
+
+    // Reset columns (so they are visible and restored to default)
+    this.gridColumnApi.resetColumnState();
   }
 
 
