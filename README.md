@@ -1,4 +1,4 @@
-Angular App1 Lesson 27c
+Angular App1 Lesson 28a
 -----------------------
 
 
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson27c/history/add-dark-mode
+    unix> git checkout lesson28a/dashboard/drag-and-drop
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
