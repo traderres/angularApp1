@@ -1,0 +1,15 @@
+/* Removes the extra padding on the top of the form field */
+/* Padding comes from the MAT_FORM_FIELD_DEFAULT_OPTIONS */
+:host  ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex{
+  padding-top: 0 !important;
+}
+
+:host  ::ng-deep .mat-form-field-infix {
+  /* Adjust the drop down so it aligns with the "Drag & Drop Mode" button */
+  padding-top: 7px !important;
+}
+
+.chart-wrapper {
+  border: 1px solid black;
+  padding: 15px;
+}

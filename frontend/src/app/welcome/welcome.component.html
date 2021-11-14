@@ -1,35 +1,90 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+<div class="page-container">
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
 
-  <div fxLayout="row" fxLayoutAlign="space-between stretch">
-    <div fxFlex="50%">
-      <!-- Left Side of Row 1 -->
-      Page Title
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <div fxFlex="50%"  fxLayoutAlign="start start">
+        <!-- Left Side of Row 1 -->
+        <h1 class="mat-h1">Welcome to Angular App1</h1>
+      </div>
+
+      <div fxFlex="50%"  fxLayoutAlign="end start">
+        <!-- Right Side of Row 1-->
+
+
+        <div>
+          <!-- Popup to change the mode of the page -->
+          <button [matMenuTriggerFor]="menu" mat-raised-button aria-label="Select Drag & Drop Mode" title="Select Drag & Drop Mode"
+                  style="width: 150px; margin-top: 5px">
+            Drag & Drop Mode
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <mat-radio-group>
+
+              <button mat-menu-item style="height: fit-content;">
+                <mat-radio-button [value]=10>
+                  Enable Chart Drag & Drop
+                </mat-radio-button>
+              </button>
+
+              <button mat-menu-item style="height: fit-content;">
+                <mat-radio-button [value]=11>
+                  Enable Grid Column Drag & Drop
+                </mat-radio-button>
+              </button>
+
+            </mat-radio-group>
+
+          </mat-menu>
+        </div>
+
+
+
+        <!-- Multiple dropdown that sets a list of numbers (which determines which charts/grids are visible -->
+        <mat-form-field style="width: 175px; margin-left: 20px" appearance="standard">
+
+          <!-- Show this label if a user unchecks all charts/grids -->
+          <mat-label *ngIf="this.selectedVisibleControls.value.length == 0">Showing No Charts</mat-label>
+
+          <mat-select multiple [formControl]="this.selectedVisibleControls">
+
+            <mat-option [value]=1>Chart 1</mat-option>
+            <mat-option [value]=2>Chart 2</mat-option>
+            <mat-option [value]=3>Grid 1</mat-option>
+            <mat-option [value]=4>Grid 2</mat-option>
+
+            <!-- Change the visible item to show how many charst/grids are visible -->
+            <mat-select-trigger>
+              <ng-container *ngIf="this.selectedVisibleControls.value.length > 1">Showing {{this.selectedVisibleControls.value.length}} Charts</ng-container>
+              <ng-container *ngIf="this.selectedVisibleControls.value.length == 1">Showing 1 Chart</ng-container>
+            </mat-select-trigger>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
     </div>
 
-    <div fxFlex="50%"  fxLayoutAlign="end start">
-      <!-- Right Side of Row 1-->
-      Drop Downs
+    <div class="chart-wrapper">
+      <!-- Row 2 -->
+      Chart 1
     </div>
 
+    <div class="chart-wrapper">
+      <!-- Row 3 -->
+      Chart 2
+    </div>
+
+    <div class="chart-wrapper">
+      <!-- Row 4 -->
+      Grid 1
+    </div>
+
+    <div class="chart-wrapper">
+      <!-- Row 5 -->
+      Grid 2
+    </div>
   </div>
 
-  <div>
-    <!-- Row 2 -->
-    Chart 1
-  </div>
-
-  <div>
-    <!-- Row 3 -->
-    Chart 2
-  </div>
-
-  <div>
-    <!-- Row 4 -->
-    Grid 1
-  </div>
-
-  <div>
-    <!-- Row 5 -->
-    Grid 2
-  </div>
 </div>
+
