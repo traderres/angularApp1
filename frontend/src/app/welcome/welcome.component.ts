@@ -26,6 +26,7 @@ import HC_drillDown from "highcharts/modules/drilldown";
 import {DashboardDataDTO} from "../models/dashboard-data-dto";
 import {DashboardService} from "../services/dashboard.service";
 import {Chart} from "highcharts";
+import {NavbarService} from "../services/navbar.service";
 HC_drillDown(Highcharts);
 
 
@@ -38,17 +39,34 @@ export class WelcomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public  selectedVisibleControls: FormControl;
   public  listOfVisibleCharts: number[] = [1, 2, 3, 4];
   private selectedVisibleControlsSubscription: Subscription;
+  private navbarSubscription: Subscription;
   public  disableGridDragDrop: boolean = false;
   private pageIsInitialized: boolean = false;
   public  dataIsLoading: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
-              private dashboardService: DashboardService) {
+              private dashboardService: DashboardService,
+              private navbarService: NavbarService) {
   }
 
   public ngOnInit(): void {
     // Create a form control that lists which controls are visible
     this.selectedVisibleControls = this.formBuilder.control(this.listOfVisibleCharts, null);
+
+    // Set options for all highchart menus on this page
+    Highcharts.setOptions( {
+      lang: {
+        thousandsSep: ','	// Set the thousand separator as a comma
+      }
+    });
+
+    this.navbarSubscription = this.navbarService.getNavbarStateAsObservable().subscribe(() => {
+      // The user has made the left navbar hidden or visible
+
+      // Redraw all of the charts on this page (so they fit perfectly within the mat-card tags
+      this.resizeChartsToFitContainers();
+    })
+
 
     this.selectedVisibleControlsSubscription = this.selectedVisibleControls.valueChanges.subscribe((arrayOfSelectedValues: number[]) => {
       // User selected some values inj the multi-select dropdown
@@ -66,6 +84,10 @@ export class WelcomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public ngOnDestroy(): void {
     if (this.selectedVisibleControlsSubscription) {
       this.selectedVisibleControlsSubscription.unsubscribe();
+    }
+
+    if (this.navbarSubscription) {
+      this.navbarSubscription.unsubscribe();
     }
   }
 
@@ -94,7 +116,19 @@ export class WelcomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  /*
+   * Send a 'resize' event
+   * This will cause HighCharts to resize all charts to fit inside their parent containers
+   */
+  private resizeChartsToFitContainers(): void {
 
+    setTimeout(()=> {
+      // Send a 'resize' event
+      // NOTE:  The window.dispatchEvent() call MUST be in a setTimeout or it will not work
+      window.dispatchEvent(new Event('resize'));
+    }, 200);
+
+  }
 
 
   public reloadData(): void {
