@@ -68,8 +68,11 @@
 
   </div>
 
-  <mat-grid-list [cols]=1 [rowHeight]=400>
-    <mat-grid-tile [colspan]=1 [rowspan]=1 *ngFor="let chartType of this.listOfVisibleCharts">
+  <mat-grid-list [cols]=1 rowHeight="400px" cdkDropList (cdkDropListDropped)="this.drop($event)">
+
+    <!-- one tile to this single-column grid-list -->
+    <mat-grid-tile [colspan]=1 [rowspan]=1 *ngFor="let chartType of this.listOfVisibleCharts"
+                   cdkDrag>
 
         <mat-card class="mat-elevation-z4">
           <mat-card-content class="chart-content">

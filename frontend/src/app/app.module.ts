@@ -141,6 +141,7 @@ const appRoutes: Routes = [
     AgGridModule,
     BrowserAnimationsModule,
     BrowserModule,
+    DragDropModule,
     FileUploadModule,
     FlexLayoutModule,
     FormsModule,
