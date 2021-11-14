@@ -9,3 +9,18 @@
   padding-top: 7px !important;
 }
 
+.chart-content {
+  height: 100% !important;    /* Needed to ensure the chart fills uses all of the height */
+}
+
+mat-card {
+  /* Set spacing between cards */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  overflow: hidden; /* Removing the verticle scroll bar */
+
+  padding: 5px;	/* Reduce the padding so the chart uses-up more space in the card */
+}
