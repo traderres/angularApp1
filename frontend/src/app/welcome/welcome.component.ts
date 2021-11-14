@@ -12,6 +12,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   public selectedVisibleControls: FormControl;
   public listOfVisibleCharts: number[] = [1, 2, 3, 4];
   private selectedVisibleControlsSubscription: Subscription;
+  public disableGridDragDrop: boolean = false;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -39,4 +40,15 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     moveItemInArray(this.listOfVisibleCharts, aEvent.previousIndex, aEvent.currentIndex);
   }
 
+
+  public userChangedDragAndDropMode(aNewDragMode: number) {
+    if (aNewDragMode == 10) {
+      // User selected to enable chart drag & drop
+      this.disableGridDragDrop = false;
+    }
+    else if (aNewDragMode == 11) {
+      // User selected to enable Grid drag & drop  (so disable the cdk drag and drop)
+      this.disableGridDragDrop = true;
+    }
+  }
 }
