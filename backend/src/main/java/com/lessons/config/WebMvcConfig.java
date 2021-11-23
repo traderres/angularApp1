@@ -37,7 +37,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         if (disableCors) {
-            registry.addMapping("/**").allowedOrigins("*");
+            registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
         }
     }
 
