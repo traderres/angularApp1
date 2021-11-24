@@ -76,10 +76,17 @@ export class WelcomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     this.selectedVisibleControlsSubscription = this.selectedVisibleControls.valueChanges.subscribe((arrayOfSelectedValues: number[]) => {
-      // User selected some values inj the multi-select dropdown
+      // User selected some values in the multi-select dropdown
 
-      // Change the public list of numbers (which causes charts to appear/disappear)
-      this.listOfVisibleCharts = arrayOfSelectedValues;
+      // Tell the *ngFor loop to re-render the components
+      //   1) set the listOfVisibleCharts to be empty
+      //   2) use setTimeout to set the listOfVisibleCharts to hold the new array
+      //      This causes components to be re-rendered in the updated *ngFor loop
+      this.listOfVisibleCharts = [ ];
+      setTimeout( () => {
+        this.listOfVisibleCharts = arrayOfSelectedValues;
+       });
+
 
       if (this.pageIsInitialized) {
         // Render the charts (if they are set as visible)
