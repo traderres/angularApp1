@@ -1,4 +1,4 @@
-Angular App1 Lesson 28
+Angular App1 Lesson 29
 ----------------------
 
 
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson28/dashboard/drag-and-drop
+    unix> git checkout lesson29/show-popup-on-load
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
