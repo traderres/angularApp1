@@ -71,30 +71,32 @@ import { ServerSideGridComponent } from './reports/server-side-grid/server-side-
 import { TimelineComponent } from './timeline/timeline.component';
 import { TimelineItemComponent } from './timeline-item/timeline-item.component';
 import { TabHistoryComponent } from './tab-history/tab-history.component';
+import { UserAchnowledgeDialogComponentComponent } from './dialogs/user-achnowledge-dialog-component/user-achnowledge-dialog-component.component';
+import {UserAcknowledgeGuard} from "./guards/user-acknowledge.guard";
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
-  { path: Constants.ADD_REPORTS_ROUTE,    component: AddReportComponent,  canActivate: [PageGuard] },
-  { path: Constants.REPORTS_GRID_VIEW_ROUTE,    component: ReportGridViewComponent,  canActivate: [PageGuard] },
-  { path: Constants.ADD_REPORTS2_ROUTE,    component: AddReport2Component,  canActivate: [PageGuard] },
-  { path: Constants.VIEW_REPORTS_ROUTE,  component: ViewReportsComponent,  canActivate: [PageGuard] },
-  { path: Constants.DASHBOARD_ROUTE,    component: DashboardComponent,  canActivate: [PageGuard] },
-  { path: Constants.USA_MAP_ROUTE,      component: UsaMapComponent,  canActivate: [PageGuard] },
-  { path: Constants.CHART_DRILLDOWN_ROUTE,   component: ChartDrillDownComponent,  canActivate: [PageGuard] },
-  { path: Constants.LONGVIEW_INTERNAL_NAV_REPORT + ':id',  component: LongViewInternalNavReportComponent ,  canActivate: [PageGuard] },
-  { path: Constants.EDIT_REPORT_ROUTE +':id', component: EditReportComponent ,  canActivate: [PageGuard] },
-  { path: Constants.SEARCH_DETAILS_ROUTE + 'id', component: SearchBoxDetailsComponent ,  canActivate: [PageGuard] },
-  { path: Constants.UPLOAD_REPORT_ROUTE, component: UploadReportComponent ,  canActivate: [PageGuard] },
-  { path: Constants.CHART1_ROUTE,       component: Chart1Component,  canActivate: [PageGuard] },
-  { path: Constants.CHART2_ROUTE,       component: Chart2Component,  canActivate: [PageGuard] },
-  { path: Constants.REPORT_SUBMIT_MARKDOWN,     component: ReportSubmitMarkdownComponent,  canActivate: [PageGuard] },
-  { path: Constants.LONGVIEW_REPORT,     component: LongViewOuterReportComponent,  canActivate: [PageGuard] },
-  { path: Constants.REPORT_PDFVIEWER_ROUTE,   component: PdfViewerComponent,  canActivate: [PageGuard] },
-  { path: Constants.TAB_GROUP_ROUTE,   component: TabGroupComponent, canActivate: [PageGuard] },
-  { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
-  { path: Constants.SERVER_SIDE_GRID_ROUTE,   component: ServerSideGridComponent, canActivate: [PageGuard] },
-  { path: '',                  component: WelcomeComponent},
-  { path: '**',                component: NotFoundComponent}
+  { path: Constants.ADD_REPORTS_ROUTE,          component: AddReportComponent,        canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.REPORTS_GRID_VIEW_ROUTE,    component: ReportGridViewComponent,   canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.ADD_REPORTS2_ROUTE,         component: AddReport2Component,       canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.VIEW_REPORTS_ROUTE,         component: ViewReportsComponent,      canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.DASHBOARD_ROUTE,            component: DashboardComponent,        canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.USA_MAP_ROUTE,              component: UsaMapComponent,           canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.CHART_DRILLDOWN_ROUTE,      component: ChartDrillDownComponent,   canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.LONGVIEW_INTERNAL_NAV_REPORT + ':id',  component: LongViewInternalNavReportComponent ,  canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.EDIT_REPORT_ROUTE +':id',     component: EditReportComponent,           canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.SEARCH_DETAILS_ROUTE + 'id',  component: SearchBoxDetailsComponent,     canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.UPLOAD_REPORT_ROUTE,          component: UploadReportComponent,   canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.CHART1_ROUTE,                 component: Chart1Component,         canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.CHART2_ROUTE,                 component: Chart2Component,         canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.REPORT_SUBMIT_MARKDOWN,       component: ReportSubmitMarkdownComponent,   canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.LONGVIEW_REPORT,              component: LongViewOuterReportComponent,    canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.REPORT_PDFVIEWER_ROUTE,       component: PdfViewerComponent,      canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.TAB_GROUP_ROUTE,              component: TabGroupComponent,       canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.FORBIDDEN_ROUTE,              component: ForbiddenComponent },
+  { path: Constants.SERVER_SIDE_GRID_ROUTE,       component: ServerSideGridComponent, canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: '',                                     component: WelcomeComponent,        canActivate: [UserAcknowledgeGuard] },
+  { path: '**',                                   component: NotFoundComponent}
 ];
 
 @NgModule({
@@ -134,7 +136,8 @@ const appRoutes: Routes = [
     ServerSideGridComponent,
     TimelineComponent,
     TimelineItemComponent,
-    TabHistoryComponent
+    TabHistoryComponent,
+    UserAchnowledgeDialogComponentComponent
   ],
   imports: [
     AppRoutingModule,

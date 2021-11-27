@@ -189,7 +189,9 @@ public class MyAuthenticationManager implements AuthenticationManager {
                 .withUsernameDn(userDN)
                 .withGrantedAuthorities(grantedRoleAuthorities)
                 .withAccessMap(accessMap);
-        
+
+//        anonymousUserInfo.setUserAcknoledgedMessage();
+
         return anonymousUserInfo;
     }
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {UserInfoDTO} from "../models/user-info-dto";
-import {Observable} from "rxjs";
+import {EMPTY, Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {map, shareReplay} from "rxjs/operators";
+import {catchError, map, shareReplay} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,7 @@ export class UserService {
 
   // Internal cache of the userInfo object
   private cachedObservable: Observable<UserInfoDTO> | null = null;
+  private cachedAckObservable: Observable<boolean> | null = null
 
   constructor(private httpClient: HttpClient) { }
 
@@ -48,5 +49,57 @@ export class UserService {
     return this.cachedObservable;
 
   } // end of getUserInfo
+
+
+  public didUserAcknowledge() : Observable<boolean> {
+    if (this.cachedAckObservable != null) {
+      // This observable is in the cache.  So, return it from the cache
+      return this.cachedAckObservable;
+    }
+
+    // Construct the URL of the REST call
+    const restUrl = environment.baseUrl + '/api/user/ack/get';
+
+    // Return an observable
+    this.cachedAckObservable = this.httpClient.get <boolean>(restUrl).pipe(
+      shareReplay(1),
+      catchError(err => {
+        console.error('There was an error getting user info.   Error is ', err);
+
+        // Clear the cache
+        this.cachedAckObservable = null;
+
+        return EMPTY;
+      }));
+
+    return this.cachedAckObservable;
+  }
+
+
+
+  public setUserAcknowledged(): Observable<string> {
+    // Construct the URL of the REST call
+    const restUrl = environment.baseUrl + '/api/user/ack/set'
+
+    // Return an observable
+    return this.httpClient.post <string>(restUrl, {} ).pipe(
+      map( (result) => {
+        // The set-acknowledged REST call finished successfully
+
+        // Set the cachedAckObservable to hold an observable holding true
+        this.cachedAckObservable = of(true);
+
+        return result;
+      }),
+      catchError(err => {
+        console.error('There was an error getting user info.   Error is ', err);
+
+        // Clear the cache
+        this.cachedAckObservable = null;
+
+        return EMPTY;
+      }));
+
+  }
 
 }
