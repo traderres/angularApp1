@@ -45,6 +45,10 @@
                         <mat-checkbox formControlName="chk3" aria-label="Option 3" title="Option 3" >Option 3</mat-checkbox>
                         <mat-checkbox formControlName="chk4" aria-label="Option 4" title="Option 4" >Option 4</mat-checkbox>
                         <mat-checkbox formControlName="chk5" aria-label="Option 5" title="Option 5" >Option 5</mat-checkbox>
+
+                       <mat-error *ngIf="myForm.errors?.validateMaxCheckboxes">
+                         Warning: {{myForm?.errors?.validateMaxCheckboxes}}
+                       </mat-error>
                    </div>
 
                   <div fxLayout="row" fxLayoutGap="20px" style="margin-top: 20px">
@@ -53,7 +57,6 @@
                   </div>
 
               </div>
-
 
 
             </form>
@@ -66,5 +69,6 @@
     </div> <!-- End of 3rd row -->
 
   </div> <!-- End of Angular flex column -->
+
 
 </div>  <!-- End of grid container -->
