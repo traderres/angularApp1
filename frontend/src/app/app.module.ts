@@ -74,6 +74,7 @@ import { TabHistoryComponent } from './tab-history/tab-history.component';
 import { UserAchnowledgeDialogComponentComponent } from './dialogs/user-achnowledge-dialog-component/user-achnowledge-dialog-component.component';
 import {UserAcknowledgeGuard} from "./guards/user-acknowledge.guard";
 import { AddReportCustomValidatorComponent } from './reports/add-report-custom-validator/add-report-custom-validator.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -156,6 +157,7 @@ const appRoutes: Routes = [
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatDatepickerModule,
     MatDialogModule,
     DragDropModule,

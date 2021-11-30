@@ -1,1 +1,70 @@
-<p>add-report-custom-validator works!</p>
+<div class="page-container">
+
+  <div fxFlexFill fxLayout="column" fxLayoutGap="5px">
+
+    <div fxFlex fxLayout="row" fxLayoutGap="0">
+
+      <!-- Left Side of the Top Row -->
+      <div fxFlex fxLayoutAlign="left center" fxLayout="row" fxLayoutGap="0">
+        <h1 class="mat-h1">Add Report (Custom Validator)</h1>
+      </div>
+
+
+      <!-- Right Side of the Top Row -->
+      <div fxFlex fxLayoutAlign="end center">
+
+      </div>
+
+    </div>  <!-- End of top row -->
+
+
+
+    <!-- Start of the 2nd row -->
+    <div fxFlex  fxLayout="column" fxLayoutGap="0">
+
+      <mat-card class="mat-elevation-z4" style="margin: 0; padding: 0">
+        <mat-card-content>
+
+          <!-- Setup a wrapper div that uses the entire available height (total height - 165px) -->
+          <div style="height: calc(100vh - 135px)">
+
+            <form novalidate autocomplete="off" [formGroup]="this.myForm">
+
+              <div fxLayout="column" style="margin-left: 20px; margin-right: 20px">
+
+                  <mat-form-field style="width: 250px">
+                    <!-- Report Name Text Box -->
+                    <mat-label>Enter Report Name</mat-label>
+                    <input matInput aria-label="Report Name" title="Report Name" type="text" formControlName="report_name"/>
+                  </mat-form-field>
+
+                   <div fxLayout="column" style="margin-top: 15px;">
+                        <div>You may select up to 3 options</div>
+                        <mat-checkbox formControlName="chk1" aria-label="Option 1" title="Option 1" >Option 1</mat-checkbox>
+                        <mat-checkbox formControlName="chk2" aria-label="Option 2" title="Option 2" >Option 2</mat-checkbox>
+                        <mat-checkbox formControlName="chk3" aria-label="Option 3" title="Option 3" >Option 3</mat-checkbox>
+                        <mat-checkbox formControlName="chk4" aria-label="Option 4" title="Option 4" >Option 4</mat-checkbox>
+                        <mat-checkbox formControlName="chk5" aria-label="Option 5" title="Option 5" >Option 5</mat-checkbox>
+                   </div>
+
+                  <div fxLayout="row" fxLayoutGap="20px" style="margin-top: 20px">
+                      <button type="button" mat-raised-button aria-label="Reset" title="Reset" (click)="this.resetPressed()">Reset</button>
+                      <button type="button" mat-raised-button color="primary" aria-label="Submit" title="Submit" (click)="this.submitPressed()">Submit</button>
+                  </div>
+
+              </div>
+
+
+
+            </form>
+
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+    </div> <!-- End of 3rd row -->
+
+  </div> <!-- End of Angular flex column -->
+
+</div>  <!-- End of grid container -->
