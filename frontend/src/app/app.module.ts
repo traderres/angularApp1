@@ -73,6 +73,7 @@ import { TimelineItemComponent } from './timeline-item/timeline-item.component';
 import { TabHistoryComponent } from './tab-history/tab-history.component';
 import { UserAchnowledgeDialogComponentComponent } from './dialogs/user-achnowledge-dialog-component/user-achnowledge-dialog-component.component';
 import {UserAcknowledgeGuard} from "./guards/user-acknowledge.guard";
+import { AddReportCustomValidatorComponent } from './reports/add-report-custom-validator/add-report-custom-validator.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -95,6 +96,7 @@ const appRoutes: Routes = [
   { path: Constants.TAB_GROUP_ROUTE,              component: TabGroupComponent,       canActivate: [UserAcknowledgeGuard, PageGuard] },
   { path: Constants.FORBIDDEN_ROUTE,              component: ForbiddenComponent },
   { path: Constants.SERVER_SIDE_GRID_ROUTE,       component: ServerSideGridComponent, canActivate: [UserAcknowledgeGuard, PageGuard] },
+  { path: Constants.ADD_REPORTS_CUSTOM_VALIDATOR, component: AddReportCustomValidatorComponent, canActivate: [UserAcknowledgeGuard, PageGuard] },
   { path: '',                                     component: WelcomeComponent,        canActivate: [UserAcknowledgeGuard] },
   { path: '**',                                   component: NotFoundComponent}
 ];
@@ -137,7 +139,8 @@ const appRoutes: Routes = [
     TimelineComponent,
     TimelineItemComponent,
     TabHistoryComponent,
-    UserAchnowledgeDialogComponentComponent
+    UserAchnowledgeDialogComponentComponent,
+    AddReportCustomValidatorComponent
   ],
   imports: [
     AppRoutingModule,

@@ -60,6 +60,18 @@
             </div>
           </mat-list-item>
 
+
+          <!-- Add Report Custom Validator -->
+          <mat-list-item class="navItem" [routerLink]="constants.ADD_REPORTS_CUSTOM_VALIDATOR" routerLinkActive="active"
+                         *ngIf="userInfo.pageRoutes.get(constants.ADD_REPORTS_CUSTOM_VALIDATOR)">
+            <a title="Add Report (Custom Validator)">Add Report (Custom Validator)</a>
+            <div fxFlex fxLayoutAlign="end end">
+              <a [routerLink]="constants.ADD_REPORTS_CUSTOM_VALIDATOR" target="_blank">
+                <i class="fas fa-external-link-alt navItemIcon" title="Open 'Add Report (Custom Validator)' in a new window"></i>
+              </a>
+            </div>
+          </mat-list-item>
+
           <!-- Audit History -->
           <mat-list-item class="navItem" [routerLink]="constants.AUDIT_HISTORY_ROUTE" routerLinkActive="active"
                          *ngIf="userInfo.pageRoutes.get(constants.AUDIT_HISTORY_ROUTE)">
