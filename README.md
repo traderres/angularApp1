@@ -1,4 +1,4 @@
-Angular App1 Lesson 23a (Markdown Editor)
+Angular App1 Lesson 23b (Extended Pdf Viewer)
 -----------------------------------------
 
 
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson23a
+    unix> git checkout lesson23b
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
