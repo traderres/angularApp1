@@ -25,6 +25,7 @@
       <!-- Left Side of the "button row"  -->
       <div fxFlex fxLayoutAlign="left center" fxLayout="row" fxLayoutGap="0">
 
+       <!-- Update Entries Button -->
         <button mat-stroked-button color="primary" class="grid-button" title="{{this.updateButtonLabel}}"
               [disabled]="this.totalRowsSelected == 0"
               (click)="this.openUpdatePriorityPopup()">
@@ -37,6 +38,9 @@
 
       <!-- Right Side of the "button row" -->
       <div fxFlex fxLayoutAlign="end center">
+
+        <!-- Reset Button -->
+        <button mat-stroked-button type="button" color="primary" (click)="this.resetGrid()" title="Reset Grid" aria-label="Reset Grid">Reset</button>
 
       </div>
 
@@ -63,6 +67,7 @@
               [gridOptions]="this.gridOptions"
               [frameworkComponents]="this.frameworkComponents"
               (selectionChanged)="this.generateDerivedValuesOnUserSelection()"
+              (firstDataRendered)="this.firstDataRendered()"
               (gridReady)="this.onGridReady($event)">
             </ag-grid-angular>
 
