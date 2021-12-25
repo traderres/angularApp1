@@ -1,12 +1,25 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ColumnApi, GridApi, GridOptions, IServerSideDatasource, IServerSideGetRowsParams, ServerSideStoreType} from "ag-grid-community";
+import {
+  ColumnApi,
+  ColumnState,
+  GridApi,
+  GridOptions,
+  IServerSideDatasource,
+  IServerSideGetRowsParams,
+  ServerSideStoreType
+} from "ag-grid-community";
 import {GridGetRowsResponseDTO} from "../../models/grid/grid-get-rows-response-dto";
 import {ServerSideGridRowDataDTO} from "../../models/grid/server-side-grid-row-data-dto";
 import {GridService} from "../../services/grid.service";
 import {GridGetRowsRequestDTO} from "../../models/grid/grid-get-rows-request-dto";
 import {ThemeOptionDTO} from "../../models/theme-option-dto";
-import {Subscription} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {ThemeService} from "../../services/theme.service";
+import {PreferenceService} from "../../services/preference.service";
+import {Constants} from "../../utilities/constants";
+import {debounceTime, switchMap} from "rxjs/operators";
+import {ApplyColumnStateParams} from "ag-grid-community/dist/lib/columnController/columnApi";
+import {GetOnePreferenceDTO} from "../../models/preferences/get-one-preference-dto";
 
 @Component({
   selector: 'app-server-side-grid',
@@ -14,7 +27,11 @@ import {ThemeService} from "../../services/theme.service";
   styleUrls: ['./server-side-grid.component.css']
 })
 export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit {
-
+  private readonly PAGE_NAME: string = "server-side-grid-view";
+  private userHasPastColumnState: boolean = false;
+  private listenForGridChanges: boolean = false;
+  private saveGridColumnStateEventsSubject: Subject<any> = new Subject();
+  private saveGridEventsSubscription: Subscription;
 
   private themeStateSubscription: Subscription;
   public  currentTheme: ThemeOptionDTO;
@@ -31,7 +48,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     rowSelection: 'multiple',      // Possible values are 'single' and 'multiple'
     domLayout: 'normal',
     rowModelType: 'serverSide',    // Possible values are 'clientSide', 'infinite', 'viewport', and 'serverSide'
-    pagination: false,             // Do not show the 1 of 20 of 20, page 1 of 1 (as we are doing infinite scrolling)
+    pagination: false,        // Do not show the 1 of 20 of 20, page 1 of 1 (as we are doing infinite scrolling)
 
     serverSideStoreType: ServerSideStoreType.Partial,   // Use partial Server Side Store Type so that pages of data are loaded
     cacheBlockSize: 50,                                 // Load 50 records at a time with each REST call
@@ -47,13 +64,51 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     onSortChanged: () => {
       // The user changed a sort.  So, clear the grid cache before the REST endpoint is invoked
       this.clearGridCache();
+    },
+
+    onDragStopped: () => {
+      // User finished resizing or moving column
+      this.saveColumnState();
+    },
+
+    onDisplayedColumnsChanged: () => {
+      this.saveColumnState();
+    },
+
+    onColumnVisible: () => {
+      this.saveColumnState();
+    },
+
+    onColumnPinned: () => {
+      this.saveColumnState();
     }
   }
 
 
+  private saveColumnState(): void {
+    if (this.listenForGridChanges) {
+      // The grid has rendered data.  So, save the sort/column changes
+
+      // Get the current column state
+      let currentColumnState = this.gridColumnApi.getColumnState();
+
+      // Send a message to save the current column state
+      this.saveGridColumnStateEventsSubject.next(currentColumnState)
+    }
+  }
+
+
+  public firstDataRendered(): void {
+    // The grid is fully rendered.  So, set the flag to start saving sort/column changes
+    this.listenForGridChanges = true;
+  }
+
   private clearGridCache(): void {
-    // Move the scrollbar to the top
+
     if (this.totalMatches > 0) {
+      // The last search had matches and we are clearing the grid cache.
+
+      // So, move the scrollbar to the top
       this.gridApi.ensureIndexVisible(0, 'top');
     }
 
@@ -62,17 +117,21 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
 
+
   /*
    * Clear all grid sorting
    */
   private clearGridSorting(): void {
 
-    // Tell the grid to clear sorting on all columns
-    this.gridColumnApi.applyColumnState({
-      defaultState: { sort: null }
-    });
+    let columnState: ApplyColumnStateParams = new class implements ApplyColumnStateParams {
+      applyOrder: boolean;
+      defaultState: ColumnState;
+      state: ColumnState[];
+    }
 
+    this.gridColumnApi.applyColumnState(columnState);
   }
+
 
 
 
@@ -255,6 +314,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
   @ViewChild('searchBox',  { read: ElementRef }) searchBox: ElementRef;
 
   constructor(private gridService: GridService,
+              private preferenceService: PreferenceService,
               private themeService: ThemeService) {}
 
   public ngOnInit(): void {
@@ -264,7 +324,25 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
       // The theme has changed.
       this.currentTheme = aNewTheme;
     });
-  }
+
+    // Listen for save-grid-column-state events
+    // NOTE:  If a user manipulates the grid, then we could be sending LOTS of save-column-state REST calls
+    //        The debounceTime slows down the REST calls
+    //        The switchMap cancels previous calls
+    //        Thus, if there are lots of changes to the grid, we invoke a single REST call using the *LAST* event (over a span of 250 msecs)
+    this.saveGridEventsSubscription = this.saveGridColumnStateEventsSubject.asObservable().pipe(
+      debounceTime(250),         // Wait 250 msecs before invoking REST call
+      switchMap( (aNewColumnState: any) => {
+        // Use the switchMap for its cancelling effect:
+        // On each observable, the previous observable is cancelled
+
+        // Return an observable
+        // Invoke the REST call to save it to the back end
+        return this.preferenceService.setPreferenceValueForPageUsingJson(Constants.COLUMN_STATE_PREFERENCE_NAME, aNewColumnState, this.PAGE_NAME)
+      })
+    ).subscribe();
+
+  }  // end of ngOnInit()
 
 
   public ngAfterViewInit(): void {
@@ -277,22 +355,60 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     if (this.themeStateSubscription) {
       this.themeStateSubscription.unsubscribe();
     }
+
+    if (this.saveGridEventsSubscription) {
+      this.saveGridEventsSubscription.unsubscribe();
+    }
+
+    if (this.saveGridColumnStateEventsSubject) {
+      this.saveGridColumnStateEventsSubject.unsubscribe();
+    }
+
   }
 
 
   /*
    * The grid calls onGridReady() once it is fully initialized.  This is the start of this page.
+   *  1. Invoke a REST call to get the grid preferences
+   *  2. When the REST call returns
+   *      a. Configure the grid with the correct columns
+   *      b. Initialize the server-side data source
+   *         (which will cause the getRows() REST endpoint to be called asynchronously)
    */
   public onGridReady(params: any): void {
     // Get a reference to the gridApi and gridColumnApi (which we will need later to get selected rows)
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
+    this.preferenceService.getPreferenceValueForPage( Constants.COLUMN_STATE_PREFERENCE_NAME, this.PAGE_NAME).subscribe( (aPreference: GetOnePreferenceDTO) => {
+      // REST call came back.  I have the grid preferences
 
-    // Set the server-side data source
-    // NOTE:  The grid will asynchronously call getRows() as it needs to load data
-    this.gridApi.setServerSideDatasource(this.serverSideDataSource);
-  }
+      if (! aPreference.value) {
+        // There is no past column state
+        this.userHasPastColumnState = false;
+      }
+      else {
+        // There is past column state
+        let storedColumnStateObject = JSON.parse(aPreference.value);
 
+        // Set the grid state -- e.g., set the column widths, column order, visible columns
+        this.gridColumnApi.applyColumnState( { state: storedColumnStateObject,  applyOrder: true} );
+
+        // Clear all sorting
+        this.clearGridSorting();
+
+        // Clear any filtering
+        this.gridApi.setFilterModel(null);
+
+        this.userHasPastColumnState = true;
+      }
+
+      // Set the server-side data source
+      // NOTE:  The grid will asynchronously call getRows() as it needs to load data
+      this.gridApi.setServerSideDatasource(this.serverSideDataSource);
+
+    });
+
+  }  // end of onGridReady()
 
 }

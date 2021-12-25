@@ -93,6 +93,7 @@
               [columnDefs]="this.columnDefs"
               [gridOptions]="this.gridOptions"
               [frameworkComponents]="this.frameworkComponents"
+              (firstDataRendered)="this.firstDataRendered()"
               (gridReady)="this.onGridReady($event)">
             </ag-grid-angular>
 
