@@ -71,6 +71,13 @@ import { ServerSideGridComponent } from './reports/server-side-grid/server-side-
 import { TimelineComponent } from './timeline/timeline.component';
 import { TimelineItemComponent } from './timeline-item/timeline-item.component';
 import { TabHistoryComponent } from './tab-history/tab-history.component';
+import { GridPageComponent } from './analytics/dashboard2/grid-page/grid-page.component';
+import { DashboardLayoutComponent } from './analytics/dashboard2/dashboard-layout/dashboard-layout.component';
+import { UsaMapPageComponent } from './analytics/dashboard2/usa-map-page/usa-map-page.component';
+import { UsaMapLittleComponent } from './analytics/dashboard2/usa-map-little/usa-map-little.component';
+import { GridLittleComponent } from './analytics/dashboard2/grid-little/grid-little.component';
+import { BarChartLittleComponent } from './analytics/dashboard2/bar-chart-little/bar-chart-little.component';
+import {BarChartPageComponent} from "./analytics/dashboard2/bar-chart-page/bar-chart-page.component";
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -93,8 +100,13 @@ const appRoutes: Routes = [
   { path: Constants.TAB_GROUP_ROUTE,   component: TabGroupComponent, canActivate: [PageGuard] },
   { path: Constants.SERVER_SIDE_GRID_ROUTE,   component: ServerSideGridComponent, canActivate: [PageGuard] },
 
+  { path: Constants.DASHBOARD_BAR_CHART_PAGE,   component: BarChartPageComponent, canActivate: [PageGuard] },
+  { path: Constants.DASHBOARD_USA_MAP_PAGE,   component: UsaMapPageComponent, canActivate: [PageGuard] },
+  { path: Constants.DASHBOARD_GRID_PAGE,   component: GridPageComponent,  canActivate: [PageGuard] },
+  { path: Constants.DASHBOARD_LAYOUT_ROUTE,   component: DashboardLayoutComponent,  canActivate: [PageGuard] },
+
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
-  { path: '',                  component: WelcomeComponent},
+  { path: '',                  component: DashboardLayoutComponent},
   { path: '**',                component: NotFoundComponent}
 ];
 
@@ -136,7 +148,14 @@ const appRoutes: Routes = [
     ServerSideGridComponent,
     TimelineComponent,
     TimelineItemComponent,
-    TabHistoryComponent
+    TabHistoryComponent,
+    GridLittleComponent,
+    GridPageComponent,
+    DashboardLayoutComponent,
+    UsaMapLittleComponent,
+    UsaMapPageComponent,
+    BarChartLittleComponent,
+    BarChartPageComponent
   ],
   imports: [
     AppRoutingModule,

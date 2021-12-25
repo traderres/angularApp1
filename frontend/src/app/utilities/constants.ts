@@ -20,6 +20,10 @@ export enum Constants {
   TAB_GROUP_ROUTE              = "page/reports/tab-group",
   SERVER_SIDE_GRID_ROUTE       = "page/reports/search",
 
+  DASHBOARD_LAYOUT_ROUTE       = "page/dashboard/layout",
+  DASHBOARD_GRID_PAGE          = "page/dashboard/grid",
+  DASHBOARD_BAR_CHART_PAGE     = "page/dashboard/bar_chart",
+  DASHBOARD_USA_MAP_PAGE       = "page/dashboard/map",
 
   COLUMN_STATE_PREFERENCE_NAME = "grid_column_state"
 }

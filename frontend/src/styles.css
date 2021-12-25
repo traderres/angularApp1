@@ -368,3 +368,22 @@ https://colorzilla.com/gradient-editor/#ffffff+20,ffffff+40,009ffd+100 */
   color: #303030;
   fill: white;
 }
+
+
+.breadcrumbs {
+  font-family: 'Open Sans';
+  font-size: .9em;
+  font-weight: 400;
+}
+
+.breadcrumbs a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.breadcrumbs_current_page {
+  font-family: 'Open Sans';
+  font-size: .9em;
+  font-weight: 600;
+  color: inherit !important;
+}

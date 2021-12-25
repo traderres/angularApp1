@@ -73,6 +73,10 @@ insert into uicontrols(id, name) values(1017, 'page/reports/markdown-submit');
 insert into uicontrols(id, name) values(1018, 'page/reports/pdf-viewer');
 insert into uicontrols(id, name) values(1019, 'page/reports/tab-group');
 insert into uicontrols(id, name) values(1020, 'page/reports/search');
+insert into uicontrols(id, name) values(1021, 'page/dashboard/layout');
+insert into uicontrols(id, name) values(1022, 'page/dashboard/grid');
+insert into uicontrols(id, name) values(1023, 'page/dashboard/bar_chart');
+insert into uicontrols(id, name) values(1024, 'page/dashboard/map');
 
 
 
@@ -98,6 +102,10 @@ insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1017);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1018);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1019);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1020);
+insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1021);
+insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1022);
+insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1023);
+insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1024);
 
 
 -- Assign ui controls for the 'reader' role  (cannot get to addReport)
@@ -121,4 +129,8 @@ insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1017);
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1018);
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1019);
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1020);
+insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1021);
+insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1022);
+insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1023);
+insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1024);
 
