@@ -21,6 +21,10 @@ public class GridGetRowsResponseDTO {
     @JsonProperty("searchAfterClause")
     private String searchAfterClause;
 
+    @JsonProperty("isValidQuery")
+    private boolean isValidQuery = true;
+
+
     // --------------- Constructor, Getters, and Setters -------------------------------/
 
     public GridGetRowsResponseDTO(List<Map<String, Object>> data, Integer totalMatches, String aSearchAfterClause) {
@@ -29,6 +33,13 @@ public class GridGetRowsResponseDTO {
         this.searchAfterClause = aSearchAfterClause;
     }
 
+    public boolean getIsValidQuery() {
+        return isValidQuery;
+    }
+
+    public void setIsValidQuery(boolean validQuery) {
+        isValidQuery = validQuery;
+    }
 
     public List<Map<String, Object>> getData() {
         return data;

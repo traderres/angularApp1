@@ -4,4 +4,5 @@ export class GridGetRowsResponseDTO {
   public totalMatches: number;
   public secondaryColumnFields: string[];
   public searchAfterClause: string;  // Holds information about the last row so ElasticSearch can get page2, page3, ...
+  public isValidQuery: boolean;
 }

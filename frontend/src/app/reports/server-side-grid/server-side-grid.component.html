@@ -35,27 +35,32 @@
       <!-- Center of the "button row"  -->
       <div fxFlex fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="0">
 
-        <div [ngClass]="{   'light':     this.currentTheme.isLightMode == true,
-                            'dark':      this.currentTheme.isLightMode == false
-                        }">
+        <div [ngClass]="{   'light':   this.currentTheme.isLightMode == true,
+                             'dark':    this.currentTheme.isLightMode == false
+                }">
 
-            <div class="searchBoxWrapper fa-border">
+          <div   [ngClass]="{   'light searchBoxWrapperValid   fa-border':  this.isValidQuery == true,
+                                 'dark searchBoxWrapperInvalid fa-border':  this.isValidQuery == false }">
 
-              <!-- Search Box -->
-              <input matInput type="text"  #searchBox [(ngModel)]="this.rawSearchQuery" (keyup.enter)="this.runSearch()"
-                     class="searchBox"
-                     placeholder="Enter Criteria..."
-                     autocomplete="off"
-                     aria-label="search box" />
+            <!-- Search Box -->
+            <input matInput type="text"  #searchBox [(ngModel)]="this.rawSearchQuery" (keyup.enter)="this.runSearch()"
+                   [ngClass]="{   'searchBoxValid':   this.isValidQuery == true,
+                                  'searchBoxInvalid': this.isValidQuery == false } "
+                   placeholder="Enter Criteria..."
+                   autocomplete="off"
+                   aria-label="search box" />
 
-              <!-- Search Icon -->
-              <span class="searchBoxIcon" (click)="this.runSearch()">
-                <i class="fa fa-search"></i>
-              </span>
+            <!-- Search Icon -->
+            <span class="searchBoxIcon" (click)="this.runSearch()">
+                  <i class="fa fa-search"></i>
+                </span>
+          </div>
 
-        </div>
         </div>
       </div>
+
+
+
 
       <!-- Right Side of the "button row" -->
       <div fxFlex fxLayoutAlign="end end">

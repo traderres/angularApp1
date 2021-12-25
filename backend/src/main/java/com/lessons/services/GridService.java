@@ -18,7 +18,6 @@ public class GridService {
     @Resource
     private ElasticSearchService elasticSearchService;
 
-
     /**
      *  1. Run a search
      *  2. Put the results into a list
@@ -49,7 +48,9 @@ public class GridService {
         String filterClause = generateFilterClause(aGridRequestDTO.getFilterModel() );
 
         // Construct the *QUERY* clause
-        String queryStringClause = generateQueryStringClause(aGridRequestDTO.getRawSearchQuery(), aFieldsToSearch );
+        String cleanedQuery = this.elasticSearchService.cleanupQuery( aGridRequestDTO.getRawSearchQuery()  );
+        String queryStringClause = generateQueryStringClause(cleanedQuery, aFieldsToSearch
+        );
 
         // Construct the _source clause (so ElasticSearch only returns a subset of the fields)
         String esSourceClause = generateSourceClause(aFieldsToReturn);
@@ -87,6 +88,23 @@ public class GridService {
                     "}";
         }
 
+
+        boolean isValidQuery = true;
+        if ((StringUtils.isNotEmpty(cleanedQuery)) && (aGridRequestDTO.getStartRow() == 0)) {
+            String fullQueryClause = "{ \"query\": { \n" + queryStringClause + "\n" + "}}\n";
+
+            // The user entered a search query and this is the first page -- so validate it
+            isValidQuery = this.elasticSearchService.isQueryValid(aIndexName, fullQueryClause);
+        }
+
+        if (! isValidQuery) {
+            // The query is not valid.  So, return a GridGetRowsResponseDTO object with the isValidQuery=false
+            GridGetRowsResponseDTO responseDTO = new GridGetRowsResponseDTO(null, 0, null);
+            responseDTO.setIsValidQuery(false);
+            return responseDTO;
+        }
+
+
         // Execute the search and generate a GetResponsRowsResponseDTO object
         // -- This sets responseDTO.setData() and responseDTo.setTotalMatches()
         GridGetRowsResponseDTO responseDTO  = this.elasticSearchService.runSearchGetRowsResponseDTO(aIndexName, jsonQuery);
@@ -107,6 +125,7 @@ public class GridService {
 
 
 
+
     private String generateSourceClause(List<String> aFieldsToReturn) {
         if (CollectionUtils.isEmpty(aFieldsToReturn)) {
             // No fields were specified -- so ES will return all fields by default (but this is not efficient)
@@ -119,7 +138,7 @@ public class GridService {
     }
 
 
-    private String generateQueryStringClause(String aRawQuery, List<String> aFieldsToSearch) {
+    private String generateQueryStringClause(String aCleaneQuery, List<String> aFieldsToSearch) {
         String queryStringClause;
         String fieldsClause = "";
 
@@ -129,7 +148,7 @@ public class GridService {
         }
 
         // Get the cleaned query
-        String cleanedQuery = this.elasticSearchService.cleanupQuery(aRawQuery );
+        String cleanedQuery = this.elasticSearchService.cleanupQuery(aCleaneQuery );
 
         if (StringUtils.isEmpty(cleanedQuery)) {
             // There is no query.  So, use ElasticSearch's match_all to run a search with no query
@@ -145,7 +164,6 @@ public class GridService {
 
         return queryStringClause;
     }
-
 
 
     /**
