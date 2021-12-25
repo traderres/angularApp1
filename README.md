@@ -1,5 +1,5 @@
-Angular App1 Lesson 27b / History Page / Add Timeline to one of the Tabs
-------------------------------------------------------------------------
+Angular App1 Lesson 27c / History Page / Add Dark Mode
+------------------------------------------------------
 
 
 <pre>
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson27b/history/add-to-tab
+    unix> git checkout lesson27c/history/add-dark-mode
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
