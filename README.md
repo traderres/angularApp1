@@ -1,5 +1,5 @@
-Angular App1 Lesson 26g / Server Side Grid / Remember Column Settings
----------------------------------------------------------------------
+Angular App1 Lesson 27a / History Page / Add Timeline components
+----------------------------------------------------------------
 
 
 <pre>
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson26g/server-side-grid/remember-settings
+    unix> git checkout lesson27a/history/add-component
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
