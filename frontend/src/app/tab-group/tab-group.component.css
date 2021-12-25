@@ -1,0 +1,51 @@
+:host ::ng-deep .mat-tab-label{
+  /* Style for non-active tabs */
+  min-width: 60px!important;
+  width: 100%;
+  color: white;
+  font-family: Roboto;
+  font-size: 16px;
+}
+
+:host ::ng-deep .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,.mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus{
+  /* Style to apply when the user clicks on a tab (focus style) */
+
+  background: #233329; /* Old browsers */
+  background: -moz-linear-gradient(top,  #233329 0%, #64d473 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #233329 0%,#64d473 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #233329 0%,#64d473 100%); /* W3C, IE10+, FF16+,Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#233329', endColorstr='#64d473',GradientType=0 ); /* IE6-9 */
+}
+
+
+:host ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active  {
+  /* Style to apply on *ACTIVE* tab */
+
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#233329+0,64d473+100 */
+  background: #233329; /* Old browsers */
+  background: -moz-linear-gradient(top,  #233329 0%, #64d473 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #233329 0%,#64d473 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #233329 0%,#64d473 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#233329', endColorstr='#64d473',GradientType=0 ); /* IE6-9 */
+
+  color: white;
+  font-family: Roboto;
+  font-size: 16px;
+}
+
+
+:host ::ng-deep .mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+:host ::ng-deep .mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+  /* Set color when tab loses focus */
+
+  /* Permalink - use to edit and share this gradient:
+https://colorzilla.com/gradient-editor/#233329+0,64d473+100 */
+  background: #233329; /* Old browsers */
+  background: -moz-linear-gradient(top,  #233329 0%, #64d473 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #233329 0%,#64d473 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #233329 0%,#64d473 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#233329', endColorstr='#64d473',GradientType=0 ); /* IE6-9 */
+
+  opacity: 1;
+}
+
