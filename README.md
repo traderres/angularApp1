@@ -1,5 +1,5 @@
-Angular App1 Lesson 26e / Server Side Grid / Query ElasticSearch
-----------------------------------------------------------------
+Angular App1 Lesson 26f / Server Side Grid / Validate ES Query
+--------------------------------------------------------------
 
 
 <pre>
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson26e/server-side-grid/query-es
+    unix> git checkout lesson26f/server-side-grid/validate-query
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
