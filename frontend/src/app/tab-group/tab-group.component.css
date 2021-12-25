@@ -1,38 +1,38 @@
 :host ::ng-deep .mat-tab-label{
   /* label style */
-  width: 100%;
+  min-width: 175px !important;
   color: white;
 
   font-family: 'Open Sans';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 17px;
+  margin: 5px;
 }
 
+:host ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active  {
+  color: white;
+}
 
-:host ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
-:host ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+:host ::ng-deep .mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+:host ::ng-deep .mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
   /* Set color when tab loses focus */
-  background-color: #63d471;
-  background-image: linear-gradient(315deg, #63d471 0%, #233329 100%);
+  background: linear-gradient(to bottom right, #679ad1 25%, #015eae 84%);
   opacity: 1;
 }
 
-
 :host ::ng-deep .mat-tab-header{
   /* Set the default background color of the header */
-  background-color: #233329;
+  background-color: #679ad1;
 }
-
 
 :host ::ng-deep .mat-tab-header, .mat-tab-nav-bar {
   border-bottom: 0;
 }
 
-
 :host ::ng-deep .mat-tab-label.mat-tab-label-active {
   /* Styles for the active tab label */
-  border: 1px solid #63d471;
+  border: 3px solid #c0da00;
   box-sizing: border-box;
   border-radius: 20px;
 }
