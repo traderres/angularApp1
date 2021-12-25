@@ -130,6 +130,19 @@
             </div>
           </mat-list-item>
 
+
+          <!-- Tab Group Page -->
+          <mat-list-item class="navItem" [routerLink]="constants.TAB_GROUP_ROUTE" routerLinkActive="active"
+                         *ngIf="userInfo.pageRoutes.get(constants.TAB_GROUP_ROUTE)">
+            <a title="Tab Group Page">Tab Group Page</a>
+            <div fxFlex fxLayoutAlign="end end" >
+              <a [routerLink]="constants.TAB_GROUP_ROUTE" target="_blank">
+                <i class="fas fa-external-link-alt navItemIcon" title="Open Tab Group Page in a new window"></i>
+              </a>
+            </div>
+          </mat-list-item>
+
+
         </div>  <!-- End of navMenuGroup -->
       </ng-container>
 

@@ -65,6 +65,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatRadioModule} from "@angular/material/radio";
 import { ThemeChangerMenuComponent } from './theme-changer-menu/theme-changer-menu.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { TabGroupComponent } from './tab-group/tab-group.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -84,6 +86,7 @@ const appRoutes: Routes = [
   { path: Constants.LONGVIEW_REPORT,     component: LongViewOuterReportComponent,  canActivate: [PageGuard] },
   { path: Constants.REPORT_SUBMIT_MARKDOWN,    component: ReportSubmitMarkdownComponent,  canActivate: [PageGuard] },
   { path: Constants.REPORT_PDFVIEWER_ROUTE,         component: PdfViewerComponent,  canActivate: [PageGuard] },
+  { path: Constants.TAB_GROUP_ROUTE,   component: TabGroupComponent, canActivate: [PageGuard] },
 
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
   { path: '',                  component: WelcomeComponent},
@@ -123,7 +126,8 @@ const appRoutes: Routes = [
     UpdatePriorityDialogComponent,
     ReportSubmitMarkdownComponent,
     PdfViewerComponent,
-    ThemeChangerMenuComponent
+    ThemeChangerMenuComponent,
+    TabGroupComponent
   ],
   imports: [
     AppRoutingModule,
@@ -153,6 +157,7 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatSidenavModule,
     MatSnackBarModule,
+    MatTabsModule,
     MatToolbarModule,
     NgxExtendedPdfViewerModule,
     QuillModule.forRoot(),
