@@ -35,20 +35,25 @@
       <!-- Center of the "button row"  -->
       <div fxFlex fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="0">
 
-        <div class="searchBoxWrapper fa-border">
+        <div [ngClass]="{   'light':     this.currentTheme.isLightMode == true,
+                            'dark':      this.currentTheme.isLightMode == false
+                        }">
 
-          <!-- Search Box -->
-          <input matInput type="text"  #searchBox [(ngModel)]="this.rawSearchQuery" (keyup.enter)="this.runSearch()"
-                 class="searchBox"
-                 placeholder="Enter Criteria..."
-                 autocomplete="off"
-                 aria-label="search box" />
+            <div class="searchBoxWrapper fa-border">
 
-          <!-- Search Icon -->
-          <span class="searchBoxIcon" (click)="this.runSearch()">
-            <i class="fa fa-search"></i>
-          </span>
+              <!-- Search Box -->
+              <input matInput type="text"  #searchBox [(ngModel)]="this.rawSearchQuery" (keyup.enter)="this.runSearch()"
+                     class="searchBox"
+                     placeholder="Enter Criteria..."
+                     autocomplete="off"
+                     aria-label="search box" />
 
+              <!-- Search Icon -->
+              <span class="searchBoxIcon" (click)="this.runSearch()">
+                <i class="fa fa-search"></i>
+              </span>
+
+        </div>
         </div>
       </div>
 
@@ -75,7 +80,9 @@
             <!-- AG-Grid -->
             <ag-grid-angular
               style="width: 100%; height: 100%"
-              class="ag-theme-alpine"
+              [ngClass]="{   'ag-theme-alpine':       this.currentTheme.isLightMode == true,
+                             'ag-theme-alpine-dark':  this.currentTheme.isLightMode == false
+                         }"
               [rowData]="this.rowData"
               [defaultColDef]="this.defaultColDefs"
               [columnDefs]="this.columnDefs"

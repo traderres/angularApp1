@@ -4,6 +4,9 @@ import {GridGetRowsResponseDTO} from "../../models/grid/grid-get-rows-response-d
 import {ServerSideGridRowDataDTO} from "../../models/grid/server-side-grid-row-data-dto";
 import {GridService} from "../../services/grid.service";
 import {GridGetRowsRequestDTO} from "../../models/grid/grid-get-rows-request-dto";
+import {ThemeOptionDTO} from "../../models/theme-option-dto";
+import {Subscription} from "rxjs";
+import {ThemeService} from "../../services/theme.service";
 
 @Component({
   selector: 'app-server-side-grid',
@@ -12,6 +15,9 @@ import {GridGetRowsRequestDTO} from "../../models/grid/grid-get-rows-request-dto
 })
 export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit {
 
+
+  private themeStateSubscription: Subscription;
+  public  currentTheme: ThemeOptionDTO;
 
   private searchAfterClause: string | null;
   public  totalMatches: number = 0;
@@ -227,9 +233,16 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
   @ViewChild('searchBox',  { read: ElementRef }) searchBox: ElementRef;
 
-  constructor(private gridService: GridService) {}
+  constructor(private gridService: GridService,
+              private themeService: ThemeService) {}
 
   public ngOnInit(): void {
+
+    // Listen for changes from the theme service
+    this.themeStateSubscription = this.themeService.getThemeStateAsObservable().subscribe( (aNewTheme: ThemeOptionDTO) => {
+      // The theme has changed.
+      this.currentTheme = aNewTheme;
+    });
   }
 
 
@@ -240,6 +253,9 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   public ngOnDestroy(): void {
+    if (this.themeStateSubscription) {
+      this.themeStateSubscription.unsubscribe();
+    }
   }
 
 
