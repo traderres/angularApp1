@@ -1,4 +1,4 @@
-Angular App1 Lesson 26b / Server Side Grid / Dark Mode
+Angular App1 Lesson 26d / Server Side Grid / Dark Mode
 ------------------------------------------------------
 
 
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout git push --set-upstream origin lesson26d/server-side-grid/dark-mode
+    unix> git checkout git lesson26d/server-side-grid/dark-mode
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
