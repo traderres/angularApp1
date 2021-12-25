@@ -13,6 +13,8 @@ import {PreferenceService} from "../../../services/preference.service";
 import {debounceTime, switchMap} from "rxjs/operators";
 import {Constants} from "../../../utilities/constants";
 import {GetOnePreferenceDTO} from "../../../models/preferences/get-one-preference-dto";
+import {ThemeService} from "../../../services/theme.service";
+import {ThemeOptionDTO} from "../../../models/theme-option-dto";
 
 @Component({
   selector: 'app-report-grid-view',
@@ -26,6 +28,9 @@ export class ReportGridViewComponent implements OnInit, OnDestroy {
   private listenForGridChanges: boolean = false;
   private saveGridColumnStateEventsSubject: Subject<any> = new Subject();
   private saveGridEventsSubscription: Subscription;
+
+  private themeStateSubscription: Subscription;
+  public currentTheme: ThemeOptionDTO;
 
   public gridOptions: GridOptions = {
     debug: true,
@@ -144,10 +149,17 @@ export class ReportGridViewComponent implements OnInit, OnDestroy {
 
   constructor(private gridService: GridService,
               private preferenceService: PreferenceService,
-              private matDialog: MatDialog) {}
+              private matDialog: MatDialog,
+              private themeService: ThemeService) {}
 
 
   public ngOnInit(): void {
+
+    // Listen for changes from the theme service
+    this.themeStateSubscription = this.themeService.getThemeStateAsObservable().subscribe( (aNewTheme: ThemeOptionDTO) => {
+      // The theme has changed.
+      this.currentTheme = aNewTheme;
+    });
 
     // Listen for save-grid-column-state events
     // NOTE:  If a user manipulates the grid, then we could be sending LOTS of save-column-state REST calls
@@ -175,6 +187,10 @@ export class ReportGridViewComponent implements OnInit, OnDestroy {
 
     if (this.saveGridColumnStateEventsSubject) {
       this.saveGridColumnStateEventsSubject.unsubscribe();
+    }
+
+    if (this.themeStateSubscription) {
+      this.themeStateSubscription.unsubscribe();
     }
   }
 

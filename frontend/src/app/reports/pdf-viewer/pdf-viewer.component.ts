@@ -3,6 +3,8 @@ import {environment} from "../../../environments/environment";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {Subscription} from "rxjs";
 import {NavbarService} from "../../services/navbar.service";
+import {ThemeService} from "../../services/theme.service";
+import {ThemeOptionDTO} from "../../models/theme-option-dto";
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -29,19 +31,22 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   private previousLeftPageWidth: number;
   private previousRightPageWidth: number;
 
+  private themeStateSubscription: Subscription;
+  public  pdfViewerBackgroundColor: string;
 
-  constructor(private navbarService: NavbarService) { }
+  constructor(private navbarService: NavbarService,
+              private themeService: ThemeService) { }
 
   /*
- * We received a resize event
- *  1) If columnResize==true, then we kicked-off this resize event (so ignore it)
- *  2) If secondResize==true, then just refresh the divider
- *  3) Else
- *     a. Calculate the ratio of the old-width to new-width
- *     b. Calculate the newLeftWidth = ratio * oldLeftWidth
- *     c. Calculate the newRightWidth = ratio * oldRightWidth
- *     d. Set the new leftWidth and newRightWidths
- */
+   * We received a resize event
+   *  1) If columnResize==true, then we kicked-off this resize event (so ignore it)
+   *  2) If secondResize==true, then just refresh the divider
+   *  3) Else
+   *     a. Calculate the ratio of the old-width to new-width
+   *     b. Calculate the newLeftWidth = ratio * oldLeftWidth
+   *     c. Calculate the newRightWidth = ratio * oldRightWidth
+   *     d. Set the new leftWidth and newRightWidths
+   */
   @HostListener('window:resize', ['$event'])
   public onResize(event: any): void {
     if (this.columnResize) {
@@ -82,6 +87,21 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public ngOnInit(): void {
+    // Listen for changes from the theme service
+    this.themeStateSubscription =
+      this.themeService.getThemeStateAsObservable().subscribe( (aNewTheme: ThemeOptionDTO) => {
+        // The theme has changed.
+
+        if (aNewTheme.isLightMode) {
+          // Set a light background color for PDF Viewer
+          this.pdfViewerBackgroundColor = "#dcdcdc";
+        }
+        else {
+          // Set a dark background color for PDF Viewer
+          this.pdfViewerBackgroundColor = "#303030";
+        }
+      });
+
 
     // Setup the path of the sample directory path
     if (environment.production) {
@@ -121,6 +141,10 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   public ngOnDestroy(): void {
     if (this.navbarSubscription) {
       this.navbarSubscription.unsubscribe();
+    }
+
+    if (this.themeStateSubscription) {
+      this.themeStateSubscription.unsubscribe();
     }
   }
 

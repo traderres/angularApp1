@@ -22,11 +22,13 @@ HC_offlineExport(Highcharts);
 
 // Turn on the drill-down capabilities
 import HC_drillDown from "highcharts/modules/drilldown";
-import {Chart} from "highcharts";
+import {Chart, Options} from "highcharts";
 import {TileSizeDTO} from "../../models/tile-size-dto";
 import {DashboardService} from "../../services/dashboard.service";
 import {DashboardDataDTO} from "../../models/dashboard-data-dto";
 import {Router} from "@angular/router";
+import {ThemeService} from "../../services/theme.service";
+import {ThemeOptionDTO} from "../../models/theme-option-dto";
 HC_drillDown(Highcharts);
 
 @Component({
@@ -35,6 +37,8 @@ HC_drillDown(Highcharts);
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
+  private themeStateSubscription: Subscription;
+  public currentTheme: ThemeOptionDTO;
 
   public totalColumns: number;
   private cardLayoutSubscription: Subscription;
@@ -286,7 +290,8 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private breakpointObserver: BreakpointObserver,
               private dashboardService: DashboardService,
-              private router: Router) { }
+              private router: Router,
+              private themeService: ThemeService) { }
 
 
   public ngOnInit(): void {
@@ -296,6 +301,14 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       lang: {
         thousandsSep: ','    // Set the thousand separator as a comma
       }
+    });
+
+
+    // Listen for changes from the theme service
+    this.themeStateSubscription = this.themeService.getThemeStateAsObservable().subscribe( (aNewTheme: ThemeOptionDTO) => {
+      this.currentTheme = aNewTheme;
+
+      this.reloadData()
     });
 
     // Listen on an array of size breakpoints
@@ -334,6 +347,10 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
         chart.destroy();
       }
     });
+
+    if (this.themeStateSubscription) {
+      this.themeStateSubscription.unsubscribe();
+    }
   }
 
   public ngAfterViewInit(): void {
@@ -346,7 +363,10 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataIsLoading = true;
 
     this.dashboardService.getAllChartData().subscribe( (aData: DashboardDataDTO) => {
-        // The REST call came back with data
+      // The REST call came back with data
+
+      if (this.currentTheme.isLightMode) {
+        // Render the charts in light mode
 
         // Set the data for chart 1 and *render* chart 1
         this.chartOptions1.series[0].data = aData.chartData1;
@@ -357,20 +377,33 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.chartOptions3.series = aData.chartData3;
         Highcharts.chart('chart3', this.chartOptions3);
+      }
+      else {
+        // Render the charts in dark mode
+
+        // Set the data for chart 1 and *render* chart 1
+        this.chartOptions1.series[0].data = aData.chartData1;
+        Highcharts.chart('chart1',  Highcharts.merge(this.chartOptions1, this.darkTheme));
+
+        this.chartOptions2.series = aData.chartData2;
+        Highcharts.chart('chart2',  Highcharts.merge(this.chartOptions2, this.darkTheme));
+
+        this.chartOptions3.series = aData.chartData3;
+        Highcharts.chart('chart3',  Highcharts.merge(this.chartOptions3, this.darkTheme));
+      }
 
     }).add(  () => {
-        // REST call finally block
+      // REST call finally block
 
       // Redraw all charts on this page (so they fit perfectly in the <mat-card> tags)
       Highcharts.charts.forEach(function (chart: Chart | undefined) {
-          chart?.reflow();
-        });
+        chart?.reflow();
+      });
 
-        this.dataIsLoading = false;
+      this.dataIsLoading = false;
     });
 
   }
-
 
   /*
    * Send a 'resize' event
@@ -414,4 +447,195 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     // Resize the charts to fit their parent containers
     this.resizeChartsToFitContainers();
   }
+
+
+
+  private darkTheme: Options = {
+    colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066',
+      '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+    chart: {
+      backgroundColor: {
+        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+        stops: [
+          [0, '#2a2a2b'],
+          [1, '#3e3e40']
+        ]
+      },
+      style: {
+        fontFamily: '\'Unica One\', sans-serif'
+      },
+      plotBorderColor: '#606063'
+    },
+    title: {
+      style: {
+        color: '#E0E0E3',
+        textTransform: 'uppercase',
+        fontSize: '20px'
+      }
+    },
+    subtitle: {
+      style: {
+        color: '#E0E0E3',
+        textTransform: 'uppercase'
+      }
+    },
+    xAxis: {
+      gridLineColor: '#707073',
+      labels: {
+        style: {
+          color: '#E0E0E3'
+        }
+      },
+      lineColor: '#707073',
+      minorGridLineColor: '#505053',
+      tickColor: '#707073',
+      title: {
+        style: {
+          color: '#A0A0A3'
+        }
+      }
+    },
+    yAxis: {
+      gridLineColor: '#707073',
+      labels: {
+        style: {
+          color: '#E0E0E3'
+        }
+      },
+      lineColor: '#707073',
+      minorGridLineColor: '#505053',
+      tickColor: '#707073',
+      tickWidth: 1,
+      title: {
+        style: {
+          color: '#A0A0A3'
+        }
+      }
+    },
+    tooltip: {
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
+      style: {
+        color: '#F0F0F0'
+      }
+    },
+    plotOptions: {
+      series: {
+        dataLabels: {
+          color: '#F0F0F3',
+          style: {
+            fontSize: '13px'
+          }
+        },
+        marker: {
+          lineColor: '#333'
+        }
+      },
+      boxplot: {
+        fillColor: '#505053'
+      },
+      candlestick: {
+        lineColor: 'white'
+      },
+      errorbar: {
+        color: 'white'
+      }
+    },
+    legend: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      itemStyle: {
+        color: '#E0E0E3'
+      },
+      itemHoverStyle: {
+        color: '#FFF'
+      },
+      itemHiddenStyle: {
+        color: '#606063'
+      },
+      title: {
+        style: {
+          color: '#C0C0C0'
+        }
+      }
+    },
+    credits: {
+      style: {
+        color: '#666'
+      }
+    },
+    drilldown: {
+      activeAxisLabelStyle: {
+        color: '#F0F0F3'
+      },
+      activeDataLabelStyle: {
+        color: '#F0F0F3'
+      }
+    },
+    navigation: {
+      buttonOptions: {
+        symbolStroke: '#DDDDDD',
+        theme: {
+          fill: '#505053'
+        }
+      }
+    },
+    // scroll charts
+    rangeSelector: {
+      buttonTheme: {
+        fill: '#505053',
+        stroke: '#000000',
+        style: {
+          color: '#CCC'
+        },
+        states: {
+          hover: {
+            fill: '#707073',
+            stroke: '#000000',
+            style: {
+              color: 'white'
+            }
+          },
+          select: {
+            fill: '#000003',
+            stroke: '#000000',
+            style: {
+              color: 'white'
+            }
+          }
+        }
+      },
+      inputBoxBorderColor: '#505053',
+      inputStyle: {
+        backgroundColor: '#333',
+        color: 'silver'
+      },
+      labelStyle: {
+        color: 'silver'
+      }
+    },
+    navigator: {
+      handles: {
+        backgroundColor: '#666',
+        borderColor: '#AAA'
+      },
+      outlineColor: '#CCC',
+      maskFill: 'rgba(255,255,255,0.1)',
+      series: {
+        color: '#7798BF',
+        lineColor: '#A6C7ED'
+      },
+      xAxis: {
+        gridLineColor: '#505053'
+      }
+    },
+    scrollbar: {
+      barBackgroundColor: '#808083',
+      barBorderColor: '#808083',
+      buttonArrowColor: '#CCC',
+      buttonBackgroundColor: '#606063',
+      buttonBorderColor: '#606063',
+      rifleColor: '#FFF',
+      trackBackgroundColor: '#404043',
+      trackBorderColor: '#404043'
+    }
+  };
 }

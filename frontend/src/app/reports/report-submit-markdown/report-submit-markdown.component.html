@@ -20,7 +20,10 @@
 
       <form novalidate autocomplete="off" [formGroup]="myForm">
 
-        <div style="margin-left: 10px; margin-top: 5px">
+        <div style="margin-left: 10px; margin-top: 5px"
+             [ngClass]="{ 'light':  this.currentTheme.isLightMode == true,
+                          'dark':   this.currentTheme.isLightMode == false
+                        }">
 
           <!-- Markdown Editor -->
           <quill-editor class="content-editor"

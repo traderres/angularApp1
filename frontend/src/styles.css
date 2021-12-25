@@ -220,3 +220,66 @@ pre {
 
   margin-top: .25em;    /* Fixes the bug with autoHeight not working in the ag-grid */
 }
+
+
+/**************** LIGHT MODE for Quill Markdown Editor CSS Customizations ****************/
+.light .ql-toolbar {
+  /* Permalink - use to edit and share this gradient:
+https://colorzilla.com/gradient-editor/#ffffff+20,ffffff+40,009ffd+100 */
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  #ffffff 20%, #ffffff 40%, #009ffd 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg,  #ffffff 20%,#ffffff 40%,#009ffd 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg,  #ffffff 20%,#ffffff 40%,#009ffd 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#009ffd',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  border: 1px solid #6294CF;
+}
+
+.light .ql-container {
+  border: 1px solid #6294CF;
+}
+
+
+/**************** DARK MODE for Quill Markdown Editor CSS Customizations ****************/
+.dark .ql-toolbar {
+  color: white;
+
+  /* Permalink - use to edit and share this gradient:
+https://colorzilla.com/gradient-editor/#ffffff+20,ffffff+40,009ffd+100 */
+  background: #303030; /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  #303030 20%, #303030 40%, #111111 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg,  #303030 20%,#303030 40%,#111111 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg,  #303030 20%,#303030 40%,#111111 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#303030', endColorstr='#111111',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  border: 1px solid #6294CF;
+}
+
+.dark .ql-container {
+  border: 1px solid #6294CF;
+}
+
+.dark .ql-toolbar .ql-stroke {
+  stroke: #fff;
+  fill: none;
+}
+
+.dark .ql-toolbar .ql-fill {
+  fill: #fff;
+  stroke: none;
+}
+
+.dark  .ql-toolbar .ql-picker {
+  color: #fff;
+  fill: none;
+}
+
+.dark  .ql-toolbar .ql-picker-options {
+  color: #fff;
+  fill: none;
+}
+
+.dark .ql-toolbar .ql-picker-options .ql-picker-item {
+  color: #303030;
+  fill: white;
+}

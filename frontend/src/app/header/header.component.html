@@ -1,4 +1,7 @@
-<div class="header">
+<div  [ngClass]="{
+            'light':   this.currentTheme.isLightMode == true,
+            'dark':    this.currentTheme.isLightMode == false
+        }">
 
   <div fxFlex fxLayout="row" fxLayoutGap="0">
 
@@ -29,6 +32,10 @@
 
     <!-- Right Side of the Header -->
     <div fxFlex fxLayoutAlign="end center">
+
+      <!-- Theme Changer -->
+      <app-theme-changer-menu style="margin-right: 5px"></app-theme-changer-menu>
+
 
       <!-- User Menu -->
       <a class="button" (click)="toggleUserNavbar()">

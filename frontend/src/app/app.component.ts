@@ -10,6 +10,7 @@ import {BannerService} from "./services/banner.service";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {tap} from "rxjs/operators";
 import {GetOnePreferenceDTO} from "./models/preferences/get-one-preference-dto";
+import {ThemeService} from "./services/theme.service";
 
 @Component({
   selector: 'app-root',
@@ -47,11 +48,18 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private navbarService: NavbarService,
               private errorService: ErrorService,
               private bannerService: BannerService,
+              private themeService: ThemeService,
               private matDialog: MatDialog)
   { }
 
 
   public ngOnInit(): void {
+
+
+    // Normally, we would get this value from a database lookup
+    // If the theme name is not found, then the default light mode theme is displayed
+    this.themeService.initialize("theme-from-database");
+
     this.bannerObs = this.bannerService.getLatestValueFromBackend().pipe(
       tap((aData: GetOnePreferenceDTO) => {
         // The REST call came back with some data
