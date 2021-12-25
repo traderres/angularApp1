@@ -1,5 +1,5 @@
-
 :host ::ng-deep .mat-tab-label{
+  /* label style */
   width: 100%;
   color: white;
 
@@ -10,36 +10,29 @@
 }
 
 
-:host ::ng-deep .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
-  background-color: #f5d020;
-  background-image: linear-gradient(315deg, #f53803 0%, #f5d020 74%);
-}
-
-
-:host ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active  {
-  background-color: #f5d020;
-  background-image: linear-gradient(315deg, #f53803 0%, #f5d020 74%);
-  color: white;
-}
-
-
-:host ::ng-deep  .mat-tab-label.mat-tab-label-active {
-  background-color: #f5d020;
-  background-image: linear-gradient(315deg, #f53803 0%, #f5d020 74%);
-}
-
-
 :host ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
 :host ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
   /* Set color when tab loses focus */
-  background-color: #f5d020;
-  background-image: linear-gradient(315deg, #f53803 0%, #f5d020 74%);
-
+  background-color: #63d471;
+  background-image: linear-gradient(315deg, #63d471 0%, #233329 100%);
   opacity: 1;
 }
+
 
 :host ::ng-deep .mat-tab-header{
   /* Set the default background color of the header */
   background-color: #233329;
 }
 
+
+:host ::ng-deep .mat-tab-header, .mat-tab-nav-bar {
+  border-bottom: 0;
+}
+
+
+:host ::ng-deep .mat-tab-label.mat-tab-label-active {
+  /* Styles for the active tab label */
+  border: 1px solid #63d471;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
