@@ -35,7 +35,7 @@
 
 
 
-            <mat-tab label="Enrichment">
+              <mat-tab label="Enrichment">
                 <!--     E N R I C H M E N T     T A B     -->
                 <ng-template matTabContent>
                   <div class="tab-content">
@@ -82,20 +82,11 @@
                 </ng-template>
               </mat-tab>
 
-              <mat-tab label="History">
-                <!--     H I S T O R Y     T A B     -->
-                <ng-template matTabContent>
-                  <div class="tab-content">
-                    <mat-card class="mat-elevation-z0">
-                      <mat-card-title>History of this Submission</mat-card-title>
-
-                      <mat-card-content style="height: calc(100vh - 245px);">
-                        This is the history tab
-                      </mat-card-content>
-                    </mat-card>
-                  </div>
-                </ng-template>
+              <mat-tab label="History" title="History">
+                <!--     H I S T O R Y                    T A B     -->
+                <app-tab-history [reportId]=25></app-tab-history>
               </mat-tab>
+
             </mat-tab-group>
 
           </div>

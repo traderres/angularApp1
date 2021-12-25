@@ -70,6 +70,7 @@ import { TabGroupComponent } from './tab-group/tab-group.component';
 import { ServerSideGridComponent } from './reports/server-side-grid/server-side-grid.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { TimelineItemComponent } from './timeline-item/timeline-item.component';
+import { TabHistoryComponent } from './tab-history/tab-history.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -134,7 +135,8 @@ const appRoutes: Routes = [
     TabGroupComponent,
     ServerSideGridComponent,
     TimelineComponent,
-    TimelineItemComponent
+    TimelineItemComponent,
+    TabHistoryComponent
   ],
   imports: [
     AppRoutingModule,
