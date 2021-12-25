@@ -1,4 +1,4 @@
-Angular App1 Lesson 26b / Server Side Grid / Setup Grid
+Angular App1 Lesson 26c / Server Side Grid / Setup Grid
 -------------------------------------------------------
 
 
