@@ -6,6 +6,7 @@ import com.lessons.config.ElasticSearchResources;
 import com.lessons.models.AutoCompleteDTO;
 import com.lessons.models.AutoCompleteMatchDTO;
 import com.lessons.models.ErrorsDTO;
+import com.lessons.models.grid.GridGetRowsResponseDTO;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
 import org.apache.commons.lang3.StringUtils;
@@ -18,11 +19,10 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Pattern;
 
-@Service("com.lessons.services.ElasticSearchService")
+@Service
 public class ElasticSearchService {
 
     private static final Logger logger = LoggerFactory.getLogger(ElasticSearchService.class);
@@ -35,6 +35,11 @@ public class ElasticSearchService {
     private final int ES_REQUEST_TIMEOUT_IN_MILLISECS = 90000;
 
     private ObjectMapper objectMapper;
+
+    private final Pattern patMatchDoubleQuote     = Pattern.compile("\"");
+    private final Pattern patMatchAscii1To31or128 = Pattern.compile("[\\u0000-\\u001F\\u0080]");
+    private final Pattern patMatchBackwardSlashMissingReserveChar = Pattern.compile("\\\\([^+!-><)(:/}{*~]|\\Z)");
+
 
     @PostConstruct
     public void init() throws Exception {
@@ -209,7 +214,8 @@ public class ElasticSearchService {
 
         if (response.getStatusCode() != 200) {
             throw new RuntimeException("Critical error in doesIndexExist():  ElasticSearch returned a response status code of " +
-                    response.getStatusCode() + ".  Response message is " + response.getResponseBody() );
+                    response.getStatusCode() + ".  Response message is " +
+                    response.getResponseBody() );
         }
 
         // Loop through the lines of data -- looking for the passed-in index name
@@ -343,5 +349,215 @@ public class ElasticSearchService {
         return listOfAutoCompleteMatchDTOs;
     }
 
+
+
+    public GridGetRowsResponseDTO runSearchGetRowsResponseDTO(String aIndexName, String aJsonBody) throws Exception {
+        if (StringUtils.isEmpty(aIndexName)) {
+            throw new RuntimeException("The passed-in aIndexName is null or empty.");
+        }
+        else if (StringUtils.isEmpty(aJsonBody)) {
+            throw new RuntimeException("The passed-in aJsonBody is null or empty.");
+        }
+
+        // Make a synchronous POST call to execute a search and return a response object
+        Response response = this.asyncHttpClient.prepareGet(this.elasticSearchUrl + "/" + aIndexName + "/_search")
+                .setRequestTimeout(this.ES_REQUEST_TIMEOUT_IN_MILLISECS)
+                .setHeader("accept", "application/json")
+                .setHeader("Content-Type", "application/json")
+                .setBody(aJsonBody)
+                .execute()
+                .get();
+
+        if (response.getStatusCode() != 200) {
+            throw new RuntimeException("Critical error in runSearchGetJsonResponse():  ElasticSearch returned a response status code of " +
+                    response.getStatusCode() + ".  Response message is " + response.getResponseBody() + "\n\n" + aJsonBody);
+        }
+
+
+        // Create an empty array list
+        List<Map<String, Object>> listOfMaps = new ArrayList<>();
+
+        // Pull the list of matching values from the JSON Response
+        String jsonResponse = response.getResponseBody();
+
+        // Convert the response JSON string into a map and examine it to see if the request really worked
+        Map<String, Object> mapResponse = objectMapper.readValue(jsonResponse, new TypeReference<Map<String, Object>>() {});
+
+        @SuppressWarnings("unchecked")
+        Map<String, Object> outerHitsMap = (Map<String, Object>) mapResponse.get("hits");
+        if (outerHitsMap == null) {
+            throw new RuntimeException("Error in runAutoComplete():  The outer hits value was not found in the JSON response");
+        }
+
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> innerHitsListOfMaps = (List<Map<String, Object>>) outerHitsMap.get("hits");
+        if (innerHitsListOfMaps == null) {
+            throw new RuntimeException("Error in runAutoComplete():  The inner hits value was not found in the JSON response");
+        }
+
+        if (innerHitsListOfMaps.size() > 0) {
+            for (Map<String, Object> hit: innerHitsListOfMaps) {
+
+                // Get the source map (that has all of the results)
+                @SuppressWarnings("unchecked")
+                Map<String, Object> sourceMap = (Map<String, Object>) hit.get("_source");
+                if (sourceMap == null) {
+                    throw new RuntimeException("Error in runAutoComplete():  The source map was null in the JSON response");
+                }
+
+                // Add the sourceMap to the list of maps
+                listOfMaps.add(sourceMap);
+            }
+        }
+
+        Integer totalMatches = 0;
+
+
+        if (listOfMaps.size() > 0) {
+            // Get the total matches from the json
+            @SuppressWarnings("unchecked")
+            Map<String, Object> totalInfoMap = (Map<String, Object>) outerHitsMap.get("total");
+            if ((totalInfoMap != null) && (totalInfoMap.size() > 0)) {
+                totalMatches = (Integer) totalInfoMap.get("value");
+            }
+        }
+
+
+        // Set the searchAfter clause in the GetResponseRowsDTO object
+        // NOTE:  The front-end will pass this back for page 2, page 3, page 4
+        //        so we can run the same ES query and get page 2, page 3, page 4
+        String searchAfterClause = getSearchAfterFromEsResponseMap(innerHitsListOfMaps);
+
+
+        GridGetRowsResponseDTO responseDTO = new GridGetRowsResponseDTO(listOfMaps, totalMatches, searchAfterClause);
+        return responseDTO;
+    }
+
+
+    /**
+     * Generate the search_after clause by looking at the last result from the last search
+     *  1. If the list of maps is empty, return an empty string
+     *  2. Loop through the sort model list
+     *     -- Build the search_after by pulling the sorted field name
+     *     -- If the sort field name == "_score", then pull the score
+     *
+     * @param aListOfHitsMaps holds the list of ES maps (that hold the search results)
+     * @return a String that holds the search_after clause
+     */
+    private String getSearchAfterFromEsResponseMap(List<Map<String, Object>> aListOfHitsMaps) {
+        if ((aListOfHitsMaps == null) || (aListOfHitsMaps.size() == 0)) {
+            return "";
+        }
+
+        // Get the last map
+        Map<String, Object> lastMap = aListOfHitsMaps.get( aListOfHitsMaps.size() - 1);
+        if (lastMap == null) {
+            return "";
+        }
+
+        // Get the last source map  (it has the search results for the last match)
+        @SuppressWarnings("unchecked")
+        Map<String, Object> lastSourceMap = (Map<String, Object>) lastMap.get("_source");
+        if (lastSourceMap == null) {
+            throw new RuntimeException("Error in getSearchAfterFromEsResponseMap():  The lastSourceMap is null.");
+        }
+
+        // Get the list of sort fields from the lastMap.sort
+        @SuppressWarnings("unchecked")
+        List<Object> listOfSortFields = (List<Object>) lastMap.get("sort");
+        if ((listOfSortFields == null) || (listOfSortFields.size() == 0)) {
+            throw new RuntimeException("Error in getSearchAfterFromEsResponseMap():  The listOfSortFields is null or empty.  It should have always have one or more items.");
+        }
+
+        StringBuilder sbSearchAfterClause = new StringBuilder();
+
+        for (Object lastSortValueObject: listOfSortFields) {
+            String lastSortValue = "\"" + String.valueOf( lastSortValueObject ) + "\"";
+
+            sbSearchAfterClause.append(lastSortValue)
+                    .append(",");
+        }
+
+        // Remove the last comma
+        sbSearchAfterClause.deleteCharAt(sbSearchAfterClause.length() - 1);
+
+        return sbSearchAfterClause.toString();
+    }
+
+
+
+    /**
+     * Clean-up the passed-in raw query with the following rules:
+     *   1) If Double quote is found, then replace it with \"
+     *   2) If ASCII value between 1 and 31 is found or 128, then replace it with a space
+     *   3) If "\" is found without a special reserve chars, then replace it with a space
+     * @param aRawQuery holds the raw query from the front-end
+     * @return cleaned-up query
+     */
+    public String cleanupQuery(String aRawQuery) {
+        // Convert the pattern match of " to \"
+        // NOTE:  Because of Java Regex, you have to use four backward slashes to match a \
+        String cleanedQuery =
+                this.patMatchDoubleQuote.matcher(aRawQuery).replaceAll("\\\\\"");
+
+        // If ASCII 1-31 or 128 is found, then replace it with a space
+        cleanedQuery = this.patMatchAscii1To31or128.matcher(cleanedQuery).replaceAll(" ");
+
+        // If a single backslash is found but the required reserve char is missing -- then replace it with a space
+        cleanedQuery = this.patMatchBackwardSlashMissingReserveChar.matcher(cleanedQuery).replaceAll(" ");
+
+        // Convert  "and " or " and " or " and" to --> AND
+        cleanedQuery = adjustElasticSearchAndOrNotOperators(cleanedQuery);
+
+        return cleanedQuery;
+    }
+
+
+
+    private String adjustElasticSearchAndOrNotOperators(String aString) {
+        if (StringUtils.isBlank(aString)) {
+            return aString;
+        }
+
+        // Convert the string into a list of Strings
+        List<String> listOfWords = Arrays.asList(aString.trim().split("\\s+"));
+
+        // Get the iterator
+        ListIterator<String> iter = listOfWords.listIterator();
+
+        boolean inQuotes = false;
+
+        // Loop through the list and remove certain items
+        while (iter.hasNext())
+        {
+            String word = iter.next();
+
+            if (word.length() == 0) {
+                continue;
+            }
+
+            if (word.equalsIgnoreCase("\"")) {
+                // The entire word is an open quote
+                inQuotes = !inQuotes;
+                continue;
+            }
+
+            if ((word.startsWith("\"") && (! word.endsWith("\""))) ||
+                    (! word.startsWith("\"") && (word.endsWith("\"")))) {
+                // The word either starts or ends with a quote
+                inQuotes = !inQuotes;
+            }
+
+            if (!inQuotes && (word.equalsIgnoreCase("and") || word.equalsIgnoreCase("or") || word.equalsIgnoreCase("not")))
+            {
+                // Convert this "and", "or", or "not" word to uppercase
+                word = word.toUpperCase();
+                iter.set(word);
+            }
+        }
+
+        String returnedStirng = StringUtils.join(listOfWords, " ");
+        return returnedStirng;
+    }
 
 }
