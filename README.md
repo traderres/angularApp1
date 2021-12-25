@@ -1,5 +1,5 @@
-Angular App1 Lesson 23a (Theme Changer)
----------------------------------------
+Angular App1 Lesson 24 (Theme Changer)
+--------------------------------------
 
 
 <pre>
