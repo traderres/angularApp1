@@ -1,5 +1,5 @@
-Angular App1 Lesson 28b / Drag & Drop Charts on Welcome Page / Separate Components
-----------------------------------------------------------------------------------
+Angular App1 Lesson 29 / Show Popup on Page Load
+------------------------------------------------
 
 
 <pre>
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson28b/dashboard/drag-and-drop/separate
+    unix> git checkout lesson29/show-popup-on-load
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
