@@ -18,6 +18,7 @@ public class UserInfo implements UserDetails, Serializable{
     private List<GrantedAuthority> grantedAuthorities;    // List of roles found in the database)
     private Integer id;                                   // Holds the user's ID in the database
     private Map<String, Boolean> accessMap;
+    private boolean userAcknowledgedMessage = false;
 
     public String getPassword() {
         // Must implement this method in order to implement the UserDetails interface
@@ -120,5 +121,13 @@ public class UserInfo implements UserDetails, Serializable{
     public UserInfo withAccessMap(Map<String, Boolean> aAccessMap) {
         this.accessMap = aAccessMap;
         return this;
+    }
+
+    public boolean getUserAcknowledgedMessage() {
+        return userAcknowledgedMessage;
+    }
+
+    public void setUserAcknowledgedMessage() {
+        this.userAcknowledgedMessage = true;
     }
 }

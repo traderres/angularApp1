@@ -42,4 +42,40 @@ public class UserController {
         // Return a response of 200 and the UserInfoDTO object
         return ResponseEntity.status(HttpStatus.OK).body(userInfoDTO);
     }
+
+
+    /**
+     * GET /api/ack/get
+     */
+    @RequestMapping(value = "/api/user/ack/get", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasAnyRole('READER', 'ADMIN')")
+    public ResponseEntity<?> getUserAcknowledged() {
+
+        // Get the UserInfo object (which holds the user's session info)
+        UserInfo userInfo = this.userService.getUserInfo();
+
+        // Get the boolean (which holds true if the user has acknowledged the popup)
+        Boolean userHasAcknowledged = userInfo.getUserAcknowledgedMessage();
+
+        // Return a response of 200 and the boolean object
+        return ResponseEntity.status(HttpStatus.OK).body(userHasAcknowledged);
+    }
+
+    /**
+     * POST /api/ack/set
+     */
+    @RequestMapping(value = "/api/user/ack/set", method = RequestMethod.POST, produces = "application/json")
+    @PreAuthorize("hasAnyRole('READER', 'ADMIN')")
+    public ResponseEntity<?> setUserAcknowledged() {
+
+        // Get the UserInfo object (which holds the user's session info)
+        UserInfo userInfo = this.userService.getUserInfo();
+
+        // Set this session as having acknowledged the popup
+        userInfo.setUserAcknowledgedMessage();
+
+        // Return a response of 200
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
 }

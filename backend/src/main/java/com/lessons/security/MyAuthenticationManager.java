@@ -188,8 +188,9 @@ public class MyAuthenticationManager implements AuthenticationManager {
                 .withUsernameUID(userUID)
                 .withUsernameDn(userDN)
                 .withGrantedAuthorities(grantedRoleAuthorities)
-                .withAccessMap(accessMap);
-        
+                .withAccessMap(accessMap);// Set the popup has disabled when running in dev mode
+        anonymousUserInfo.setUserAcknowledgedMessage();
+
         return anonymousUserInfo;
     }
 
