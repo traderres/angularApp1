@@ -144,4 +144,74 @@ export class DashboardService {
     return of(data);
   }  // end of getBarChartData()
 
+
+
+  public getUsaMapData(): Observable<any> {
+    let data =  [
+      ['us-ma', 0],
+      ['us-wa', 1],
+      ['us-ca', 2],
+      ['us-or', 3],
+      ['us-wi', 4],
+      ['us-me', 5],
+      ['us-mi', 6],
+      ['us-nv', 7],
+      ['us-nm', 8],
+      ['us-co', 9],
+      ['us-wy', 10],
+      ['us-ks', 11],
+      ['us-ne', 12],
+      ['us-ok', 13],
+      ['us-mo', 14],
+      ['us-il', 15],
+      ['us-in', 16],
+      ['us-vt', 17],
+      ['us-ar', 18],
+      ['us-tx', 19],
+      ['us-ri', 20],
+      ['us-al', 21],
+      ['us-ms', 22],
+      ['us-nc', 23],
+      ['us-va', 24],
+      ['us-ia', 25],
+      ['us-md', 26],
+      ['us-de', 27],
+      ['us-pa', 28],
+      ['us-nj', 29],
+      ['us-ny', 30],
+      ['us-id', 31],
+      ['us-sd', 32],
+      ['us-ct', 33],
+      ['us-nh', 34],
+      ['us-ky', 35],
+      ['us-oh', 36],
+      ['us-tn', 37],
+      ['us-wv', 38],
+      ['us-dc', 39],
+      ['us-la', 40],
+      ['us-fl', 41],
+      ['us-ga', 42],
+      ['us-sc', 43],
+      ['us-mn', 44],
+      ['us-mt', 45],
+      ['us-nd', 46],
+      ['us-az', 47],
+      ['us-ut', 48],
+      ['us-hi', 49],   // Hawaii
+      ['us-ak', 50],   // Alaska
+      ['gu-3605', 51],
+      ['mp-ti', 52],
+      ['mp-sa', 53],
+      ['mp-ro', 54],
+      ['as-6515', 55],
+      ['as-6514', 56],
+      ['pr-3614', 57],
+      ['vi-3617', 58],
+      ['vi-6398', 59],
+      ['vi-6399', 60]
+    ];
+
+    return of(data);
+  }  // end of getUsaMapData()
+
 }
