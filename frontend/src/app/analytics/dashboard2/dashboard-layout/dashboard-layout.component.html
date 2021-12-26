@@ -87,7 +87,7 @@
 
           <div style="width: 100%; height: 100%" *ngIf="chartType == 2">
             <!-- This is chartType==2.  So, show the "Grid" -->
-            <app-grid-little></app-grid-little>
+            <app-grid-little *ngIf="this.showGrid"></app-grid-little>
           </div>
 
           <div style="width: 100%; height: 100%" *ngIf="chartType == 3">

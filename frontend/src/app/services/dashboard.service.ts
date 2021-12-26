@@ -4,6 +4,7 @@ import {DashboardDataDTO} from "../models/dashboard-data-dto";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {DashboardGridRowDTO} from "../models/dashboard-grid-row-dto";
+import {BarChartDTO} from "../models/bar-chart-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -69,5 +70,78 @@ export class DashboardService {
 
     return of(data);
   }
+
+
+  public getBarChartData(): Observable<BarChartDTO> {
+    let data: BarChartDTO = new BarChartDTO();
+
+    data.chartData = [{
+      name: 'Average Package Time in Each Work Role',  	// Named used for the "Back to <>" when drilled-in
+      colorByPoint: true,
+      data: [{
+        name: 'GCA',
+        y: 3
+      }, {
+        name: 'Contractor',
+        y: 30
+      }, {
+        name: 'EM',
+        y: 21,
+        drilldown: 'emAnalysts'
+      }, {
+        name: 'EMTL',
+        y: 5
+      }, {
+        name: 'FOCI Business Analyst',
+        y: 15,
+        drilldown: 'fociAnalysts'
+      }, {
+        name: 'FOCI Team Manager',
+        y: 5,
+      }, {
+        name: 'RMO',
+        y: 10,
+      }, {
+        name: 'Mitigation Strategy Officer / Approval Officer',
+        y: 12,
+      }, {
+        name: 'Oversight RMO',
+        y: 6,
+      }]
+    }];
+
+    data.drillDownData = {
+      series: [{
+        id: 'emAnalysts',
+        data: [
+          {
+            name: 'John Smith',
+            y: 30
+          },
+          {
+            name: 'Dave Lewis',
+            y: 21
+          },
+          {
+            name: 'Carl Johnson',
+            y: 40
+          },
+          {
+            name: 'Steve Young',
+            y: 15
+          }
+        ]
+      }, {
+        id: 'fociAnalysts',
+        data: [
+          ['Nick Foles', 13],
+          ['Blake Bortles', 15],
+          ['Daniel Jones', 8]
+        ]
+      }]
+    };
+
+    return of(data);
+  }  // end of getBarChartData()
 
 }
