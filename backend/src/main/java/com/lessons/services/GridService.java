@@ -49,8 +49,7 @@ public class GridService {
 
         // Construct the *QUERY* clause
         String cleanedQuery = this.elasticSearchService.cleanupQuery( aGridRequestDTO.getRawSearchQuery()  );
-        String queryStringClause = generateQueryStringClause(cleanedQuery, aFieldsToSearch
-        );
+        String queryStringClause = generateQueryStringClause(cleanedQuery, aFieldsToSearch);
 
         // Construct the _source clause (so ElasticSearch only returns a subset of the fields)
         String esSourceClause = generateSourceClause(aFieldsToReturn);
@@ -138,7 +137,7 @@ public class GridService {
     }
 
 
-    private String generateQueryStringClause(String aCleaneQuery, List<String> aFieldsToSearch) {
+    private String generateQueryStringClause(String aCleanedQuery, List<String> aFieldsToSearch) {
         String queryStringClause;
         String fieldsClause = "";
 
@@ -147,10 +146,7 @@ public class GridService {
             fieldsClause = "\"fields\": [\"" + StringUtils.join(aFieldsToSearch, "\",\"") + "\"],\n";
         }
 
-        // Get the cleaned query
-        String cleanedQuery = this.elasticSearchService.cleanupQuery(aCleaneQuery );
-
-        if (StringUtils.isEmpty(cleanedQuery)) {
+        if (StringUtils.isEmpty(aCleanedQuery)) {
             // There is no query.  So, use ElasticSearch's match_all to run a search with no query
             queryStringClause = "  \"match_all\": {}\n";
         }
@@ -158,12 +154,13 @@ public class GridService {
             // There is a query, so return a query_string clause
             queryStringClause = "  \"query_string\": {\n" +
                     fieldsClause +
-                    "    \"query\": \"" + cleanedQuery + "\"\n" +
-                    "     }\n";
+                    "	\"query\": \"" + aCleanedQuery + "\"\n" +
+                    " 	}\n";
         }
 
         return queryStringClause;
     }
+
 
 
     /**

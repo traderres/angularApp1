@@ -495,10 +495,14 @@ public class ElasticSearchService {
      * @return cleaned-up query
      */
     public String cleanupQuery(String aRawQuery) {
+
+        // Convert  "and " or " and " or " and" to --> AND
+        // NOTE:  Do this first before encoding the quotes
+        String cleanedQuery = adjustElasticSearchAndOrNotOperators(aRawQuery);
+
         // Convert the pattern match of " to \"
         // NOTE:  Because of Java Regex, you have to use four backward slashes to match a \
-        String cleanedQuery =
-                this.patMatchDoubleQuote.matcher(aRawQuery).replaceAll("\\\\\"");
+        cleanedQuery = this.patMatchDoubleQuote.matcher(cleanedQuery).replaceAll("\\\\\"");
 
         // If ASCII 1-31 or 128 is found, then replace it with a space
         cleanedQuery = this.patMatchAscii1To31or128.matcher(cleanedQuery).replaceAll(" ");
@@ -506,11 +510,9 @@ public class ElasticSearchService {
         // If a single backslash is found but the required reserve char is missing -- then replace it with a space
         cleanedQuery = this.patMatchBackwardSlashMissingReserveChar.matcher(cleanedQuery).replaceAll(" ");
 
-        // Convert  "and " or " and " or " and" to --> AND
-        cleanedQuery = adjustElasticSearchAndOrNotOperators(cleanedQuery);
-
         return cleanedQuery;
     }
+
 
 
 
