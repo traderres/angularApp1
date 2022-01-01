@@ -45,8 +45,11 @@ public class GridService {
         // Construct the *SORT* clause
         String esSortClauseWithComma = generateSortClauseFromSortParams(aGridRequestDTO.getSortModel() );
 
-        // Construct the *FILTER* clause (if any)
+        // Construct the *FILTER* clause (this holds the contains filters)
         String filterClause = generateFilterClause(aGridRequestDTO.getFilterModel() );
+
+        // Construct the *MUST_NOT* clause (this holds the notContains filters)
+        String mustNotClause = generateMustNotClause(aGridRequestDTO.getFilterModel() );
 
         // Construct the *QUERY* clause
         String cleanedQuery = this.elasticSearchService.cleanupQuery( aGridRequestDTO.getRawSearchQuery()  );
@@ -56,37 +59,22 @@ public class GridService {
         String esSourceClause = generateSourceClause(aFieldsToReturn);
 
         // Assemble the pieces to build the JSON query
-        String jsonQuery;
-        if (StringUtils.isNotEmpty(filterClause)) {
-            // This ES query has a filter
-            jsonQuery = "{\n" +
-                    esSourceClause + "\n" +
-                    esSearchAfterClause + "\n" +
-                    esSortClauseWithComma + "\n" +
-                    "   \"track_total_hits\": true,\n" +
-                    "   \"size\": " + pageSize +",\n" +
-                    "  \"query\": {\n" +
-                    "    \"bool\": {\n" +
-                    "      \"must\": {\n" +
-                    queryStringClause + "\n" +
-                    "      },\n" +
-                    filterClause +
-                    "    }\n" +
-                    "  }\n" +
-                    "}";
-        }
-        else {
-            // This ES query does *NOT* have a filter
-            jsonQuery = "{\n" +
-                    esSearchAfterClause + "\n" +
-                    esSortClauseWithComma + "\n" +
-                    "   \"track_total_hits\": true,\n" +
-                    "   \"size\": " + pageSize +",\n" +
-                    "   \"query\": { \n" +
-                    queryStringClause + "\n" +
-                    "}\n" +
-                    "}";
-        }
+        String jsonQuery = "{\n" +
+                esSourceClause + "\n" +
+                esSearchAfterClause + "\n" +
+                esSortClauseWithComma + "\n" +
+                "   \"track_total_hits\": true,\n" +
+                "   \"size\": " + pageSize +",\n" +
+                "  \"query\": {\n" +
+                "    \"bool\": {\n" +
+                "      \"must\": {\n" +
+                queryStringClause + "\n" +
+                "      },\n" +
+                filterClause + "," +
+                mustNotClause +
+                "    }\n" +
+                "  }\n" +
+                "}";
 
         // Execute the search and generate a GetResponsRowsResponseDTO object
         // -- This sets responseDTO.setData() and responseDTo.setTotalMatches()
@@ -148,75 +136,75 @@ public class GridService {
 
 
     /**
-     * Generate an ElasticSearch Filter clause
+     * Generate an ElasticSearch must_not clause
      *
-     *       "filter": [
-     *         {
-     *           "term" : {
-     *             "id":254
-     *           }
-     *         },
-     *         {
-     *           "term" : {
-     *             "cityId":35
-     *           }
-     *         }
-     *       ],
+     * If no filters are found, then return
+     *    "must_not": []
+     *
+     * If filters are found, then return
+     "    "must_not": [
+     *       {"term" : { "full_name.filtered":"jone"} }
+     *       {"term" : { "username.filtered":"jone"} },
+     *     ]
      *
      * @param aFilterModelsMap holds a map of filter objects
      * @return String containing a filter clause
      */
-    private String generateFilterClause(Map<String, ColumnFilter> aFilterModelsMap) {
+    private String generateMustNotClause(Map<String, ColumnFilter> aFilterModelsMap) {
         if ((aFilterModelsMap == null) || (aFilterModelsMap.size() == 0)){
-            // There are no filters
-            return null;
+            // There are no filters.  So, return an empty must_not section
+            return "\"must_not\": []\n";
         }
 
         // Start off the filter ES query
-        StringBuilder sbFilterClause = new StringBuilder("\"filter\": [");
+        StringBuilder sbFilterClause = new StringBuilder("\"must_not\": [");
 
         for (Map.Entry<String, ColumnFilter> filter: aFilterModelsMap.entrySet() ) {
-            String originalFieldName = filter.getKey();
-            String actualFilterFieldName;
+            String actualFilterFieldName = filter.getKey();
 
             // Get the columnFilter object -- it may be a NumericColumnFilter or a TextColumnFilter
             ColumnFilter columnFilter = filter.getValue();
 
             if (columnFilter instanceof NumberColumnFilter) {
                 // This is a numeric filter.
+                NumberColumnFilter numberColumnFilter = (NumberColumnFilter) columnFilter;
+                if ((numberColumnFilter.getType() == null) || (!(numberColumnFilter.getType().equalsIgnoreCase("notContains")))) {
+                    // This is *NOT* a notContains filter.  So skip it
+                    continue;
+                }
 
-                // The actual ES field to search will have .filtered on it
-                actualFilterFieldName = originalFieldName + ".filtered";
-
-                NumberColumnFilter numberColumnFilter = (NumberColumnFilter) filter.getValue();
                 Integer filterValue = numberColumnFilter.getFilter();
+                if (filterValue == null) {
+                    // The user typed-in an invalid filter (entering text in a numeric filter)
+                    filterValue = -1;
+                }
 
-                // Add the filter to the ES query
-                sbFilterClause.append("{" +
-                        "                \"term\" : {\n" +
-                        "                  \"" + actualFilterFieldName + "\":\"" + filterValue +"\"\n" +
-                        "                }\n" +
-                        "              },");
+                // This is a number filter (so there are no quotes around the filterValue
+                sbFilterClause.append("\n{ \"term\" : {" )
+                        .append(" \"")
+                        .append(actualFilterFieldName)
+                        .append("\":")
+                        .append( filterValue )
+                        .append(" }},");
             }
             else if (columnFilter instanceof TextColumnFilter) {
                 // This is a text filter
+                TextColumnFilter textColumnFilter = (TextColumnFilter) columnFilter;
+                if ((textColumnFilter.getType() == null) || (!(textColumnFilter.getType().equalsIgnoreCase("notContains")))) {
+                    // This is *NOT* a notContains filter.  So skip it
+                    continue;
+                }
 
-                // TODO: Get the correct fieldname by examining ElasticSearch at startup
-
-                // The actual ES field to search will have .filtered on it
-                actualFilterFieldName = originalFieldName + ".filtered";
-
-                TextColumnFilter textColumnFilter = (TextColumnFilter) filter.getValue();
                 String filterValue = textColumnFilter.getFilter();
 
                 // Add the filter to the ES query
                 // NOTE: Set the filterValue to lowercase (as the filtered collumn is stored as lowercase)
-                sbFilterClause.append("{" +
-                        "                \"term\" : {\n" +
-                        "                  \"" + actualFilterFieldName + "\":\"" + filterValue.toLowerCase()
-                        +"\"\n" +
-                        "                }\n" +
-                        "              },");
+                sbFilterClause.append("\n{ \"term\" : {" )
+                        .append(" \"")
+                        .append(actualFilterFieldName)
+                        .append("\":\"")
+                        .append( filterValue.toLowerCase() )
+                        .append("\" }},");
             }
             else {
                 throw new RuntimeException("Error in generateFilterClause():  Unknown filter Type.");
@@ -224,9 +212,99 @@ public class GridService {
 
         }  // End of looping through filters
 
+        if (sbFilterClause.charAt(sbFilterClause.length() - 1) == ',') {
+            // Remove the last comma if found
+            sbFilterClause.deleteCharAt(sbFilterClause.length() - 1);
+        }
 
-        // Remove the last comma
-        sbFilterClause.deleteCharAt(sbFilterClause.length() - 1);
+        // Add the closing square bracket
+        sbFilterClause.append("]\n");
+
+        return sbFilterClause.toString();
+    }
+
+
+
+    /**
+     * Generate an ElasticSearch Filter clause
+     *
+     * If no filters are found, then return
+     *    "filter": []
+     *
+     * If filters are found, then return
+     "    "filter": [
+     *       {"term" : { "full_name.filtered":"jone"} }
+     *       {"term" : { "username.filtered":"jone"} },
+     *     ]
+     *
+     * @param aFilterModelsMap holds a map of filter objects
+     * @return String containing a filter clause
+     */
+    private String generateFilterClause(Map<String, ColumnFilter> aFilterModelsMap) {
+        if ((aFilterModelsMap == null) || (aFilterModelsMap.size() == 0)){
+            // There are no filters.  So, return an empty filters section
+            return "\"filter\": []\n";
+        }
+
+        // Start off the filter ES query
+        StringBuilder sbFilterClause = new StringBuilder("\"filter\": [");
+
+        for (Map.Entry<String, ColumnFilter> filter: aFilterModelsMap.entrySet() ) {
+            String actualFilterFieldName = filter.getKey();
+
+            // Get the columnFilter object -- it may be a NumericColumnFilter or a TextColumnFilter
+            ColumnFilter columnFilter = filter.getValue();
+
+            if (columnFilter instanceof NumberColumnFilter) {
+                // This is a numeric filter.
+                NumberColumnFilter numberColumnFilter = (NumberColumnFilter) columnFilter;
+                if ((numberColumnFilter.getType() == null) || (!(numberColumnFilter.getType().equalsIgnoreCase("contains")))) {
+                    // This is *NOT* a contains filter.  So skip it
+                    continue;
+                }
+
+                Integer filterValue = numberColumnFilter.getFilter();
+                if (filterValue == null) {
+                    filterValue = -1;
+                }
+
+                // This is a number filter (so there are no quotes around the filterValue
+                sbFilterClause.append("\n{ \"term\" : {" )
+                        .append(" \"")
+                        .append(actualFilterFieldName)
+                        .append("\":")
+                        .append( filterValue )
+                        .append(" }},");
+            }
+            else if (columnFilter instanceof TextColumnFilter) {
+                // This is a text filter
+                TextColumnFilter textColumnFilter = (TextColumnFilter) columnFilter;
+                if ((textColumnFilter.getType() == null) || (!(textColumnFilter.getType().equalsIgnoreCase("contains")))) {
+                    // This is *NOT* a contains filter.  So skip it
+                    continue;
+                }
+
+                String filterValue = textColumnFilter.getFilter();
+
+                // Add the filter to the ES query
+                // NOTE: Set the filterValue to lowercase (as the filtered collumn is stored as lowercase)
+                sbFilterClause.append("\n{ \"term\" : {" )
+                        .append(" \"")
+                        .append(actualFilterFieldName)
+                        .append("\":\"")
+                        .append( filterValue.toLowerCase() )
+                        .append("\" }},");
+            }
+            else {
+                throw new RuntimeException("Error in generateFilterClause():  Unknown filter Type.");
+            }
+
+        }  // End of looping through filters
+
+        if (sbFilterClause.charAt(sbFilterClause.length() - 1) == ',') {
+            // Remove the last comma if found
+            sbFilterClause.deleteCharAt(sbFilterClause.length() - 1);
+        }
 
         // Add the closing square bracket
         sbFilterClause.append("]\n");
@@ -247,22 +325,18 @@ public class GridService {
 
             if (sortFieldName.equalsIgnoreCase("_score")) {
                 // We are sorting by the _score so do not include the missing: field
-                sbSortClause.append(
-                        "{\n" +
-                                "\"" + sortFieldName + "\": {\n" +
-                                "            \"order\": \"" + sortOrder + "\"\n" +
-                                "          }\n" +
-                                "        },");
+                sbSortClause.append("{\n" + "\"").append(sortFieldName).append("\": {\n").append("        	\"order\": \"").append(sortOrder).append("\"\n").append("      	}\n").append("    	},");
             }
             else {
                 // We are sorting by a non _score field.  So, include the missing field
-                sbSortClause.append(
-                        "{\n" +
-                                "\"" + sortFieldName + "\": {\n" +
-                                "            \"order\": \"" + sortOrder + "\",\n" +
-                                "            \"missing\" : \"_first\"\n" +
-                                "          }\n" +
-                                "        },");
+                if (sortOrder.equalsIgnoreCase("asc")) {
+                    // Sorting ascending, so set missing to _first  (so nulls are at the top)
+                    sbSortClause.append("{\n" + "\"").append(sortFieldName).append("\": {\n").append("        	\"order\": \"").append(sortOrder).append("\",\n").append("        	\"missing\" : \"_first\"\n").append("      	}\n").append("    	},");
+                }
+                else {
+                    // Sort descedngin, so set missing to _last  (so nulls are at the end)
+                    sbSortClause.append("{\n" + "\"").append(sortFieldName).append("\": {\n").append("        	\"order\": \"").append(sortOrder).append("\",\n").append("        	\"missing\" : \"_last\"\n").append("      	}\n").append("    	},");
+                }
             }
 
         }
