@@ -4,6 +4,7 @@ import com.lessons.models.grid.GridGetRowsRequestDTO;
 import com.lessons.models.grid.GridGetRowsResponseDTO;
 import com.lessons.models.grid.SortModel;
 import com.lessons.services.GridService;
+import com.lessons.utilities.Constants;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -27,6 +28,55 @@ public class GridController {
 
     @Resource
     private GridService gridService;
+
+
+
+    /**
+     * The "Critical Reports" AG-Grid calls this REST endpoint to load the grid in server-side mode
+     *
+     * @param aGridRequestDTO holds the Request information
+     * @return ResponseEntity that holds a GridGetRowsResponseDTO object
+     * @throws Exception if something bad happens
+     */
+    @RequestMapping(value = "/api/grid/critical-reports/getRows", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<?> getRowsForCriticalReports(@RequestBody GridGetRowsRequestDTO aGridRequestDTO) throws Exception {
+        logger.debug("getRowsForCriticalReports() started.");
+
+        if (aGridRequestDTO.getStartRow() >= aGridRequestDTO.getEndRow() ) {
+            // This is an invalid request
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .body("The endRow must be greater than the startRow.");
+        }
+
+        // Set default raw-query string for this grid  (to limit all results to the critical reports)
+        setDefaultSearchForGrid(aGridRequestDTO, "priority.sort:critical");
+
+        // Change the sort field from "priority" to "priority.sort"  (so the sort is case insensitive -- see the mapping)
+        changeSortFieldToUseElasticFieldsForSorting(aGridRequestDTO, "id");
+
+        // Set Default sorting
+        //  1) If the sorting model is not empty, then do nothing
+        //  2) If the sorting model to empty and rawSearchQuery is empty, then sort by "id" ascending
+        //  3) If the sorting model is empty and rawSearchQuery is not empty, then sort by "_score" descending
+        setDefaultSorting(aGridRequestDTO, "id");
+
+        // Create an array of ES fields to **SEARCH**
+        List<String> esFieldsToSearch = Arrays.asList("id.sort", "description", "display_name.sort", "priority.sort");
+
+        // Create an array of ES fields to **RETURN**   (if this list is empty, then ES will return all fields in the ES mapping)
+        List<String> esFieldsToReturn = Arrays.asList("id", "description", "display_name", "priority");
+
+        // Invoke the GridService to run a search
+        GridGetRowsResponseDTO responseDTO = gridService.getPageOfData("reports", esFieldsToSearch, esFieldsToReturn, aGridRequestDTO);
+
+        // Return the responseDTO object and a 200 status code
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseDTO);
+    }
+
+
 
 
     /**
@@ -137,4 +187,19 @@ public class GridController {
             }
         }
     }
+
+
+    private void setDefaultSearchForGrid(GridGetRowsRequestDTO aGridRequestDTO, String aDefaultQueryString) {
+
+        if (StringUtils.isBlank(aGridRequestDTO.getRawSearchQuery())) {
+            // Search text is empty so set it to search for registered users
+            aGridRequestDTO.setRawSearchQuery(aDefaultQueryString);
+        } else {
+            // Search text is not empty so AND the default search text to the original query
+            String newSearchText = aGridRequestDTO.getRawSearchQuery() + " AND " + aDefaultQueryString;
+            aGridRequestDTO.setRawSearchQuery(newSearchText);
+        }
+    }
+
+
 }

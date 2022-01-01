@@ -58,5 +58,18 @@ export class GridService {
   }
 
 
+  /*
+   * The "Critical Reports" srever side grid invokes this REST endpoint to get data for the grid
+   */
+  public getServerSideDataForCriticalReports(aGridGetRowsRequestDTO: GridGetRowsRequestDTO): Observable<GridGetRowsResponseDTO> {
+    // Construct the URL of the REST call
+    const restUrl = environment.baseUrl + '/api/grid/critical-reports/getRows';
+
+    // Use a POST call to send a JSON body of info
+    return this.httpClient.post <GridGetRowsResponseDTO> (restUrl, aGridGetRowsRequestDTO, {} );
+  }
+
+
+
 
 }
