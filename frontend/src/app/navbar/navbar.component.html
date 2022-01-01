@@ -153,13 +153,25 @@
             </div>
           </mat-list-item>
 
-          <!-- Grid Tab Group Page -->
-          <mat-list-item class="navItem"  [routerLink]="constants.GRID_TAB_GROUP_ROUTE" routerLinkActive="active"
-                         *ngIf="userInfo.pageRoutes.get(constants.GRID_TAB_GROUP_ROUTE)">
-            <a title="Tab Group Page">Grid Tab Group Page</a>
+          <!-- Grid Tab Group / Critical Reports Tab -->
+          <mat-list-item class="navItem"  [routerLink]="[constants.GRID_TAB_GROUP_ROUTE, 1]" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}"
+                         *ngIf="userInfo.pageRoutes.get(constants.GRID_TAB_GROUP_ROUTE + ':startingTab')">
+            <a title="Critical Reports">Critical Reports</a>
             <div fxFlex fxLayoutAlign="end end" >
-              <a [routerLink]="constants.GRID_TAB_GROUP_ROUTE" target="_blank">
-                <i class="fas fa-external-link-alt navItemIcon" title="Open Grid Tab Group Page in a new window"></i>
+              <a [routerLink]="[constants.GRID_TAB_GROUP_ROUTE, 1]" target="_blank">
+                <i class="fas fa-external-link-alt navItemIcon" title="Open Critical Reports in a new window"></i>
+              </a>
+            </div>
+          </mat-list-item>
+
+
+          <!-- Grid Tab Group / All Reports Tab -->
+          <mat-list-item class="navItem"  [routerLink]="[constants.GRID_TAB_GROUP_ROUTE, 2]" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}"
+                         *ngIf="userInfo.pageRoutes.get(constants.GRID_TAB_GROUP_ROUTE + ':startingTab')">
+            <a title="All Reports">All Reports</a>
+            <div fxFlex fxLayoutAlign="end end" >
+              <a [routerLink]="[constants.GRID_TAB_GROUP_ROUTE, 2]" target="_blank">
+                <i class="fas fa-external-link-alt navItemIcon" title="Open All Reports in a new window"></i>
               </a>
             </div>
           </mat-list-item>

@@ -77,7 +77,7 @@ insert into uicontrols(id, name) values(1021, 'page/dashboard/layout');
 insert into uicontrols(id, name) values(1022, 'page/dashboard/grid');
 insert into uicontrols(id, name) values(1023, 'page/dashboard/bar_chart');
 insert into uicontrols(id, name) values(1024, 'page/dashboard/map');
-insert into uicontrols(id, name) values(1025, 'page/reports/grid-tab-group');
+insert into uicontrols(id, name) values(1025, 'page/reports/grid-tab-group/:startingTab');
 
 
 -- Assign ui controls for the 'admin' role

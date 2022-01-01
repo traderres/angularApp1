@@ -108,7 +108,7 @@ const appRoutes: Routes = [
   { path: Constants.DASHBOARD_GRID_PAGE,   component: GridPageComponent,  canActivate: [UserAcknowledgeGuard, PageGuard] },
   { path: Constants.DASHBOARD_LAYOUT_ROUTE,   component: DashboardLayoutComponent,  canActivate: [UserAcknowledgeGuard, PageGuard] },
 
-  { path: Constants.GRID_TAB_GROUP_ROUTE,   component: GridTabGroupPageComponent, canActivate: [PageGuard] },
+  { path: Constants.GRID_TAB_GROUP_ROUTE + ':startingTab',   component: GridTabGroupPageComponent, canActivate: [PageGuard] },
 
 
 
