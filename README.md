@@ -1,5 +1,5 @@
-Angular App1 Lesson 30b / Tab Group Page / Navbar Links to Different Tabs
--------------------------------------------------------------------------
+Angular App1 Lesson 30c / Tab Group Page / Add Server Side Grids
+----------------------------------------------------------------
 
 
 <pre>
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson30b/tab-group/nav-link-to-tab
+    unix> git checkout lesson30c/tab-group/add-grids
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
