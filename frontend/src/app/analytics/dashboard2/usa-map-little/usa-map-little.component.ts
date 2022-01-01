@@ -112,7 +112,7 @@ export class UsaMapLittleComponent implements OnInit, OnDestroy, AfterViewInit {
           this.mapChart = Highcharts.mapChart('usaMapLittlePage1', this.mapOptions);
 
           // Resize the chart to fit its container
-          this.mapOptions.reflow();
+          this.mapChart.reflow();
         });
 
         // Charts are rendered.  So, stop the interval
