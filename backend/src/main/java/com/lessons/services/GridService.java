@@ -26,7 +26,7 @@ public class GridService {
      *  4. Return the GridGetRowsResponseDTO object
      *
      * @param aGridRequestDTO holds information about the request
-     * @return holds the response object (that holds the list of data, p
+     * @return holds the response object (that holds the list of data)
      */
     public GridGetRowsResponseDTO getPageOfData(String aIndexName, List<String> aFieldsToSearch, List<String> aFieldsToReturn, GridGetRowsRequestDTO aGridRequestDTO) throws Exception {
 
@@ -125,13 +125,12 @@ public class GridService {
             // There is a query, so return a query_string clause
             queryStringClause = "  \"query_string\": {\n" +
                     fieldsClause +
-                    "	\"query\": \"" + aCleanedQuery + "\"\n" +
-                    " 	}\n";
+                    "    \"query\": \"" + aCleanedQuery + "\"\n" +
+                    "     }\n";
         }
 
         return queryStringClause;
     }
-
 
 
 
@@ -198,7 +197,7 @@ public class GridService {
                 String filterValue = textColumnFilter.getFilter();
 
                 // Add the filter to the ES query
-                // NOTE: Set the filterValue to lowercase (as the filtered collumn is stored as lowercase)
+                // NOTE: Set the filterValue to lowercase (as the filtered column is stored as lowercase)
                 sbFilterClause.append("\n{ \"term\" : {" )
                         .append(" \"")
                         .append(actualFilterFieldName)
@@ -325,17 +324,43 @@ public class GridService {
 
             if (sortFieldName.equalsIgnoreCase("_score")) {
                 // We are sorting by the _score so do not include the missing: field
-                sbSortClause.append("{\n" + "\"").append(sortFieldName).append("\": {\n").append("        	\"order\": \"").append(sortOrder).append("\"\n").append("      	}\n").append("    	},");
+                sbSortClause
+                        .append("{\n" + "\"")
+                        .append(sortFieldName)
+                        .append("\": {\n")
+                        .append("            \"order\": \"")
+                        .append(sortOrder)
+                        .append("\"\n")
+                        .append("          }\n")
+                        .append("        },");
             }
             else {
                 // We are sorting by a non _score field.  So, include the missing field
                 if (sortOrder.equalsIgnoreCase("asc")) {
                     // Sorting ascending, so set missing to _first  (so nulls are at the top)
-                    sbSortClause.append("{\n" + "\"").append(sortFieldName).append("\": {\n").append("        	\"order\": \"").append(sortOrder).append("\",\n").append("        	\"missing\" : \"_first\"\n").append("      	}\n").append("    	},");
+                    sbSortClause
+                            .append("{\n" + "\"")
+                            .append(sortFieldName)
+                            .append("\": {\n")
+                            .append("            \"order\": \"")
+                            .append(sortOrder)
+                            .append("\",\n")
+                            .append("            \"missing\" : \"_first\"\n")
+                            .append("          }\n")
+                            .append("        },");
                 }
                 else {
-                    // Sort descedngin, so set missing to _last  (so nulls are at the end)
-                    sbSortClause.append("{\n" + "\"").append(sortFieldName).append("\": {\n").append("        	\"order\": \"").append(sortOrder).append("\",\n").append("        	\"missing\" : \"_last\"\n").append("      	}\n").append("    	},");
+                    // Sort descending, so set missing to _last  (so nulls are at the end)
+                    sbSortClause
+                            .append("{\n" + "\"")
+                            .append(sortFieldName)
+                            .append("\": {\n")
+                            .append("            \"order\": \"")
+                            .append(sortOrder)
+                            .append("\",\n")
+                            .append("            \"missing\" : \"_last\"\n")
+                            .append("          }\n")
+                            .append("        },");
                 }
             }
 
