@@ -1,5 +1,5 @@
-Angular App1 Lesson 30c / Tab Group Page / Add "Critical Reports" Side Grids
-----------------------------------------------------------------------------
+Angular App1 Lesson 30c / Tab Group Page / Add "Critical Reports" Grid
+----------------------------------------------------------------------
 
 
 <pre>
