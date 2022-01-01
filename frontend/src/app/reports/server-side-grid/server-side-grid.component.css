@@ -1,3 +1,10 @@
+:host ::ng-deep .ag-body-viewport.ag-layout-normal {
+  /* Force ag-grid to show a vertical scrollbar all of the time to avoid the "bump" */
+  /* The bump appears when the user searches for something that has no matches, then vertical scrollbar disappears and the columns move over */
+  overflow-y: scroll;
+}
+
+
 /**********   L I G H T      M O D E  **********/
 .light .searchBoxValid  {
   width: 250px;                /* Set the width of the search box */
