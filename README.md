@@ -1,5 +1,5 @@
-Angular App1 Lesson 30c / Tab Group Page / Add "Critical Reports" Grid
-----------------------------------------------------------------------
+Angular App1 Lesson 30d / Tab Group Page / Add "All Reports" Grid
+-----------------------------------------------------------------
 
 
 <pre>
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson30c/tab-group/add-critical-reports-grid
+    unix> git checkout lesson30d/tab-group/add-all-reports-grid
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
