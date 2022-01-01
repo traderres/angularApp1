@@ -80,6 +80,7 @@ import { BarChartLittleComponent } from './analytics/dashboard2/bar-chart-little
 import {BarChartPageComponent} from "./analytics/dashboard2/bar-chart-page/bar-chart-page.component";
 import { UserAcknowledgeDialogComponentComponent } from './dialogs/user-acknowledge-dialog-component/user-acknowledge-dialog-component.component';
 import {UserAcknowledgeGuard} from "./guards/user-acknowledge.guard";
+import { GridTabGroupPageComponent } from './analytics/grid-tab-group/grid-tab-group-page/grid-tab-group-page.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -106,6 +107,10 @@ const appRoutes: Routes = [
   { path: Constants.DASHBOARD_USA_MAP_PAGE,   component: UsaMapPageComponent, canActivate: [UserAcknowledgeGuard, PageGuard] },
   { path: Constants.DASHBOARD_GRID_PAGE,   component: GridPageComponent,  canActivate: [UserAcknowledgeGuard, PageGuard] },
   { path: Constants.DASHBOARD_LAYOUT_ROUTE,   component: DashboardLayoutComponent,  canActivate: [UserAcknowledgeGuard, PageGuard] },
+
+  { path: Constants.GRID_TAB_GROUP_ROUTE,   component: GridTabGroupPageComponent, canActivate: [PageGuard] },
+
+
 
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
   { path: '',                  component: DashboardLayoutComponent,  canActivate: [UserAcknowledgeGuard] },
@@ -158,7 +163,8 @@ const appRoutes: Routes = [
     UsaMapPageComponent,
     BarChartLittleComponent,
     BarChartPageComponent,
-    UserAcknowledgeDialogComponentComponent
+    UserAcknowledgeDialogComponentComponent,
+    GridTabGroupPageComponent
   ],
   imports: [
     AppRoutingModule,

@@ -77,8 +77,7 @@ insert into uicontrols(id, name) values(1021, 'page/dashboard/layout');
 insert into uicontrols(id, name) values(1022, 'page/dashboard/grid');
 insert into uicontrols(id, name) values(1023, 'page/dashboard/bar_chart');
 insert into uicontrols(id, name) values(1024, 'page/dashboard/map');
-
-
+insert into uicontrols(id, name) values(1025, 'page/reports/grid-tab-group');
 
 
 -- Assign ui controls for the 'admin' role
@@ -106,6 +105,7 @@ insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1021);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1022);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1023);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1024);
+insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1025);
 
 
 -- Assign ui controls for the 'reader' role  (cannot get to addReport)
@@ -133,4 +133,4 @@ insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1021);
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1022);
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1023);
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1024);
-
+insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1025);
