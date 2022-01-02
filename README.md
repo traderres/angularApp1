@@ -1,5 +1,5 @@
-Angular App1 Lesson 30d / Tab Group Page / Add "All Reports" Grid
------------------------------------------------------------------
+Angular App1 Lesson 30e / Tab Group Page / Add "Edit Report" Page (with fixed title)
+------------------------------------------------------------------------------------
 
 
 <pre>
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson30d/tab-group/add-all-reports-grid
+    unix> git checkout lesson30e/tab-group/add-details-page
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
