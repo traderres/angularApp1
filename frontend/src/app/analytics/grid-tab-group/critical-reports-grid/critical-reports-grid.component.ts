@@ -18,7 +18,7 @@ import {GetOnePreferenceDTO} from "../../../models/preferences/get-one-preferenc
   styleUrls: ['./critical-reports-grid.component.css']
 })
 export class CriticalReportsGridComponent implements OnInit, OnDestroy, AfterViewInit {
-  private readonly PAGE_NAME: string = "critical-reports=server-grid";
+  private readonly PAGE_NAME: string = "critical-reports-server-grid";
   private userHasPastColumnState: boolean = false;
   private listenForGridChanges: boolean = false;
   private saveGridColumnStateEventsSubject: Subject<any> = new Subject();
