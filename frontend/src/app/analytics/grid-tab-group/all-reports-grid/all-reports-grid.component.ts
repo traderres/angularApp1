@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ColumnApi, ColumnState, GridApi, GridOptions, IServerSideDatasource, IServerSideGetRowsParams,  ServerSideStoreType} from "ag-grid-community";
+import {Subject, Subscription} from "rxjs";
+import {ThemeOptionDTO} from "../../../models/theme-option-dto";
+import {ColumnApi, ColumnState, GridApi, GridOptions, IServerSideDatasource, IServerSideGetRowsParams, ServerSideStoreType} from "ag-grid-community";
+import {ApplyColumnStateParams} from "ag-grid-community/dist/lib/columnController/columnApi";
 import {GridGetRowsRequestDTO} from "../../../models/grid/grid-get-rows-request-dto";
 import {GridGetRowsResponseDTO} from "../../../models/grid/grid-get-rows-response-dto";
 import {GridService} from "../../../services/grid.service";
-import {Subject, Subscription} from "rxjs";
-import {ThemeOptionDTO} from "../../../models/theme-option-dto";
-import {ApplyColumnStateParams} from "ag-grid-community/dist/lib/columnController/columnApi";
 import {PreferenceService} from "../../../services/preference.service";
 import {ThemeService} from "../../../services/theme.service";
 import {debounceTime, switchMap} from "rxjs/operators";
@@ -13,12 +13,12 @@ import {Constants} from "../../../utilities/constants";
 import {GetOnePreferenceDTO} from "../../../models/preferences/get-one-preference-dto";
 
 @Component({
-  selector: 'app-critical-reports-grid',
-  templateUrl: './critical-reports-grid.component.html',
-  styleUrls: ['./critical-reports-grid.component.css']
+  selector: 'app-all-reports-grid',
+  templateUrl: './all-reports-grid.component.html',
+  styleUrls: ['./all-reports-grid.component.css']
 })
-export class CriticalReportsGridComponent implements OnInit, OnDestroy, AfterViewInit {
-  private readonly PAGE_NAME: string = "critical-reports-server-grid";
+export class AllReportsGridComponent implements OnInit, OnDestroy, AfterViewInit {
+  private readonly PAGE_NAME: string = "all-reports-server-grid";
   private userHasPastColumnState: boolean = false;
   private listenForGridChanges: boolean = false;
   private saveGridColumnStateEventsSubject: Subject<any> = new Subject();
@@ -202,7 +202,7 @@ export class CriticalReportsGridComponent implements OnInit, OnDestroy, AfterVie
       let getRowsRequestDTO: GridGetRowsRequestDTO = new GridGetRowsRequestDTO(params.request, this.searchAfterClause, this.rawSearchQuery)
 
       // Subscribe to this service method to get the data
-      this.gridService.getServerSideDataForCriticalReports(getRowsRequestDTO)
+      this.gridService.getServerSideDataForAllReports(getRowsRequestDTO)
         .subscribe((response: GridGetRowsResponseDTO) => {
           // REST Call finished successfully
 

@@ -82,6 +82,7 @@ import { UserAcknowledgeDialogComponentComponent } from './dialogs/user-acknowle
 import {UserAcknowledgeGuard} from "./guards/user-acknowledge.guard";
 import { GridTabGroupPageComponent } from './analytics/grid-tab-group/grid-tab-group-page/grid-tab-group-page.component';
 import { CriticalReportsGridComponent } from './analytics/grid-tab-group/critical-reports-grid/critical-reports-grid.component';
+import { AllReportsGridComponent } from './analytics/grid-tab-group/all-reports-grid/all-reports-grid.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -166,7 +167,8 @@ const appRoutes: Routes = [
     BarChartPageComponent,
     UserAcknowledgeDialogComponentComponent,
     GridTabGroupPageComponent,
-    CriticalReportsGridComponent
+    CriticalReportsGridComponent,
+    AllReportsGridComponent
   ],
   imports: [
     AppRoutingModule,
