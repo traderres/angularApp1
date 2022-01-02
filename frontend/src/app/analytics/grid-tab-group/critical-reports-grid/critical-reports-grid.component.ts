@@ -1,5 +1,14 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ColumnApi, ColumnState, GridApi, GridOptions, IServerSideDatasource, IServerSideGetRowsParams,  ServerSideStoreType} from "ag-grid-community";
+import {
+  ColumnApi,
+  ColumnState,
+  GridApi,
+  GridOptions,
+  ICellRendererParams,
+  IServerSideDatasource,
+  IServerSideGetRowsParams,
+  ServerSideStoreType
+} from "ag-grid-community";
 import {GridGetRowsRequestDTO} from "../../../models/grid/grid-get-rows-request-dto";
 import {GridGetRowsResponseDTO} from "../../../models/grid/grid-get-rows-response-dto";
 import {GridService} from "../../../services/grid.service";
@@ -11,6 +20,8 @@ import {ThemeService} from "../../../services/theme.service";
 import {debounceTime, switchMap} from "rxjs/operators";
 import {Constants} from "../../../utilities/constants";
 import {GetOnePreferenceDTO} from "../../../models/preferences/get-one-preference-dto";
+import {CriticalReportsActionRendererComponent} from "../critical-reports-action-renderer/critical-reports-action-renderer.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-critical-reports-grid',
@@ -265,12 +276,22 @@ export class CriticalReportsGridComponent implements OnInit, OnDestroy, AfterVie
 
   public columnDefs = [
     {
+      headerName: 'Action',
+      filter: false,
+      sortable: false,
+      cellStyle: {'text-align': 'left'},
+      cellRenderer: 'editActionRenderer',
+      cellRendererParams: {
+        editButtonClicked: (params: ICellRendererParams) => this.editReportClicked(params),
+      }
+    },
+    {
       headerName: 'Id',
       field: 'id',
       filter: 'agNumberColumnFilter',           // numeric filter
       filterParams: this.textFilterParams,
       cellClass: 'grid-text-cell-format',
-      checkboxSelection: false
+      checkboxSelection: false,
     },
     {
       headerName: 'Report Name',
@@ -295,8 +316,13 @@ export class CriticalReportsGridComponent implements OnInit, OnDestroy, AfterVie
     }
   ];
 
+
+  // Tell ag-grid which cell-renderers will be available
   // This is a map of component names that correspond to components that implement ICellRendererAngularComp
-  public  frameworkComponents: any = {  };
+  public frameworkComponents: any = {
+    editActionRenderer: CriticalReportsActionRendererComponent
+  };
+
 
   private gridApi: GridApi;
   private gridColumnApi: ColumnApi;
@@ -304,6 +330,7 @@ export class CriticalReportsGridComponent implements OnInit, OnDestroy, AfterVie
   @ViewChild('searchBox',  { read: ElementRef }) searchBox: ElementRef;
 
   constructor(private gridService: GridService,
+              private router: Router,
               private preferenceService: PreferenceService,
               private themeService: ThemeService) {}
 
@@ -400,5 +427,15 @@ export class CriticalReportsGridComponent implements OnInit, OnDestroy, AfterVie
     });
 
   }  // end of onGridReady()
+
+
+  /*
+   * User clicked one of the Edit Report Buttons (in the grid)
+   */
+  private editReportClicked(params: ICellRendererParams) {
+    // Navigate to the "Edit Report Details" page and passed-in the reportId
+    this.router.navigate([Constants.GRID_TAB_GROUP_EDIT_DETAILS_ROUTE, params.data.id]).then();
+  }
+
 
 }

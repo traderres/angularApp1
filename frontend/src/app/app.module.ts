@@ -83,6 +83,8 @@ import {UserAcknowledgeGuard} from "./guards/user-acknowledge.guard";
 import { GridTabGroupPageComponent } from './analytics/grid-tab-group/grid-tab-group-page/grid-tab-group-page.component';
 import { CriticalReportsGridComponent } from './analytics/grid-tab-group/critical-reports-grid/critical-reports-grid.component';
 import { AllReportsGridComponent } from './analytics/grid-tab-group/all-reports-grid/all-reports-grid.component';
+import { EditDetailsPageComponent } from './analytics/grid-tab-group/edit-details-page/edit-details-page.component';
+import { CriticalReportsActionRendererComponent } from './analytics/grid-tab-group/critical-reports-action-renderer/critical-reports-action-renderer.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -111,7 +113,7 @@ const appRoutes: Routes = [
   { path: Constants.DASHBOARD_LAYOUT_ROUTE,   component: DashboardLayoutComponent,  canActivate: [UserAcknowledgeGuard, PageGuard] },
 
   { path: Constants.GRID_TAB_GROUP_ROUTE + ':startingTab',   component: GridTabGroupPageComponent, canActivate: [PageGuard] },
-
+  { path: Constants.GRID_TAB_GROUP_EDIT_DETAILS_ROUTE + ':id',   component: EditDetailsPageComponent, canActivate: [PageGuard] },
 
 
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
@@ -168,7 +170,9 @@ const appRoutes: Routes = [
     UserAcknowledgeDialogComponentComponent,
     GridTabGroupPageComponent,
     CriticalReportsGridComponent,
-    AllReportsGridComponent
+    AllReportsGridComponent,
+    EditDetailsPageComponent,
+    CriticalReportsActionRendererComponent
   ],
   imports: [
     AppRoutingModule,
