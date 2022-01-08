@@ -1,5 +1,5 @@
-Angular App1 Lesson 30
-----------------------
+Angular App1 Lesson 31 / Advanced Custom Validators
+---------------------------------------------------
 
 
 <pre>
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson30/more-validation
+    unix> git checkout lesson31/custom-validators
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
