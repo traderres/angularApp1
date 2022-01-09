@@ -48,6 +48,7 @@ import { BannerComponent } from './banner/banner.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { SearchBoxDetailsComponent } from './search/search-box-details/search-box-details.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -108,6 +109,7 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
