@@ -47,6 +47,7 @@ import {ChartDrillDownComponent} from "./analytics/chart-drill-down/chart-drill-
 import { BannerComponent } from './banner/banner.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { SearchBoxComponent } from './search/search-box/search-box.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -105,6 +106,7 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
