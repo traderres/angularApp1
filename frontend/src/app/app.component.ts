@@ -65,8 +65,16 @@ export class AppComponent implements OnInit, OnDestroy {
         let errorFormData: ErrorDialogFormData = new ErrorDialogFormData();
         errorFormData.error_text = aError.statusText;
         errorFormData.status_code = aError.status
-        errorFormData.message = aError.error;      // NOTE:  Use aError.error here
         errorFormData.url = aError.url;
+
+        if (typeof aError.error === 'object') {
+          // The aError.error is an object.  So, pull the error from aError.error.message
+          errorFormData.message = aError.error.message;
+        }
+        else {
+          // The aError.error is not an object.  So, pull the error from aError.error
+          errorFormData.message = aError.error;
+        }
 
         if (this.errorDialogIsOpen) {
           // The error dialog is already open -- so close it
