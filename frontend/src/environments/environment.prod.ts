@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   baseUrl: '.',
-  agGridLicenseKey: 'For_Trialing_ag-Grid_Only-Not_For_Real_Development_Or_Production_Projects-Valid_Until-18_March_2021_[v2]_MTYxNjAyNTYwMDAwMA==948d8f51e73a17b9d78e03e12b9bf934'
+  agGridLicenseKey: 'CompanyName=RBR Technologies,LicensedGroup=RBRDev01,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=1,LicensedProductionInstancesCount=0,AssetReference=AG-017601,ExpiryDate=28_July_2022_[v2]_MTY1ODk2MjgwMDAwMA==5bf889a6d35999955c2ab2fab4ec4cb3'
 };
