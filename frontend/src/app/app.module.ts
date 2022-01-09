@@ -51,6 +51,7 @@ import { SearchBoxDetailsComponent } from './search/search-box-details/search-bo
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import {PageGuard} from "./guards/page.guard";
 import {Constants} from "./utilities/constants";
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -112,6 +113,7 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
