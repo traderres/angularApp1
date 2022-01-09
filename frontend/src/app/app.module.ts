@@ -35,6 +35,7 @@ import {ErrorInterceptor} from "./errorHandler/error.interceptor";
 import { EditReportComponent } from './reports/edit-report/edit-report.component';
 import {FileUploadModule} from "ng2-file-upload";
 import { UploadReportComponent } from './reports/upload-report/upload-report.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -86,6 +87,7 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     ReactiveFormsModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatNativeDateModule,
     FileUploadModule,
     RouterModule.forRoot(appRoutes)
