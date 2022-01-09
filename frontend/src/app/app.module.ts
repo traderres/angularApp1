@@ -32,6 +32,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { ErrorDialogComponent } from './errorHandler/error-dialog/error-dialog.component';
 import {ErrorInterceptor} from "./errorHandler/error.interceptor";
+import {MatDialogModule} from "@angular/material/dialog";
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -79,8 +80,9 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     ReactiveFormsModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatNativeDateModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'standard' } },
