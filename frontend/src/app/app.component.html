@@ -1,3 +1,5 @@
+<ng-container *ngIf="this.preferencesObs | async">
+
 <ng-container *ngIf="this.bannerObs | async">
   <!-- The banner info has been loaded.  So, display the rest of the page -->
 
@@ -45,5 +47,7 @@
   </div>
 
 </div>
+
+</ng-container>
 
 </ng-container>

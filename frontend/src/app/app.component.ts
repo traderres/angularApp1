@@ -11,6 +11,8 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {tap} from "rxjs/operators";
 import {GetOnePreferenceDTO} from "./models/preferences/get-one-preference-dto";
 import {ThemeService} from "./services/theme.service";
+import {PreferenceService} from "./services/preference.service";
+import {Constants} from "./utilities/constants";
 
 @Component({
   selector: 'app-root',
@@ -43,17 +45,30 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public disableAnimations: boolean = true;
 
   public bannerObs: Observable<GetOnePreferenceDTO>
+  public preferencesObs: Observable<GetOnePreferenceDTO>;
+
 
 
   constructor(private navbarService: NavbarService,
               private errorService: ErrorService,
               private bannerService: BannerService,
               private themeService: ThemeService,
+              private preferenceService: PreferenceService,
               private matDialog: MatDialog)
   { }
 
 
   public ngOnInit(): void {
+
+    // Setup the preferences observable  (the async pipe will invoke this REST call to get the light-mode/dark-mode preference)
+    this.preferencesObs = this.preferenceService.getPreferenceValueWithoutPage(Constants.THEME_PREFERENCE_NAME).pipe(
+      tap((aData: GetOnePreferenceDTO) => {
+        // The REST call came back with some data
+
+        // Initialize the theme service
+        this.themeService.initialize(aData.value);
+      })
+    );
 
 
     // Normally, we would get this value from a database lookup

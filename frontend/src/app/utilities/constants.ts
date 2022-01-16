@@ -18,7 +18,7 @@ export enum Constants {
   REPORT_SUBMIT_MARKDOWN       = "page/reports/markdown-submit",
   REPORT_PDFVIEWER_ROUTE       = "page/reports/pdf-viewer",
 
-
-COLUMN_STATE_PREFERENCE_NAME = "grid_column_state"
+  THEME_PREFERENCE_NAME = "theme",                      // Preference name for the theme
+   COLUMN_STATE_PREFERENCE_NAME = "grid_column_state"
 
 }
