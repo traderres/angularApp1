@@ -165,6 +165,7 @@ export class WelcomeComponent implements OnInit, OnDestroy, AfterViewInit {
             yAxis: {
               min: 0,
               max: 20,
+              tickPositions: [0, 20],    // put min and max values in this array
               stops: [
                 [1, '#800080'] // purple
               ],
@@ -194,6 +195,7 @@ export class WelcomeComponent implements OnInit, OnDestroy, AfterViewInit {
             yAxis: {
               min: 0,
               max: 50,
+              tickPositions: [0, 50],    // put min and max values in this array
               stops: [
                 [1, '#FF0000'] // red
               ],
@@ -221,6 +223,7 @@ export class WelcomeComponent implements OnInit, OnDestroy, AfterViewInit {
             yAxis: {
               min: 0,
               max: 50,
+              tickPositions: [0, 50],    // put min and max values in this array
               stops: [
                 [1, '#008000'] // green
               ],
