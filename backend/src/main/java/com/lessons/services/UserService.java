@@ -222,4 +222,20 @@ public class UserService {
         return accessMap;
     }
 
+
+    /**
+     * End the User's Session
+     */
+    public void endSession() {
+        // Get the UserInfo object from Spring Security
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        if (securityContext == null) {
+            throw new RuntimeException("Error in endSession():  SecurityContext is null.  This should never happen.");
+        }
+
+        // Clear the user's authentication
+        securityContext.setAuthentication(null);
+    }
+
+
 }

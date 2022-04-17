@@ -387,3 +387,15 @@ https://colorzilla.com/gradient-editor/#ffffff+20,ffffff+40,009ffd+100 */
   font-weight: 600;
   color: inherit !important;
 }
+
+
+.logout-backdrop {
+  backdrop-filter: blur(4px);
+
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#19134b+0,bcdffb+100 */
+  background: #19134b; /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  #19134b 0%, #bcdffb 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg,  #19134b 0%,#bcdffb 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg,  #19134b 0%,#bcdffb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#19134b', endColorstr='#bcdffb',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}

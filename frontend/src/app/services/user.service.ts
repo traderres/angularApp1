@@ -16,6 +16,19 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
+  // Clears all cached things in this service
+  public clearCache(): void{
+    this.cachedObservable = null;
+    this.cachedAckObservable = null;
+  }
+
+  // Returns an observable that will end the users session in the backend
+  public logout() : Observable<string> {
+    const restUrl = environment.baseUrl + "/api/user/logout";
+    return this.httpClient.post<string>(restUrl, "", {responseType:'json'});
+  }
+
+
   /*
    * Return an observable that holds information about the user
    * -- The UserInfoDTO holds the user's name and map of routes

@@ -25,7 +25,7 @@
     <div fxFlex  fxLayoutAlign="center center">
 
       <!-- Application Title -->
-      <h1 class="app1Logo clickable" [routerLink]="'/'">
+      <h1 class="appLogo clickable" [routerLink]="'/'">
         Angular App1
       </h1>
     </div>
@@ -38,7 +38,7 @@
 
 
       <!-- User Menu -->
-      <a class="button" (click)="toggleUserNavbar()">
+      <a class="button" [mat-menu-trigger-for]="appMenu" title="Log Out">
         <span class="username">John.Smith</span>&nbsp;
         <span class="fa fa-user"></span>
       </a>
@@ -46,3 +46,9 @@
 
   </div>
 </div>
+
+
+<!-- Popup User Menu -->
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item (click)="this.userClickedLogout()">Logout</button>
+</mat-menu>

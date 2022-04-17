@@ -78,4 +78,19 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
+
+    /**
+     * POST /api/user/logout
+     */
+    @RequestMapping(value = "/api/user/logout", method = RequestMethod.POST, produces = "application/json")
+    @PreAuthorize("hasAnyRole('READER', 'ADMIN')")
+    public ResponseEntity<?> logoutUser() {
+
+        // End the user's session
+        userService.endSession();
+
+        // Return a response of 200 and an empty string
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
 }
