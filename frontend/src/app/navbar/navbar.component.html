@@ -102,6 +102,18 @@
             </div>
           </mat-list-item>
 
+
+          <!-- Master Detail Grid -->
+          <mat-list-item class="navItem" [routerLink]="constants.MATER_DETAIL_REPORT_VIEW" routerLinkActive="active"
+                         *ngIf="userInfo.pageRoutes.get(constants.MATER_DETAIL_REPORT_VIEW)">
+            <a title="Master Detail Grid">Master Detail Grid</a>
+            <div fxFlex fxLayoutAlign="end end" >
+              <a [routerLink]="constants.MATER_DETAIL_REPORT_VIEW" target="_blank">
+                <i class="fas fa-external-link-alt navItemIcon" title="Open 'Master Detail Grid' a new window"></i>
+              </a>
+            </div>
+          </mat-list-item>
+
         </div>  <!-- End of navMenuGroup -->
       </ng-container>
 

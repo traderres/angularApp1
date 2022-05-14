@@ -53,6 +53,7 @@ insert into roles(id, name) values( 2, 'READER');
 -- Add the uicontrols records
 -- ASSUMPTION:  These routes match your routes in constants.ts
 --
+insert into uicontrols(id, name) values(1000, 'page/reports/master-detail-view');
 insert into uicontrols(id, name) values(1001, 'page/viewReports');
 insert into uicontrols(id, name) values(1002, 'page/reports/add');
 insert into uicontrols(id, name) values(1003, 'page/reports/add2');
@@ -72,6 +73,7 @@ insert into uicontrols(id, name) values(1016, 'page/reports/grid');
 
 
 -- Assign ui controls for the 'admin' role
+insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1000);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1001);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1002);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1003);
@@ -80,6 +82,7 @@ insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1016);
 
 
 -- Assign ui controls for the 'reader' role  (cannot get to addReport)
+insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1000);
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1001);
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1002);
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1003);

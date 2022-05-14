@@ -1,0 +1,18 @@
+<div fxLayout="column" fxLayoutGap="10px" style=" padding:15px 15px; overflow-y: auto; height: 100%">
+
+  <div>
+    ID is {{ this.rowData.id }}
+  </div>
+
+  <div>
+    Priority is {{ this.rowData.priority }}
+  </div>
+
+  <div>
+    Name is {{ this.rowData.name }}
+  </div>
+
+  <button mat-raised-button color="primary" style="width: 100px" (click)="this.updateClicked()">
+     Update
+  </button>
+</div>

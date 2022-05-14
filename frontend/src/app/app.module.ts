@@ -57,6 +57,8 @@ import { PriorityCellCustomRendererComponent } from './reports/report-grid-view/
 import { ReportGridActionCellRendererComponent } from './reports/report-grid-view/report-grid-action-cell-renderer/report-grid-action-cell-renderer.component';
 import { UpdatePriorityDialogComponent } from './reports/report-grid-view/update-priority-dialog-component/update-priority-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { MasterDetailGridComponent } from './reports/master-detail/master-detail-grid/master-detail-grid.component';
+import { CustomDetailRendererComponent } from './reports/master-detail/custom-detail-renderer/custom-detail-renderer.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -74,6 +76,7 @@ const appRoutes: Routes = [
   { path: Constants.CHART1_ROUTE,       component: Chart1Component,  canActivate: [PageGuard] },
   { path: Constants.CHART2_ROUTE,       component: Chart2Component,  canActivate: [PageGuard] },
   { path: Constants.LONGVIEW_REPORT,     component: LongViewOuterReportComponent,  canActivate: [PageGuard] },
+  { path: Constants.MATER_DETAIL_REPORT_VIEW,  component: MasterDetailGridComponent,  canActivate: [PageGuard] },
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
   { path: '',                  component: WelcomeComponent},
   { path: '**',                component: NotFoundComponent}
@@ -108,7 +111,9 @@ const appRoutes: Routes = [
     ReportGridViewComponent,
     PriorityCellCustomRendererComponent,
     ReportGridActionCellRendererComponent,
-    UpdatePriorityDialogComponent
+    UpdatePriorityDialogComponent,
+    MasterDetailGridComponent,
+    CustomDetailRendererComponent
   ],
   imports: [
     AppRoutingModule,
