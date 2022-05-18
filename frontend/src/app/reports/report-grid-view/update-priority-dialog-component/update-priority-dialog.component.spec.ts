@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UpdatePriorityDialogComponent } from './update-priority-dialog.component';
 
@@ -6,7 +6,7 @@ describe('UpdatePriorityDialogComponentComponent', () => {
   let component: UpdatePriorityDialogComponent;
   let fixture: ComponentFixture<UpdatePriorityDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UpdatePriorityDialogComponent ]
     })
