@@ -259,6 +259,12 @@
 
     </mat-nav-list>
 
+    <ng-container *ngIf="(this.versionInfoObs | async) as versionDTO">
+      <mat-label style="position: absolute; bottom: 5px; left: 5px">
+        <span class="version-label">{{versionDTO.version}}</span>
+      </mat-label>
+    </ng-container>
+
   </ng-container>
 
 </div>

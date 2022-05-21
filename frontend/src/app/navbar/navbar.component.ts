@@ -5,6 +5,8 @@ import {Observable, Subscription} from "rxjs";
 import {UserInfoDTO} from "../models/user-info-dto";
 import {ThemeService} from "../services/theme.service";
 import {ThemeOptionDTO} from "../models/theme-option-dto";
+import {NavbarService} from "../services/navbar.service";
+import {GetVersionDTO} from "../models/get-version-dto";
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +22,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private themeStateSubscription: Subscription;
   public currentTheme: ThemeOptionDTO;
 
+  public versionInfoObs: Observable<GetVersionDTO>;
+
   constructor(private userService: UserService,
+              private navbarService: NavbarService,
               private themeService: ThemeService) { }
 
   public ngOnInit(): void {
@@ -33,6 +38,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // Setup an observable to get the UserInfo
     // NOTE:  The HTML Template uses an async pipe to subscribe and unsubscribe to this observable
     this.userInfoObs = this.userService.getUserInfo();
+
+    // Setup an observable to get the app-version-info
+    // NOTE:  The Async Pipe will subscribe and unsubscribe to this observable
+    this.versionInfoObs = this.navbarService.getVersionInfo()
   }
 
   public ngOnDestroy(): void {

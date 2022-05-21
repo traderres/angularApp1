@@ -1,6 +1,10 @@
 
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
+import {GetVersionDTO} from "../models/get-version-dto";
+import {environment} from "../../environments/environment";
+import {JobStatusDTO} from "../models/job-status-dto";
+import {HttpClient} from "@angular/common/http";
 
 class NavbarState {
   isAppNavbarDisplayed: boolean;
@@ -16,7 +20,7 @@ export class NavbarService  {
   private navbarState: NavbarState = new NavbarState();
 
 
-  public constructor() {
+  public constructor(private httpClient: HttpClient) {
     // Initialize the navbarState
 
     // The AppNavBar will be visible on startup
@@ -63,6 +67,14 @@ export class NavbarService  {
 
     // Send a message to the user-navbar (to tell the navbar to show or hide)
     this.navbarStateSubject.next(this.navbarState);
+  }
+
+  public getVersionInfo(): Observable<GetVersionDTO> {
+    // Construct the URL of the REST call
+    const restUrl = environment.baseUrl + '/api/version';
+
+    // Return an observable
+    return this.httpClient.get <GetVersionDTO>(restUrl);
   }
 
 }
