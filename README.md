@@ -1,5 +1,5 @@
-Angular App1 Lesson 35 / Upgrade to Angular 11
-----------------------------------------------
+Angular App1 Lesson 36 / Show Maven Version
+-------------------------------------------
 
 
 <pre>
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson35/upgrade-to-angular-11
+    unix> git checkout lesson36/show-maven-version
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
