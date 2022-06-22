@@ -26,6 +26,18 @@
       </mat-form-field>
       <br/>
 
+      <mat-form-field>
+        <mat-label>Enter Phone Number</mat-label>
+
+        <!-- Phone Number Text Field -->
+        <input matInput type="text" formControlName="phone_number" placeholder="(555) 555-5555" maxlength="14" appPhoneMask />
+
+        <mat-error *ngIf="myForm.controls.phone_number.errors?.required" >Please provide a phone number</mat-error>
+        <mat-error *ngIf="myForm.controls.phone_number.errors?.pattern" >Please enter a valid phone number</mat-error>
+
+      </mat-form-field>
+      <br/>
+
       <ng-container *ngIf="data.report_sources; else loadingReportSources">
         <!-- Report Sources are loaded -->
         <mat-form-field style="margin-top: 20px">
@@ -115,11 +127,7 @@
 </mat-card>
 
 <pre>
-myForm.valid={{this.myForm.valid}}
-  myForm.controls.report_name.errors={{this.myForm.controls?.report_name?.errors | json}}
-  myForm.controls.priority.errors={{this.myForm.controls?.priority?.errors | json}}
-  myForm.controls.source.errors={{this.myForm.controls?.source?.errors | json}}
-  myForm.controls.authors.errors={{this.myForm.controls?.authors?.errors | json}}
+  myForm.controls.phone_number.value={{this.myForm.controls.phone_number.value}}
 </pre>
 
 </ng-container>

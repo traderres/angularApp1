@@ -86,6 +86,7 @@ import { AllReportsGridComponent } from './analytics/grid-tab-group/all-reports-
 import { EditDetailsPageComponent } from './analytics/grid-tab-group/edit-details-page/edit-details-page.component';
 import { CriticalReportsActionRendererComponent } from './analytics/grid-tab-group/critical-reports-action-renderer/critical-reports-action-renderer.component';
 import { UserIsLoggedOutDialogComponent } from './dialogs/user-is-logged-out-dialog/user-is-logged-out-dialog.component';
+import { PhoneMaskDirective } from './directives/phone-mask.directive';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -174,7 +175,8 @@ const appRoutes: Routes = [
     AllReportsGridComponent,
     EditDetailsPageComponent,
     CriticalReportsActionRendererComponent,
-    UserIsLoggedOutDialogComponent
+    UserIsLoggedOutDialogComponent,
+    PhoneMaskDirective
   ],
   imports: [
     AppRoutingModule,

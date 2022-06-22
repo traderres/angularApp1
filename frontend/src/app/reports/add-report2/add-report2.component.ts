@@ -51,9 +51,8 @@ export class AddReport2Component implements OnInit {
         ]],
 
       source: ['',  null],
-
       priority:  ['', Validators.required],
-
+      phone_number: [null, [Validators.required, Validators.pattern(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/)]],
       authors:  ['',
         [
           Validators.required,
