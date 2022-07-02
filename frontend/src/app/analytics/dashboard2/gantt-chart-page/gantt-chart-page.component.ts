@@ -149,47 +149,6 @@ export class GanttChartPageComponent  implements OnInit, OnDestroy, AfterViewIni
       max: Date.UTC(2021, 5, 30)
     },
 
-    // exporting: {
-    //   menuItemDefinitions: {
-    //     viewFullscreen: {
-    //       onclick: function() {
-    //         // @ts-ignore
-    //         let container = this.renderTo;
-    //
-    //         console.log('container.height=', container.height);
-    //
-    //         if (container.requestFullscreen) {
-    //           container.requestFullscreen();
-    //         } else if (container.mozRequestFullScreen) {
-    //           container.mozRequestFullScreen();
-    //         } else if (container.webkitRequestFullscreen) {
-    //           container.webkitRequestFullscreen();
-    //         } else if (container.msRequestFullscreen) {
-    //           container.msRequestFullscreen();
-    //         }
-    //       },
-    //       text: 'View in Full Screen'
-    //     }
-    //   },
-    //   buttons: {
-    //     contextButton: {
-    //       menuItems:  [
-    //         'viewFullscreen',
-    //         'printChart',
-    //         'separator',
-    //         'downloadPNG',
-    //         'downloadJPEG',
-    //         'downloadPDF',
-    //         'downloadSVG',
-    //         'separator',
-    //         'downloadCSV',
-    //         'downloadXLS',
-    //       ]
-    //     }
-    //   }
-    // },
-
-
     series: [
       {
         type: "gantt",
