@@ -572,7 +572,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     navigation: {
       buttonOptions: {
-        symbolStroke: '#DDDDDD',
+        // symbolStroke: '#DDDDDD',
         theme: {
           fill: '#505053'
         }

@@ -41,7 +41,6 @@ import { LongViewOuterReportComponent } from './reports/long-view-outer-report/l
 import { LongViewInternalNavReportComponent } from './reports/long-view-internal-nav-report/long-view-internal-nav-report.component';
 import { DashboardComponent } from './analytics/dashboard/dashboard.component';
 import {MatGridListModule} from "@angular/material/grid-list";
-import { HighchartsChartModule } from 'highcharts-angular';
 import { UsaMapComponent } from './analytics/usa-map/usa-map.component';
 import {ChartDrillDownComponent} from "./analytics/chart-drill-down/chart-drill-down.component";
 import { BannerComponent } from './banner/banner.component';
@@ -78,6 +77,8 @@ import { UsaMapLittleComponent } from './analytics/dashboard2/usa-map-little/usa
 import { GridLittleComponent } from './analytics/dashboard2/grid-little/grid-little.component';
 import { BarChartLittleComponent } from './analytics/dashboard2/bar-chart-little/bar-chart-little.component';
 import {BarChartPageComponent} from "./analytics/dashboard2/bar-chart-page/bar-chart-page.component";
+import { GanttChartLittleComponent } from './analytics/dashboard2/gantt-chart-little/gantt-chart-little.component';
+import { GanttChartPageComponent } from './analytics/dashboard2/gantt-chart-page/gantt-chart-page.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -104,6 +105,7 @@ const appRoutes: Routes = [
   { path: Constants.DASHBOARD_USA_MAP_PAGE,   component: UsaMapPageComponent, canActivate: [PageGuard] },
   { path: Constants.DASHBOARD_GRID_PAGE,   component: GridPageComponent,  canActivate: [PageGuard] },
   { path: Constants.DASHBOARD_LAYOUT_ROUTE,   component: DashboardLayoutComponent,  canActivate: [PageGuard] },
+  { path: Constants.DASHBOARD_GANT_PAGE,   component: GanttChartPageComponent,  canActivate: [PageGuard] },
 
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
   { path: '',                  component: DashboardLayoutComponent},
@@ -155,7 +157,9 @@ const appRoutes: Routes = [
     UsaMapLittleComponent,
     UsaMapPageComponent,
     BarChartLittleComponent,
-    BarChartPageComponent
+    BarChartPageComponent,
+    GanttChartLittleComponent,
+    GanttChartPageComponent
   ],
   imports: [
     AppRoutingModule,
@@ -167,7 +171,6 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     FormsModule,
     HttpClientModule,
-    HighchartsChartModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,

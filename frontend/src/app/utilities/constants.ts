@@ -24,6 +24,7 @@ export enum Constants {
   DASHBOARD_GRID_PAGE          = "page/dashboard/grid",
   DASHBOARD_BAR_CHART_PAGE     = "page/dashboard/bar_chart",
   DASHBOARD_USA_MAP_PAGE       = "page/dashboard/map",
+  DASHBOARD_GANT_PAGE          = "page/dashboard/gantt",
 
   COLUMN_STATE_PREFERENCE_NAME = "grid_column_state"
 }

@@ -11,7 +11,7 @@ import {NavbarService} from "../../../services/navbar.service";
 })
 export class DashboardLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   public selectedVisibleControls: FormControl;
-  public listOfVisibleCharts: number[] = [1, 2, 3];
+  public listOfVisibleCharts: number[] = [1, 2, 3, 4];
   private selectedVisibleControlsSubscription: Subscription;
   public disableGridDragDrop: boolean = false;
 
