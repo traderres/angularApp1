@@ -136,7 +136,8 @@ export class GanttChartPageComponent  implements OnInit, OnDestroy, AfterViewIni
 
 
 
-  private  chartOptions: Highcharts.Options = {
+
+  private  chartOptions: any = {
     credits: {
       enabled: false    	// Hide the highcharts.com label
     },
@@ -144,10 +145,39 @@ export class GanttChartPageComponent  implements OnInit, OnDestroy, AfterViewIni
       text: ""
     },
 
-    xAxis: {
-      min: Date.UTC(2021, 5, 1),
-      max: Date.UTC(2021, 5, 30)
+    // xAxis: {
+    //   min: Date.UTC(2021, 1, 1),
+    //   max: Date.UTC(2021, 12, 31)
+    // },
+
+    navigator: {
+      enabled: true,
+      liveRedraw: true,
+      series: {
+        type: 'gantt',
+        pointPlacement: 0.5,
+        pointPadding: 0.25,
+        accessibility: {
+          enabled: false
+        }
+      },
+      yAxis: {
+        min: 0,
+        max: 3,
+        reversed: true,
+        categories: []
+      }
     },
+
+    scrollbar: {
+      enabled: true
+    },
+
+    rangeSelector: {
+      enabled: true,
+      selected: 0
+    },
+
 
     series: [
       {
@@ -178,6 +208,8 @@ export class GanttChartPageComponent  implements OnInit, OnDestroy, AfterViewIni
       }
     ]
   };
+
+
 
 
 }
