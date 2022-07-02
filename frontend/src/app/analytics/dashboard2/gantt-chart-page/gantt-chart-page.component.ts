@@ -4,7 +4,6 @@ import {DashboardService} from "../../../services/dashboard.service";
 import {NavbarService} from "../../../services/navbar.service";
 import {BarChartDTO} from "../../../models/bar-chart-dto";
 import {Constants} from "../../../utilities/constants";
-
 import * as Highcharts from "highcharts/highcharts-gantt";
 import {Chart} from "highcharts";
 
@@ -24,9 +23,6 @@ HC_exportData(Highcharts);
 import HC_offlineExport from "highcharts/modules/offline-exporting";
 HC_offlineExport(Highcharts);
 
-// Turn on the drill-down capabilities
-import HC_drillDown from "highcharts/modules/drilldown";
-HC_drillDown(Highcharts);
 
 
 @Component({

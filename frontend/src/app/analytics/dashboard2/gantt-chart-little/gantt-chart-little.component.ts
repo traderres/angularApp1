@@ -1,7 +1,8 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DashboardService} from "../../../services/dashboard.service";
 import {Router} from "@angular/router";
-
+import {BarChartDTO} from "../../../models/bar-chart-dto";
+import {Constants} from "../../../utilities/constants";
 import * as Highcharts from "highcharts/highcharts-gantt";
 import {Chart} from "highcharts";
 
@@ -21,11 +22,6 @@ HC_exportData(Highcharts);
 import HC_offlineExport from "highcharts/modules/offline-exporting";
 HC_offlineExport(Highcharts);
 
-// Turn on the drill-down capabilities
-import HC_drillDown from "highcharts/modules/drilldown";
-import {BarChartDTO} from "../../../models/bar-chart-dto";
-import {Constants} from "../../../utilities/constants";
-HC_drillDown(Highcharts);
 
 
 @Component({
