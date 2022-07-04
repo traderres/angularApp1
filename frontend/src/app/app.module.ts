@@ -40,6 +40,7 @@ import { LongViewInnerReportComponent } from './reports/long-view-inner-report/l
 import { LongViewOuterReportComponent } from './reports/long-view-outer-report/long-view-outer-report.component';
 import { LongViewInternalNavReportComponent } from './reports/long-view-internal-nav-report/long-view-internal-nav-report.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { WorkflowIndicatorComponent } from './shared/workflow-indicator/workflow-indicator.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -75,7 +76,8 @@ const appRoutes: Routes = [
     UploadReportComponent,
     LongViewInnerReportComponent,
     LongViewOuterReportComponent,
-    LongViewInternalNavReportComponent
+    LongViewInternalNavReportComponent,
+    WorkflowIndicatorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,103 @@
+
+.completed-task-icon {
+  font-size: 14px;
+  color: #666666;
+  margin-right: 5px;
+}
+
+.outer-wrapper {
+  width: 585px;
+  overflow-x: hidden;
+}
+
+
+.step-text {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #666666;
+}
+
+.step-text-active {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.wrap {
+  width: 100%;
+  height: 40px;
+  z-index: -2;
+  white-space: nowrap;
+}
+
+.wrap div:first-child{
+  margin-left: -8px;    /* Made first box have a flat left side of the box */
+}
+
+.progress {
+  margin: 0 10px 0 0;    /* determines space between boxes */
+  min-width: 180px;      /* determines width of each box */
+  height: 40px;
+  width: 25%;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  line-height: 40px;
+  transition: all 0.8s;
+}
+.progress:before,
+.progress:after {
+  content: "";
+  position: absolute;
+  transition: all 0.8s;
+  z-index:-1;
+}
+.progress:before {
+  height: 50%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  -webkit-transform: skew(45deg);
+  -moz-transform: skew(45deg);
+  transform: skew(45deg);
+}
+.progress:after {
+  height: 50%;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  -webkit-transform: skew(-45deg);
+  -moz-transform: skew(-45deg);
+  transform: skew(-45deg);
+}
+
+
+
+.progress:before,
+.progress:after {
+  /* Inactive Items */
+  background:  #d9e3f7;
+}
+
+
+.active.progress:before,
+.active.progress:after {
+  /* Active Item */
+  background:  #23468c;
+}
+
+.no-select {
+  /* CSS class that prevents the user from highlighting this element */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}

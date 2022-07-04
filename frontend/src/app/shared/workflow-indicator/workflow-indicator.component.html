@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" style="margin-right: 15px">
+
+  <div class="outer-wrapper" #outerWrapper  >
+    <div class="wrap">
+
+      <div class="progress no-select" (click)="this.scrollBoxes(1)">
+        <span id="step1" class="step-text">Workflow Step 1</span>
+      </div>
+      <div class="progress active no-select"  (click)="this.scrollBoxes(2)">
+        <span id="step2" class="step-text-active">Workflow Step 2</span>
+      </div>
+      <div class="progress no-select" (click)="this.scrollBoxes(3)">
+        <span id="step3" class="step-text">Workflow Step 3</span>
+      </div>
+      <div class="progress no-select" (click)="this.scrollBoxes(4)">
+        <span id="step4" class="step-text">Workflow Step 4</span>
+      </div>
+      <div class="progress no-select" (click)="this.scrollBoxes(5)">
+        <span id="step5" class="step-text">Workflow Step 5</span>
+      </div>
+      <div class="progress no-select" (click)="this.scrollBoxes(6)">
+        <span id="step6" class="step-text">Workflow Step 6</span>
+      </div>
+      <div class="progress no-select" (click)="this.scrollBoxes(7)">
+        <span id="step7" class="step-text">Workflow Step 7</span>
+      </div>
+      <div class="progress no-select" (click)="this.scrollBoxes(8)">
+        <span id="step8" class="step-text">Workflow Step 8</span>
+      </div>
+      <div class="progress no-select" style="margin-right: 50px" (click)="this.scrollBoxes(9)">
+        <span id="step9" class="step-text">Workflow Step 9</span>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Show Graph Icon -->
+  <span  (click)="this.goToChartPage()"  title="Show Chart">
+    <i class="fas fa-chart-area" style="font-size: 21px; color: #257aaf; cursor: pointer"></i>
+  </span>
+
+</div>
+
