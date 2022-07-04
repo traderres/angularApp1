@@ -22,7 +22,7 @@
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
-  color: #ffffff;
+  color: #ffff50;   /* Highlighted box is more yellow */
 }
 
 .wrap {
