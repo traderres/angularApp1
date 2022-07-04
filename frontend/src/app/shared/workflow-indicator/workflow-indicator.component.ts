@@ -39,7 +39,7 @@ export class WorkflowIndicatorComponent implements OnInit, AfterViewInit {
   private goBackwards(): void {
 
     if (this.currentCenteredIndex <= 2) {
-      // Showing far left or 2nd left element.  So, set currentIndex to 2nd and stop here
+      // Showing the far left or 2nd left element.  So, set currentIndex to 2nd and stop here
       this.currentCenteredIndex=2;
     }
     else {
@@ -50,13 +50,12 @@ export class WorkflowIndicatorComponent implements OnInit, AfterViewInit {
       // Scroll backwards
       this.outerWrapper.nativeElement.scrollTo(
         {
-          left:      (this.outerWrapper.nativeElement.scrollLeft - 200),
+          left:      (this.outerWrapper.nativeElement.scrollLeft - 165),
           behavior: 'smooth'
         });
     }
 
   }
-
 
 
   private goForwards(): void {
@@ -72,12 +71,14 @@ export class WorkflowIndicatorComponent implements OnInit, AfterViewInit {
       // Scroll forwards
       this.outerWrapper.nativeElement.scrollTo(
         {
-          left:      (this.outerWrapper.nativeElement.scrollLeft + 200),
+          left:      (this.outerWrapper.nativeElement.scrollLeft + 165),
           behavior: 'smooth'
         });
     }
 
   }
+
+
 
 
   /*
