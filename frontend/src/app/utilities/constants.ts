@@ -25,6 +25,8 @@ export enum Constants {
   DASHBOARD_BAR_CHART_PAGE     = "page/dashboard/bar_chart",
   DASHBOARD_USA_MAP_PAGE       = "page/dashboard/map",
 
+  DERIVATIVE_DROPDOWNS_ROUTE   = "page/dropdowns",
+
   GRID_TAB_GROUP_ROUTE         = "page/reports/grid-tab-group/",   // This route has a required startingTab
   GRID_TAB_GROUP_EDIT_DETAILS_ROUTE = "page/reports/edit-details/",   // This route has a required startingTab
 

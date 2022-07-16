@@ -1,0 +1,56 @@
+<mat-card>
+  <form novalidate autocomplete="off" [formGroup]="this.myForm" >
+
+    <mat-card-title>Derivative Dropdowns</mat-card-title>
+
+    <mat-card-content>
+
+      <!-- Primary Items Dropdown -->
+      <ng-container *ngIf="(this.allPrimaryObsValues | async) as allPrimaryItems">
+          <mat-form-field style="display:block; width: 400px">
+            <mat-label>Primary Selector</mat-label>
+
+            <mat-select formControlName="primaryInput">
+                <mat-option *ngFor="let primaryItem of allPrimaryItems" [value]="primaryItem.id">{{primaryItem.name}}</mat-option>
+            </mat-select>
+
+          </mat-form-field>
+      </ng-container>
+
+
+      <!-- Secondary Items Dropdown -->
+      <ng-container *ngIf="(this.secondaryObsValues | async) as secondaryItems">
+        <mat-form-field style="display:block; width: 400px">
+          <mat-label>Secondary Selector</mat-label>
+
+          <mat-select formControlName="secondaryInput">
+            <mat-option *ngFor="let secondaryItem of secondaryItems" [value]="secondaryItem.id">{{secondaryItem.name}}</mat-option>
+          </mat-select>
+
+        </mat-form-field>
+      </ng-container>
+
+
+
+      <!-- Tertiary Items Dropdown -->
+      <ng-container *ngIf="(this.tertiaryObsValues | async) as tertiaryItems">
+        <mat-form-field style="display:block; width: 400px">
+          <mat-label>Tertiary Selector</mat-label>
+
+          <mat-select formControlName="tertiaryInput">
+            <mat-option *ngFor="let tertiaryItem of tertiaryItems" [value]="tertiaryItem.id">{{tertiaryItem.name}}</mat-option>
+          </mat-select>
+
+        </mat-form-field>
+      </ng-container>
+
+      <div fxLayout="row" fxLayoutGap="20px">
+        <!-- Page Buttons -->
+        <button type="button" style="width: 100px" mat-raised-button (click)="this.resetClicked()">Reset</button>
+        <button type="button" style="width: 100px" mat-raised-button (click)="this.saveClicked()" [disabled]="this.myForm.invalid" color="primary">Save</button>
+      </div>
+
+
+    </mat-card-content>
+  </form>
+</mat-card>
