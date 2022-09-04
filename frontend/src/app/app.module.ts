@@ -88,6 +88,7 @@ import { CriticalReportsActionRendererComponent } from './analytics/grid-tab-gro
 import { UserIsLoggedOutDialogComponent } from './dialogs/user-is-logged-out-dialog/user-is-logged-out-dialog.component';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { DerivativeDropdownsComponent } from './reports/derivative-dropdowns/derivative-dropdowns.component';
+import { ListExceptionsGridComponent } from './admin/list-exceptions-grid/list-exceptions-grid.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -118,7 +119,7 @@ const appRoutes: Routes = [
   { path: Constants.GRID_TAB_GROUP_ROUTE + ':startingTab',   component: GridTabGroupPageComponent, canActivate: [PageGuard] },
   { path: Constants.GRID_TAB_GROUP_EDIT_DETAILS_ROUTE + ':id',   component: EditDetailsPageComponent, canActivate: [PageGuard] },
   { path: Constants.DERIVATIVE_DROPDOWNS_ROUTE,   component: DerivativeDropdownsComponent },
-
+  { path: Constants.LIST_EXCEPTIONS_ROUTE,   component: ListExceptionsGridComponent, canActivate: [PageGuard] },
 
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
   { path: '',                  component: DashboardLayoutComponent,  canActivate: [UserAcknowledgeGuard] },
@@ -179,7 +180,8 @@ const appRoutes: Routes = [
     CriticalReportsActionRendererComponent,
     UserIsLoggedOutDialogComponent,
     PhoneMaskDirective,
-    DerivativeDropdownsComponent
+    DerivativeDropdownsComponent,
+    ListExceptionsGridComponent
   ],
   imports: [
     AppRoutingModule,

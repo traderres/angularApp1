@@ -26,9 +26,11 @@ export enum Constants {
   DASHBOARD_USA_MAP_PAGE       = "page/dashboard/map",
 
   DERIVATIVE_DROPDOWNS_ROUTE   = "page/dropdowns",
+  LIST_EXCEPTIONS_ROUTE   = "page/admin/list-exceptions",
 
   GRID_TAB_GROUP_ROUTE         = "page/reports/grid-tab-group/",   // This route has a required startingTab
   GRID_TAB_GROUP_EDIT_DETAILS_ROUTE = "page/reports/edit-details/",   // This route has a required startingTab
 
-  COLUMN_STATE_PREFERENCE_NAME = "grid_column_state"
+  COLUMN_STATE_PREFERENCE_NAME = "grid_column_state",
+  EXCEPTION_FILTER_PREFERENCE_NAME = "filter-number",
 }

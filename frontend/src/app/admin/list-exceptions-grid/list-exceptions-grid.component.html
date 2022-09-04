@@ -1,0 +1,188 @@
+<div class="page-container">
+
+  <mat-sidenav-container [hasBackdrop]="false">
+
+    <mat-sidenav position="end" mode="over" [opened]="this.sideBarIsVisible" style="width: 60%" [disableClose]="true">
+      <!-- S I D E    B A R       S T A R T S     H E R E -->
+
+      <div fxLayout="column" >
+
+        <div fxLayout="row">
+          <!-- Row 1 (in Side Nav) -->
+          <div fxFlex>
+            <!-- Left Side of Row 1 in Side Nav -->
+          </div>
+
+          <div fxFlex="20px" fxLayoutAlign="end start">
+            <!-- Right Side of Row 1 in Side Nav-->
+
+            <button type="button" mat-icon-button (click)="this.sideBarIsVisible = false" color="primary" disableRipple>
+              <i title="Hide" aria-label="Hide" style="font-size: 24px" class="fa-solid fa-circle-xmark"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div style="margin: 0 15px 0 15px;">
+          <!-- Content of Side Nav -->
+
+          <p class="slide-out-subheader">Exception Details</p>
+
+          <div fxLayout="row" fxLayoutGap="25px" style="margin-top: 20px;">
+            <!-- Error Id -->
+            <mat-form-field appearance="legacy" style="width: 65px">
+              <mat-label>Error Id</mat-label>
+              <input type="text" aria-label="Error ID" matInput readonly value="{{this.selectedRow?.id}}">
+            </mat-form-field>
+
+            <!-- App Version -->
+            <mat-form-field appearance="legacy" style="width: 65px">
+              <mat-label>App Version</mat-label>
+              <input type="text" aria-label="App Version" matInput readonly value="{{this.selectedRow?.app_version}}">
+            </mat-form-field>
+
+            <!-- Event Date -->
+            <mat-form-field appearance="legacy" style="width: 150px">
+              <mat-label>Event Date</mat-label>
+              <input type="text" aria-label="Event Date"  matInput readonly value="{{this.selectedRow?.event_date}}">
+            </mat-form-field>
+
+            <!-- User Full Name -->
+            <mat-form-field appearance="legacy" style="width: 250px">
+              <mat-label>User Full Name</mat-label>
+              <input type="text" aria-label="User Full Name" matInput readonly value="{{this.selectedRow?.user_full_name}}">
+            </mat-form-field>
+
+            <!-- URL -->
+            <mat-form-field appearance="legacy" style="width: 250px">
+              <mat-label>URL</mat-label>
+              <input type="text" aria-label="URL" matInput readonly value="{{this.selectedRow?.url}}">
+            </mat-form-field>
+          </div>
+
+
+
+          <ng-container *ngIf="this.selectedRow?.cause != null">
+            <!-- Cause Header -->
+            <p style="margin-top: 20px"  class="slide-out-subheader">Cause</p>
+
+            <!-- Show the cause info in a courier font -->
+            <pre>{{this.selectedRow?.cause }}</pre>
+          </ng-container>
+
+
+
+          <!-- Stack Trace Header -->
+          <p style="margin-top: 20px" class="slide-out-subheader">Stack Trace</p>
+
+          <!-- Show the stack trace in a courier font -->
+          <pre>{{this.selectedRow?.stack_trace }}</pre>
+        </div>
+
+      </div>
+
+
+    </mat-sidenav> <!-- End of Sliding Navbar -->
+
+    <div fxFlexFill fxLayout="column" style="margin: 0; padding: 0">
+
+      <div fxFlex fxLayout="row" fxLayoutGap="0" style="margin: 0; padding: 0;">
+
+
+        <div fxFlex fxLayoutAlign="left top" fxLayout="row" fxLayoutGap="0" class="top-row">
+          <!-- Left Side of the 1st Row -->
+          <h1 class="mat-h1">List Exceptions</h1>
+        </div>
+
+
+        <div fxFlex fxLayoutAlign="end top">
+          <!-- Right Side of the 1st Row -->
+        </div>
+
+      </div>  <!-- End of 1st row -->
+
+      <div fxFlex fxLayout="row" fxLayoutGap="0" style="margin: 0; padding: 0;">
+
+        <div fxFlex="33%" fxLayoutAlign="left end" fxLayoutGap="5px">
+          <!-- Buttons -->
+          <button [mat-menu-trigger-for]="filterMenu" type="button" mat-stroked-button color="primary" title="Filter">Filter</button>
+
+          <mat-menu #filterMenu="matMenu">
+            <mat-radio-group>
+              <button mat-menu-item>
+                <mat-radio-button [value]="this.LAST_1_DAY_FILTER" title="Filter to the last 1 day"
+                                  [checked]="this.selectedFilter == this.LAST_1_DAY_FILTER"
+                                  (click)="this.applyFilterAndReloadGrid(this.LAST_1_DAY_FILTER)">Last 1 Day</mat-radio-button>
+              </button>
+
+              <button mat-menu-item>
+                <mat-radio-button [value]="this.LAST_7_DAYS_FILTER" title="Filter to the last 7 days"
+                                  [checked]="this.selectedFilter == this.LAST_7_DAYS_FILTER"
+                                  (click)="this.applyFilterAndReloadGrid(this.LAST_7_DAYS_FILTER)">Last 7 Days</mat-radio-button>
+              </button>
+
+              <button mat-menu-item>
+                <mat-radio-button [value]="this.LAST_30_DAYS_FILTER" title="Filter to the last 30 days"
+                                  [checked]="this.selectedFilter == this.LAST_30_DAYS_FILTER"
+                                  (click)="this.applyFilterAndReloadGrid(this.LAST_30_DAYS_FILTER)">Last 30 Days</mat-radio-button>
+              </button>
+
+              <button mat-menu-item>
+                <mat-radio-button [value]="this.YEAR_TO_DATE_FILTER" title="Filter to year to date"
+                                  [checked]="this.selectedFilter == this.YEAR_TO_DATE_FILTER"
+                                  (click)="this.applyFilterAndReloadGrid(this.YEAR_TO_DATE_FILTER)">Year To Date</mat-radio-button>
+              </button>
+
+              <mat-divider></mat-divider>
+
+              <button mat-menu-item>
+                <mat-radio-button [value]="this.SHOW_ALL_DATA_FILTER" title="Show all records"
+                                  [checked]="this.selectedFilter == this.SHOW_ALL_DATA_FILTER"
+                                  (click)="this.applyFilterAndReloadGrid(this.SHOW_ALL_DATA_FILTER)">Show All Records</mat-radio-button>
+              </button>
+            </mat-radio-group>
+          </mat-menu>
+
+          <button type="button" mat-stroked-button color="primary" title="Reset"
+                  (click)="this.resetGrid()">Reset</button>
+        </div>
+
+
+        <div fxFlex="33%" fxLayoutAlign="center end">
+          <!-- Filter Label -->
+          {{this.selectedFilterLabel}}
+        </div>
+
+
+
+        <div fxFlex="34%" fxLayoutAlign="end end">
+          <!-- Total Matches -->
+          <span style="font-weight: bold">{{this.rowData?.length | number}} matches</span>
+        </div>
+
+      </div>  <!-- End of 2nd row -->
+
+    </div>
+
+    <!-- Set the grid to use the entire height (except for the height of the header and page title) -->
+    <div style="margin-top: 10px; height: calc(100vh - 175px)">
+
+      <!-- Angular Grid:  NOTE: Angular flex layout does not work with ag-grid-angular -->
+      <ag-grid-angular
+        (gridReady)="this.onGridReady($event)"
+        style="width: 100%; height: 100%;"
+        class="ag-theme-alpine"
+        [rowData]="this.rowData"
+        [gridOptions]="this.gridOptions"
+        [defaultColDef]="this.defaultColDefs"
+        (firstDataRendered)="this.firstDataRendered()"
+        [columnDefs]="this.columnDefs">
+      </ag-grid-angular>
+
+    </div>
+
+  </mat-sidenav-container>
+
+</div>

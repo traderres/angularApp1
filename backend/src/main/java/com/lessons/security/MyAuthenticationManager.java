@@ -171,6 +171,7 @@ public class MyAuthenticationManager implements AuthenticationManager {
         // Create a list of granted authorities
         List<GrantedAuthority> grantedRoleAuthorities = new ArrayList<>();
         grantedRoleAuthorities.add(new SimpleGrantedAuthority("ROLE_READER"));
+        grantedRoleAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         grantedRoleAuthorities.add(new SimpleGrantedAuthority("ROLE_USER_FOUND_IN_VALID_LIST_OF_USERS"));
 
         // User is about to login
