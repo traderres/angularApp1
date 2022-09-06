@@ -5,6 +5,10 @@ import {PreferencesDTO} from "../models/preferences-dto";
 import {HttpClient} from "@angular/common/http";
 import {PreferenceService} from "./preference.service";
 import {GetOnePreferenceDTO} from "../models/preferences/get-one-preference-dto";
+import {JobStatusDTO} from "../models/job-status-dto";
+import {GetBannerDTO} from "../models/get-banner-dto";
+import {ReportDTO} from "../models/report-dto";
+import {AddBannerDTO} from "../models/add-banner-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +58,29 @@ export class BannerService {
     // Send out a message that (to anyone listening) with the current value
     // Anyone who listens later, gets this initial message
     this.bannerStateSubject = new BehaviorSubject<boolean>(aBannerInfo);
+  }
+
+
+  /*
+   * Returns an observable that holds an array of GetBannerDTO objects
+   */
+  public getListOfBanners(): Observable<GetBannerDTO[]> {
+    // Construct the URL of the REST call
+    const restUrl = environment.baseUrl + '/api/banners/list';
+
+    // Return an observable
+    return this.httpClient.get <GetBannerDTO[]>(restUrl);
+  }
+
+  /*
+   * Returns an observable that adds a banner to the system
+   */
+  public addBanner(aAddBannerDTO: AddBannerDTO): Observable<string> {
+    // Construct the URL for the REST endpoint (so it works in dev and prod mode)
+    const restUrl = environment.baseUrl + '/api/banners/add';
+
+    // NOTE:  The REST call is not invoked you call subscribe() on this observable
+    return this.httpClient.post(restUrl, aAddBannerDTO, {responseType: 'text'});
   }
 
 

@@ -27,6 +27,7 @@ export enum Constants {
 
   DERIVATIVE_DROPDOWNS_ROUTE   = "page/dropdowns",
   LIST_EXCEPTIONS_ROUTE   = "page/admin/list-exceptions",
+  MANAGE_BANNERS_ROUTE   = "page/admin/list-banners",
 
   GRID_TAB_GROUP_ROUTE         = "page/reports/grid-tab-group/",   // This route has a required startingTab
   GRID_TAB_GROUP_EDIT_DETAILS_ROUTE = "page/reports/edit-details/",   // This route has a required startingTab

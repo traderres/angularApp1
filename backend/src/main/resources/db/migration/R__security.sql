@@ -80,7 +80,7 @@ insert into uicontrols(id, name) values(1024, 'page/dashboard/map');
 insert into uicontrols(id, name) values(1025, 'page/reports/grid-tab-group/:startingTab');
 insert into uicontrols(id, name) values(1026, 'page/reports/edit-details/:id');
 insert into uicontrols(id, name) values(1027, 'page/admin/list-exceptions');
-
+insert into uicontrols(id, name) values(1028, 'page/admin/list-banners');
 
 
 
@@ -112,6 +112,7 @@ insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1024);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1025);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1026);
 insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1027);
+insert into roles_uicontrols(role_id, uicontrol_id) values(1, 1028);
 
 -- Assign ui controls for the 'reader' role  (cannot get to addReport)
 insert into roles_uicontrols(role_id, uicontrol_id) values(2, 1001);

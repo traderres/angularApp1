@@ -89,6 +89,7 @@ import { UserIsLoggedOutDialogComponent } from './dialogs/user-is-logged-out-dia
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { DerivativeDropdownsComponent } from './reports/derivative-dropdowns/derivative-dropdowns.component';
 import { ListExceptionsGridComponent } from './admin/list-exceptions-grid/list-exceptions-grid.component';
+import { ManageBannersGridComponent } from './admin/manage-banners-grid/manage-banners-grid.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -120,6 +121,7 @@ const appRoutes: Routes = [
   { path: Constants.GRID_TAB_GROUP_EDIT_DETAILS_ROUTE + ':id',   component: EditDetailsPageComponent, canActivate: [PageGuard] },
   { path: Constants.DERIVATIVE_DROPDOWNS_ROUTE,   component: DerivativeDropdownsComponent },
   { path: Constants.LIST_EXCEPTIONS_ROUTE,   component: ListExceptionsGridComponent, canActivate: [PageGuard] },
+  { path: Constants.MANAGE_BANNERS_ROUTE,   component: ManageBannersGridComponent, canActivate: [PageGuard] },
 
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
   { path: '',                  component: DashboardLayoutComponent,  canActivate: [UserAcknowledgeGuard] },
@@ -181,7 +183,8 @@ const appRoutes: Routes = [
     UserIsLoggedOutDialogComponent,
     PhoneMaskDirective,
     DerivativeDropdownsComponent,
-    ListExceptionsGridComponent
+    ListExceptionsGridComponent,
+    ManageBannersGridComponent
   ],
   imports: [
     AppRoutingModule,

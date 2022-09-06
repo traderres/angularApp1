@@ -280,6 +280,18 @@
       </mat-list-item>
 
 
+      <!-- Manage Banners Page -->
+      <mat-list-item class="navItem" [routerLink]="constants.MANAGE_BANNERS_ROUTE" routerLinkActive="active"
+                     *ngIf="userInfo.pageRoutes.get(constants.MANAGE_BANNERS_ROUTE)">
+        <a title="Manage Banners">Manage Banners</a>
+        <div fxFlex fxLayoutAlign="end end" >
+          <a [routerLink]="constants.MANAGE_BANNERS_ROUTE" target="_blank">
+            <i class="fas fa-external-link-alt navItemIcon" title="Open 'Manage Banners' a new window"></i>
+          </a>
+        </div>
+      </mat-list-item>
+
+
     </mat-nav-list>
 
     <ng-container *ngIf="(this.versionInfoObs | async) as versionDTO">
