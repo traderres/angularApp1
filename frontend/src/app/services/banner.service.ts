@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {environment} from "../../environments/environment";
-import {PreferencesDTO} from "../models/preferences-dto";
 import {HttpClient} from "@angular/common/http";
 import {PreferenceService} from "./preference.service";
 import {GetOnePreferenceDTO} from "../models/preferences/get-one-preference-dto";
-import {JobStatusDTO} from "../models/job-status-dto";
 import {GetBannerDTO} from "../models/get-banner-dto";
-import {ReportDTO} from "../models/report-dto";
 import {AddBannerDTO} from "../models/add-banner-dto";
-import {delay} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
