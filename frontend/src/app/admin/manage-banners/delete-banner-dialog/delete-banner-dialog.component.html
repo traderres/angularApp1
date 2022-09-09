@@ -1,0 +1,38 @@
+<h2 style="margin-bottom: 0; margin-top: 0">Delete Banner?</h2>
+
+<mat-dialog-content>
+
+    <!-- Display the message in read-only textarea -->
+    <mat-form-field style="width: 100%">
+      <textarea matInput title="message" aria-label="message" readonly [value]="this.data.message"></textarea>
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions style="justify-content: center">
+
+  <div fxLayout="row" fxLayoutGap="20px">
+
+    <!-- Cancel Button -->
+    <button mat-raised-button class="standard-button" type="button" title="Cancel" aria-label="Cancel"
+            (click)="this.userPressedCancel()" [disabled]="this.submitInProgress">
+      Cancel
+    </button>
+
+    <!-- "Delete Banner" button -->
+    <button mat-raised-button class="standard-button" color="warn" type="button"  title="Delete a new banner" aria-label="Delete a banner"
+            (click)="this.userPressedOk()" [disabled]="this.submitInProgress">
+
+      <ng-container *ngIf="!this.submitInProgress">
+        <!-- REST call is not running.  So, show the regular label -->
+        Delete
+      </ng-container>
+
+      <ng-container *ngIf="this.submitInProgress">
+        <!-- REST Call is running.  So, show the spinner -->
+        <i class="fa fa-spin fa-spinner" style="font-size: 18px"></i> Deleting...
+      </ng-container>
+    </button>
+  </div>
+
+</mat-dialog-actions>

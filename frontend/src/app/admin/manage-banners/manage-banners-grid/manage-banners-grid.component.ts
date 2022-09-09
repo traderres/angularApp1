@@ -1,12 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject, Subscription} from "rxjs";
-import {ColumnApi, GridApi, GridOptions} from "ag-grid-community";
-import {GetBannerDTO} from "../../models/get-banner-dto";
-import {PreferenceService} from "../../services/preference.service";
+import {ColumnApi, GridApi, GridOptions, ICellRendererParams} from "ag-grid-community";
+import {GetBannerDTO} from "../../../models/get-banner-dto";
+import {PreferenceService} from "../../../services/preference.service";
 import {debounceTime, switchMap} from "rxjs/operators";
-import {Constants} from "../../utilities/constants";
-import {BannerService} from "../../services/banner.service";
-import {GetOnePreferenceDTO} from "../../models/preferences/get-one-preference-dto";
+import {Constants} from "../../../utilities/constants";
+import {BannerService} from "../../../services/banner.service";
+import {GetOnePreferenceDTO} from "../../../models/preferences/get-one-preference-dto";
+import {MatDialog} from "@angular/material/dialog";
+import {AddBannerDialogComponent} from "../add-banner-dialog/add-banner-dialog.component";
+import {DeleteBannerDialogComponent} from "../delete-banner-dialog/delete-banner-dialog.component";
+import {DeleteBannerFormData} from "../../../models/delete-banner-form-data";
+import {ManageBannersGridActionRendererComponent} from "../manage-banners-grid-action-renderer/manage-banners-grid-action-renderer.component";
 
 @Component({
   selector: 'app-manage-banners-grid',
@@ -64,31 +69,48 @@ export class ManageBannersGridComponent implements OnInit, OnDestroy {
 
   }
 
+
+  // Tell ag-grid which cell-renderers will be available
+  // This is a map of component names that correspond to components that implement ICellRendererAngularComp
+  public frameworkComponents: any = {
+    actionCellRenderer: ManageBannersGridActionRendererComponent
+  };
+
   public columnDefs = [
     {
       field: 'id',
-      headerName: "Id",
-      filterParams: this.textFilterParams,
-      filter: 'agTextColumnFilter'
-    },
-    {
-      field: 'is_visible',
-      headerName: "Is Visible?",
-      filterParams: this.textFilterParams,
-      filter: 'agTextColumnFilter'
+      cellClass: 'grid-text-cell-format',
+      cellRenderer: 'actionCellRenderer',
+      cellRendererParams: {
+        deleteButtonGridMethod: (params: ICellRendererParams) => this.openDeleteBannerDialog(params.data),
+      },
+      headerName: 'Actions',
+      filter: false,
+      suppressMenu: false,
+      sortable: false,
+      resizable: true,
+      maxWidth: 150
     },
     {
       field: 'urgency_label',
       headerName: "Urgency",
       filterParams: this.textFilterParams,
-      filter: 'agTextColumnFilter'
+      filter: 'agTextColumnFilter',
+      maxWidth: 150
+    },
+    {
+      field: 'is_visible',
+      headerName: "Is Visible?",
+      filterParams: this.textFilterParams,
+      filter: 'agTextColumnFilter',
+      maxWidth: 150
     },
     {
       field: 'message',
       headerName: "Message",
       filterParams: this.textFilterParams,
       filter: 'agTextColumnFilter'
-    }
+    },
   ];
 
   public gridApi: GridApi;
@@ -98,6 +120,7 @@ export class ManageBannersGridComponent implements OnInit, OnDestroy {
   public rowData: GetBannerDTO[];
 
   constructor(private bannerService: BannerService,
+              private matDialog: MatDialog,
               private preferenceService: PreferenceService) { }
 
   public ngOnInit(): void {
@@ -217,4 +240,40 @@ export class ManageBannersGridComponent implements OnInit, OnDestroy {
     this.listenForGridChanges = true;
   }
 
+  public openAddBannerDialog(): void {
+    let dialogRef = this.matDialog.open(AddBannerDialogComponent, {
+      width: "400px"
+    });
+
+    dialogRef.afterClosed().subscribe( (userAddedBanner: boolean) => {
+      // The dialog box has closed
+
+      if (userAddedBanner) {
+        // The user added a banner.  So, reload the grid
+        this.reloadData();
+      }
+    })
+  }
+
+
+  public openDeleteBannerDialog(aRowData: GetBannerDTO): void {
+    let formData: DeleteBannerFormData = new DeleteBannerFormData();
+    formData.id = aRowData.id;
+    formData.message = aRowData.message;
+
+    // Open the dialog box and pass-in the form data
+    let dialogRef = this.matDialog.open(DeleteBannerDialogComponent, {
+      width: "400px",
+      data: formData
+    });
+
+    dialogRef.afterClosed().subscribe( (userDeletedBanner: boolean) => {
+      // The dialog box has closed
+
+      if (userDeletedBanner) {
+        // The user deleted a banner.  So, reload the grid
+        this.reloadData();
+      }
+    })
+  }
 }

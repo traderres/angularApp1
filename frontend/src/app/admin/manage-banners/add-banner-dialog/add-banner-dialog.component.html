@@ -1,0 +1,54 @@
+<h2 style="margin-bottom: 0; margin-top: 0">Add Banner</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="this.myForm" novalidate autocomplete="off">
+
+    <mat-form-field style="width: 100%">
+      <mat-label>Urgency</mat-label>
+      <mat-select formControlName="urgency">
+        <mat-option [value]=10>Low</mat-option>
+        <mat-option [value]=20>Medium</mat-option>
+        <mat-option [value]=30>High</mat-option>
+        <mat-option [value]=40>Critical</mat-option>
+      </mat-select>
+
+      <mat-error>Urgency is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <mat-label>Message</mat-label>
+      <textarea matInput title="message" aria-label="message" formControlName="message"></textarea>
+
+      <mat-error>Message is required</mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions style="justify-content: center">
+
+  <div fxLayout="row" fxLayoutGap="20px">
+
+      <!-- Cancel Button -->
+      <button mat-raised-button class="standard-button" type="button" title="Cancel" aria-label="Cancel"
+              (click)="this.userPressedCancel()" [disabled]="this.submitInProgress">
+        Cancel
+      </button>
+
+      <!-- "Add Banner" button -->
+      <button mat-raised-button class="standard-button" color="primary" type="button"  title="Add a new banner" aria-label="Add a new banner"
+              (click)="this.userPressedOk()" [disabled]="this.submitInProgress">
+
+        <ng-container *ngIf="!this.submitInProgress">
+            <!-- REST call is not running.  So, show the regular label -->
+            Add Banner
+        </ng-container>
+
+        <ng-container *ngIf="this.submitInProgress">
+            <!-- REST Call is running.  So, show the spinner -->
+            <i class="fa fa-spin fa-spinner" style="font-size: 18px"></i> Processing...
+        </ng-container>
+      </button>
+  </div>
+
+</mat-dialog-actions>

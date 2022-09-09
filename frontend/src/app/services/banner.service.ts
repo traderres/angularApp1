@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
 import {PreferencesDTO} from "../models/preferences-dto";
 import {HttpClient} from "@angular/common/http";
@@ -9,6 +9,7 @@ import {JobStatusDTO} from "../models/job-status-dto";
 import {GetBannerDTO} from "../models/get-banner-dto";
 import {ReportDTO} from "../models/report-dto";
 import {AddBannerDTO} from "../models/add-banner-dto";
+import {delay} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -82,6 +83,19 @@ export class BannerService {
     // NOTE:  The REST call is not invoked you call subscribe() on this observable
     return this.httpClient.post(restUrl, aAddBannerDTO, {responseType: 'text'});
   }
+
+
+  /*
+   * Returns an observable that delete a banner to the system
+   */
+  public deleteBanner(aBannerId: number): Observable<string> {
+    // Construct the URL for the REST endpoint (so it works in dev and prod mode)
+    const restUrl = environment.baseUrl + `/api/banners/delete/${aBannerId}`;
+
+    // NOTE:  The REST call is not invoked you call subscribe() on this observable
+    return this.httpClient.post <string>(restUrl, {});
+  }
+
 
 
 }

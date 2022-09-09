@@ -89,7 +89,10 @@ import { UserIsLoggedOutDialogComponent } from './dialogs/user-is-logged-out-dia
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { DerivativeDropdownsComponent } from './reports/derivative-dropdowns/derivative-dropdowns.component';
 import { ListExceptionsGridComponent } from './admin/list-exceptions-grid/list-exceptions-grid.component';
-import { ManageBannersGridComponent } from './admin/manage-banners-grid/manage-banners-grid.component';
+import { ManageBannersGridComponent } from './admin/manage-banners/manage-banners-grid/manage-banners-grid.component';
+import {AddBannerDialogComponent} from "./admin/manage-banners/add-banner-dialog/add-banner-dialog.component";
+import {DeleteBannerDialogComponent} from "./admin/manage-banners/delete-banner-dialog/delete-banner-dialog.component";
+import { ManageBannersGridActionRendererComponent } from './admin/manage-banners/manage-banners-grid-action-renderer/manage-banners-grid-action-renderer.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -184,7 +187,10 @@ const appRoutes: Routes = [
     PhoneMaskDirective,
     DerivativeDropdownsComponent,
     ListExceptionsGridComponent,
-    ManageBannersGridComponent
+    ManageBannersGridComponent,
+    AddBannerDialogComponent,
+    DeleteBannerDialogComponent,
+    ManageBannersGridActionRendererComponent
   ],
   imports: [
     AppRoutingModule,
