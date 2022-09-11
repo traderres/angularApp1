@@ -1,4 +1,4 @@
-Angular App1 Lesson 41b / Manage Banners Page / Adjust Other Pages to Get Variable Height
+Angular App1 Lesson 41b / Manage Banners Page / Adjust Pages to Get Variable Height
 ---------------------------------------------
 
 
