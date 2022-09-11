@@ -55,10 +55,15 @@ export class ListExceptionsGridComponent implements  OnInit, OnDestroy {
   };
 
   public gridOptions: GridOptions = {
+    rowModelType: 'clientSide',
     domLayout: 'normal',
     debug: false,
     suppressCellSelection: true,
-    rowModelType: 'clientSide',
+
+    overlayNoRowsTemplate:  '<span class="ng-overlay-loading-center">No exceptions were found</span>',
+    overlayLoadingTemplate: '<span class="ng-overlay-loading-center">Loading data now...</span>',
+
+
     onRowDoubleClicked:(event: RowDoubleClickedEvent) => {
       this.openSideBar(event.data)
     },

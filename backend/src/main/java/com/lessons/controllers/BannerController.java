@@ -10,11 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller
@@ -60,8 +62,40 @@ public class BannerController {
                     .body("The passed-in message is blank");
         }
 
-        // Get all banners in the system
+        // Add the banner to the system
         this.bannerService.addBanner(aDTO);
+
+        // Return 200 status code
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(null);
+    }
+
+
+
+    /**
+     * POST /api/banners/delete/${bannerId} REST call
+     *
+     * Delete an existing banner from the system
+     */
+    @RequestMapping(value = "/api/banners/delete/{bannerId}", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<?> addBanner(@PathVariable(name="bannerId") Integer aBannerId)  {
+        logger.debug("addBanner() started.");
+
+        if (aBannerId < 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .body("The passed-in banner id is not valid");
+        }
+
+        if (! this.bannerService.doesBannerIdExist(aBannerId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .body("The passed-in banner id does not exist");
+        }
+
+        // Delete the banner
+        this.bannerService.deleteBanner(aBannerId);
 
         // Return 200 status code
         return ResponseEntity

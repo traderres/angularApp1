@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -56,6 +57,7 @@ public class BannerService {
      * @param aAddBannerDTO holds the DTO with information about this new banner
      */
     public void addBanner(AddBannerDTO aAddBannerDTO) {
+        logger.debug("addBanner() started");
 
         String sql = "insert into banners(id, message, is_visible, banner_urgency_id) " +
                      "values( :banner_id , :message, true, :banner_urgency_id) ";
@@ -76,5 +78,37 @@ public class BannerService {
             throw new RuntimeException("Error in addBanner().  I expected to insert one record.  Instead, " + rowsAdded + " records were added.");
         }
 
+    }
+
+
+    /**
+     * Delete an existing banner from the system
+     * @param aBannerId holds the id of the banner to delete
+     */
+    public void deleteBanner(Integer aBannerId) {
+        logger.debug("deleteBanner() started");
+
+        String sql = "delete from banners where id=:id";
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", aBannerId);
+
+        NamedParameterJdbcTemplate np = new NamedParameterJdbcTemplate(this.dataSource);
+        int rowsDeleted = np.update(sql, paramMap);
+
+        if (rowsDeleted != 1) {
+            throw new RuntimeException("Error in deleteBanner().  I expected to delete one record.  Instead, " + rowsDeleted + " records were deleted.");
+        }
+
+    }
+
+
+    public boolean doesBannerIdExist(Integer aBannerId) {
+        String sql = "select id from banners where id=?";
+
+        JdbcTemplate jt = new JdbcTemplate(this.dataSource);
+
+        SqlRowSet rs = jt.queryForRowSet(sql, aBannerId);
+        return rs.next();
     }
 }

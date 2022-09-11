@@ -41,11 +41,13 @@ export class ManageBannersGridComponent implements OnInit, OnDestroy {
   };
 
   public gridOptions: GridOptions = {
+    rowModelType: 'clientSide',
     domLayout: 'normal',
     debug: false,
     suppressCellSelection: true,
-    rowModelType: 'clientSide',
 
+    overlayNoRowsTemplate:  '<span class="ng-overlay-loading-center">No banners were found</span>',
+    overlayLoadingTemplate: '<span class="ng-overlay-loading-center">Loading data now...</span>',
 
     onSortChanged: () => {
       this.saveColumnState();
