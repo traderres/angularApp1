@@ -1,4 +1,4 @@
-Angular App1 Lesson 41a / Manage Banners Page
+Angular App1 Lesson 41b / Manage Banners Page / Adjust Other Pages to Get Variable Height
 ---------------------------------------------
 
 
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson41a/manage-banners
+    unix> git checkout lesson41b/get-variable-height
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
