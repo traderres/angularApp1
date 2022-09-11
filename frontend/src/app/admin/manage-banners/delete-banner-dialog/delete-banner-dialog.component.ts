@@ -17,9 +17,9 @@ export class DeleteBannerDialogComponent implements OnInit {
               private dialogRef: MatDialogRef<DeleteBannerDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DeleteBannerFormData ) { }
 
+
   public ngOnInit(): void {
   }
-
 
 
   public userPressedOk(): void {
@@ -34,7 +34,7 @@ export class DeleteBannerDialogComponent implements OnInit {
 
     // Invoke the REST call
     this.bannerService.deleteBanner(this.data.id).subscribe( () => {
-      // The banner was successfully delete
+      // The banner was successfully deleted
 
       // Show a success message
       this.messageService.showSuccessMessage("The banner was deleted.");

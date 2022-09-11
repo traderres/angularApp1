@@ -31,7 +31,7 @@ export class AddBannerDialogComponent implements OnInit {
       this.myForm.markAllAsTouched();
 
       if (this.myForm.invalid) {
-        // One or more text fields are invalid.  So, stop here
+        // One or more form fields are invalid.  So, stop here
         return;
       }
 
