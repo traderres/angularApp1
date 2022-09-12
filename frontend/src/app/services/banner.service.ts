@@ -6,16 +6,23 @@ import {PreferenceService} from "./preference.service";
 import {GetOnePreferenceDTO} from "../models/preferences/get-one-preference-dto";
 import {GetBannerDTO} from "../models/get-banner-dto";
 import {AddBannerDTO} from "../models/add-banner-dto";
+import {take, tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BannerService {
   private bannerStateSubject: BehaviorSubject<boolean>;
+  private totalBannerHeightInPixels: number = 0;   // Holds the height of the banners (could be 0 or 20px)
+  private bsTotalHeightInPixels: BehaviorSubject<string> = new BehaviorSubject<string>("0px");
 
   constructor(private httpClient: HttpClient,
               private preferenceService: PreferenceService) { }
 
+
+  public getBannerHeightInPixelsObs(): Observable<string> {
+    return this.bsTotalHeightInPixels.asObservable();
+  }
 
   public getStateAsObservable(): Observable<boolean> {
     return this.bannerStateSubject.asObservable();
@@ -57,16 +64,41 @@ export class BannerService {
     this.bannerStateSubject = new BehaviorSubject<boolean>(aBannerInfo);
   }
 
-
   /*
-   * Returns an observable that holds an array of GetBannerDTO objects
-   */
+ * Returns an observable that holds an array of GetBannerDTO objects
+ */
   public getListOfBanners(): Observable<GetBannerDTO[]> {
     // Construct the URL of the REST call
     const restUrl = environment.baseUrl + '/api/banners/list';
 
     // Return an observable
     return this.httpClient.get <GetBannerDTO[]>(restUrl);
+  }
+
+
+  /*
+   * Returns an observable that holds an array of GetBannerDTO objects
+   */
+  public getListOfBannersForMainPage(): Observable<GetBannerDTO[]> {
+    // Construct the URL of the REST call
+    const restUrl = environment.baseUrl + '/api/banners/list';
+
+    // Return an observable
+    return this.httpClient.get <GetBannerDTO[]>(restUrl).pipe(
+      tap( (aBanners: GetBannerDTO[]) => {
+          if ((aBanners != null) && (aBanners.length > 0)) {
+            // We got banners back from the back-end
+
+            // Increment the total banner height by 20px
+            this.totalBannerHeightInPixels = this.totalBannerHeightInPixels + 20;
+
+            // Send a message (to all grid pages) with the new banner height
+            let message: string = this.totalBannerHeightInPixels + 'px';
+            this.bsTotalHeightInPixels.next(message)
+          }
+      }),
+      take(1)       // After getting the first value, stop listening
+    );
   }
 
   /*

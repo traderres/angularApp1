@@ -1,66 +1,69 @@
-<div class="page-container">
+<ng-container *ngIf="(this.bannerHeightInPixelsObs | async) as bannerHeight">
 
-    <div fxFlexFill fxLayout="column" style="margin: 0; padding: 0">
+    <div class="page-container">
 
-      <div fxFlex fxLayout="row" fxLayoutGap="0" style="margin: 0; padding: 0;">
+        <div fxFlexFill fxLayout="column" style="margin: 0; padding: 0">
+
+          <div fxFlex fxLayout="row" fxLayoutGap="0" style="margin: 0; padding: 0;">
 
 
-        <div fxFlex fxLayoutAlign="left top" fxLayout="row" fxLayoutGap="0" class="top-row">
-          <!-- Left Side of the 1st Row -->
-          <h1 class="mat-h1">Manage Banners</h1>
+            <div fxFlex fxLayoutAlign="left top" fxLayout="row" fxLayoutGap="0" class="top-row">
+              <!-- Left Side of the 1st Row -->
+              <h1 class="mat-h1">Manage Banners</h1>
+            </div>
+
+
+            <div fxFlex fxLayoutAlign="end top">
+              <!-- Right Side of the 1st Row -->
+            </div>
+
+          </div>  <!-- End of 1st row -->
+
+          <div fxFlex fxLayout="row" fxLayoutGap="0" style="margin: 0; padding: 0;">
+
+            <div fxFlex="50%" fxLayoutAlign="left end" fxLayoutGap="5px">
+              <!-- Buttons -->
+
+              <button type="button" mat-stroked-button color="primary" title="Add"
+                    (click)="this.openAddBannerDialog()">
+                  Add Banner
+              </button>
+
+              <button type="button" mat-stroked-button color="primary" title="Reset"
+                      (click)="this.resetGrid()">
+                  Reset
+              </button>
+            </div>
+
+
+
+            <div fxFlex="50%" fxLayoutAlign="end end">
+              <!-- Total Matches -->
+              <span style="font-weight: bold">{{this.rowData?.length | number}} banners</span>
+            </div>
+
+          </div>  <!-- End of 2nd row -->
+
         </div>
 
+        <!-- Set the grid to use the entire height (except for the height of the header and page title) -->
+        <div style="margin-top: 10px; height: calc(100vh - 175px - {{ bannerHeight }})">
 
-        <div fxFlex fxLayoutAlign="end top">
-          <!-- Right Side of the 1st Row -->
+          <!-- Angular Grid:  NOTE: Angular flex layout does not work with ag-grid-angular -->
+          <ag-grid-angular
+            (gridReady)="this.onGridReady($event)"
+            style="width: 100%; height: 100%;"
+            class="ag-theme-alpine"
+            [rowData]="this.rowData"
+            [frameworkComponents]="this.frameworkComponents"
+            [gridOptions]="this.gridOptions"
+            [defaultColDef]="this.defaultColDefs"
+            (firstDataRendered)="this.firstDataRendered()"
+            [columnDefs]="this.columnDefs">
+          </ag-grid-angular>
+
         </div>
-
-      </div>  <!-- End of 1st row -->
-
-      <div fxFlex fxLayout="row" fxLayoutGap="0" style="margin: 0; padding: 0;">
-
-        <div fxFlex="50%" fxLayoutAlign="left end" fxLayoutGap="5px">
-          <!-- Buttons -->
-
-          <button type="button" mat-stroked-button color="primary" title="Add"
-                (click)="this.openAddBannerDialog()">
-              Add Banner
-          </button>
-
-          <button type="button" mat-stroked-button color="primary" title="Reset"
-                  (click)="this.resetGrid()">
-              Reset
-          </button>
-        </div>
-
-
-
-        <div fxFlex="50%" fxLayoutAlign="end end">
-          <!-- Total Matches -->
-          <span style="font-weight: bold">{{this.rowData?.length | number}} banners</span>
-        </div>
-
-      </div>  <!-- End of 2nd row -->
 
     </div>
 
-    <!-- Set the grid to use the entire height (except for the height of the header and page title) -->
-    <div style="margin-top: 10px; height: calc(100vh - 175px)">
-
-      <!-- Angular Grid:  NOTE: Angular flex layout does not work with ag-grid-angular -->
-      <ag-grid-angular
-        (gridReady)="this.onGridReady($event)"
-        style="width: 100%; height: 100%;"
-        class="ag-theme-alpine"
-        [rowData]="this.rowData"
-        [frameworkComponents]="this.frameworkComponents"
-        [gridOptions]="this.gridOptions"
-        [defaultColDef]="this.defaultColDefs"
-        (firstDataRendered)="this.firstDataRendered()"
-        [columnDefs]="this.columnDefs">
-      </ag-grid-angular>
-
-    </div>
-
-
-</div>
+</ng-container>

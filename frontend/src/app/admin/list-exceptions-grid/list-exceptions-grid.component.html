@@ -1,3 +1,5 @@
+<ng-container *ngIf="(this.bannerHeightInPixelsObs | async) as bannerHeight">
+
 <div class="page-container">
 
   <mat-sidenav-container [hasBackdrop]="false">
@@ -167,7 +169,7 @@
     </div>
 
     <!-- Set the grid to use the entire height (except for the height of the header and page title) -->
-    <div style="margin-top: 10px; height: calc(100vh - 175px)">
+    <div style="margin-top: 10px; height: calc(100vh - 175px - {{bannerHeight}})">
 
       <!-- Angular Grid:  NOTE: Angular flex layout does not work with ag-grid-angular -->
       <ag-grid-angular
@@ -186,3 +188,5 @@
   </mat-sidenav-container>
 
 </div>
+
+</ng-container>

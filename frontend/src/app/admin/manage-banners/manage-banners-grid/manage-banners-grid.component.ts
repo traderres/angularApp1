@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subject, Subscription} from "rxjs";
+import {Observable, Subject, Subscription} from "rxjs";
 import {ColumnApi, GridApi, GridOptions, ICellRendererParams} from "ag-grid-community";
 import {GetBannerDTO} from "../../../models/get-banner-dto";
 import {PreferenceService} from "../../../services/preference.service";
@@ -116,16 +116,17 @@ export class ManageBannersGridComponent implements OnInit, OnDestroy {
   ];
 
   public gridApi: GridApi;
-
   public gridColumnApi: ColumnApi;
-
   public rowData: GetBannerDTO[];
+  public bannerHeightInPixelsObs: Observable<string>;
 
   constructor(private bannerService: BannerService,
               private matDialog: MatDialog,
               private preferenceService: PreferenceService) { }
 
   public ngOnInit(): void {
+
+    this.bannerHeightInPixelsObs = this.bannerService.getBannerHeightInPixelsObs();
 
     // Listen for save-grid-column-state events
     // NOTE:  If a user manipulates the grid, then we could be sending LOTS of save-column-state REST calls

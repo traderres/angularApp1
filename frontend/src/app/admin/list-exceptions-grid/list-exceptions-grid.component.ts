@@ -1,5 +1,5 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {Subject, Subscription} from "rxjs";
+import {Observable, Subject, Subscription} from "rxjs";
 import {GetExceptionInfoDTO} from "../../models/get-exception-info-dto";
 import {ColumnApi, GridApi, GridOptions, RowDoubleClickedEvent} from "ag-grid-community";
 import {ExceptionService} from "../../services/exception.service";
@@ -7,6 +7,7 @@ import {PreferenceService} from "../../services/preference.service";
 import {debounceTime, switchMap} from "rxjs/operators";
 import {Constants} from "../../utilities/constants";
 import {GetOnePreferenceDTO} from "../../models/preferences/get-one-preference-dto";
+import {BannerService} from "../../services/banner.service";
 
 @Component({
   selector: 'app-list-exceptions-grid',
@@ -149,15 +150,18 @@ export class ListExceptionsGridComponent implements  OnInit, OnDestroy {
   ];
 
   public gridApi: GridApi;
-
   public gridColumnApi: ColumnApi;
-
   public rowData: GetExceptionInfoDTO[];
+  public bannerHeightInPixelsObs: Observable<string>;
 
-  constructor(private exceptionService: ExceptionService,
+  constructor(private bannerService: BannerService,
+              private exceptionService: ExceptionService,
               private preferenceService: PreferenceService) { }
 
   public ngOnInit(): void {
+
+    this.bannerHeightInPixelsObs = this.bannerService.getBannerHeightInPixelsObs();
+
 
     // Listen for save-grid-column-state events
     // NOTE:  If a user manipulates the grid, then we could be sending LOTS of save-column-state REST calls

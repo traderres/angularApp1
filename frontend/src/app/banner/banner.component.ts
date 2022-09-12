@@ -34,7 +34,7 @@ export class BannerComponent implements OnInit {
 
     // Initialize the observable
     // NOTE:  The async pipe will subscribe and unsubscribe for us
-    this.listOfBannersObs = this.bannerService.getListOfBanners().pipe(
+    this.listOfBannersObs = this.bannerService.getListOfBannersForMainPage().pipe(
       tap( (aData: GetBannerDTO[]) => {
             this.rotateBannerMessages(aData);
       })
