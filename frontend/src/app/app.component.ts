@@ -7,7 +7,6 @@ import {ErrorDialogComponent} from "./errorHandler/error-dialog/error-dialog.com
 import {ErrorDialogFormData} from "./errorHandler/error-dialog-form-data";
 import {HttpErrorResponse} from "@angular/common/http";
 import {BannerService} from "./services/banner.service";
-import {animate, style, transition, trigger} from "@angular/animations";
 import {tap} from "rxjs/operators";
 import {GetOnePreferenceDTO} from "./models/preferences/get-one-preference-dto";
 import {ThemeService} from "./services/theme.service";
@@ -15,18 +14,7 @@ import {ThemeService} from "./services/theme.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [   // :enter is alias to 'void => *'
-        style({opacity:0}),
-        animate(500, style({opacity:1}))
-      ]),
-      transition(':leave', [   // :leave is alias to '* => void'
-        animate(500, style({opacity:0}))
-      ])
-    ])
-  ]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   title = 'AngularApp1';
