@@ -21,7 +21,6 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   public  pdfSrc: string | null = null;       // Has the path of the pdf file that the viewer will open
   private pdfSrcSampleDirectoryPath: string;   // Holds the url path to get to assets/sample
 
-  private secondResize: boolean = false;
   private columnResize: boolean = false;
   private navbarSubscription: Subscription;
   private adjustWidthOffsetForNavbar: number;
@@ -33,24 +32,17 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private navbarService: NavbarService) { }
 
   /*
- * We received a resize event
- *  1) If columnResize==true, then we kicked-off this resize event (so ignore it)
- *  2) If secondResize==true, then just refresh the divider
- *  3) Else
- *     a. Calculate the ratio of the old-width to new-width
- *     b. Calculate the newLeftWidth = ratio * oldLeftWidth
- *     c. Calculate the newRightWidth = ratio * oldRightWidth
- *     d. Set the new leftWidth and newRightWidths
- */
+   * We received a resize event
+   *  1) If columnResize==true, then we kicked-off this resize event (so ignore it)
+   *  2) Else
+   *     a. Calculate the ratio of the old-width to new-width
+   *     b. Calculate the newLeftWidth = ratio * oldLeftWidth
+   *     c. Calculate the newRightWidth = ratio * oldRightWidth
+   *     d. Set the new leftWidth and newRightWidths
+   */
   @HostListener('window:resize', ['$event'])
   public onResize(event: any): void {
     if (this.columnResize) {
-      return;
-    }
-
-    if (this.secondResize) {
-      this.showDivider = true;
-      this.secondResize = false;
       return;
     }
 
@@ -65,15 +57,6 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
     // Set the new widths of the left and right columns
     this.leftFlexValue = String(newLeftSideWidth) + "px";
     this.rightFlexValue = String(newRightSideWidth) + "px";
-
-    // Refresh the divider by hiding it and showing it
-    this.showDivider = false;
-
-    // Send a resize event so that the pdf viewer will resize
-    setTimeout(() => {
-      this.secondResize = true;
-      window.dispatchEvent(new Event('resize'));
-    }, 1);
 
     // Store the current page width as (previousPageWidth)
     this.previousLeftPageWidth = newLeftSideWidth;
@@ -106,9 +89,14 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         this.previousPageWidth = window.innerWidth + this.adjustWidthOffsetForNavbar;
-      });
 
-    this.refreshDivider();
+        // Send a resize event so that the pdf viewer will resize
+        // NOTE:  We must wait atleast 300 msecs before sending the resize event otherwise it does not work
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize'));
+        }, 300);
+
+      });
 
   }  // end of ngOnInit()
 
@@ -152,7 +140,7 @@ export class PdfViewerComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
- /*
+  /*
    * The drag-and-drop operation finished
    *
    *  1) Calculate the new width of the left and right columns
