@@ -15,12 +15,6 @@ spring.profiles.active: dev
 # NOTE:  order is important.  Make sure disable.cors comes *AFTER* you set the profile
 disable.cors: true
 
-# Tell Spring to disable DataSource Auto Configuration (so you can run a springboot app without a datasource
-spring.autoconfigure:
-  exclude:
-    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-    - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
 
 # Have the Exception Handler return detailed information
