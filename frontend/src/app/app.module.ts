@@ -54,6 +54,7 @@ import {Constants} from "./utilities/constants";
 import {AgGridModule} from "ag-grid-angular";
 import { ReportGridViewComponent } from './reports/report-grid-view/report-grid-view.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RecentSearchesComponent } from './analytics/recent-searches/recent-searches.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -72,6 +73,7 @@ const appRoutes: Routes = [
   { path: Constants.CHART2_ROUTE,       component: Chart2Component,  canActivate: [PageGuard] },
   { path: Constants.LONGVIEW_REPORT,     component: LongViewOuterReportComponent,  canActivate: [PageGuard] },
   { path: Constants.FORBIDDEN_ROUTE,     component: ForbiddenComponent },
+  { path: Constants.RECENT_SEARCHES_ROUTE,   component: RecentSearchesComponent, canActivate: [PageGuard] },
   { path: '',                  component: WelcomeComponent},
   { path: '**',                component: NotFoundComponent}
 ];
@@ -102,7 +104,8 @@ const appRoutes: Routes = [
     SearchBoxComponent,
     SearchBoxDetailsComponent,
     ForbiddenComponent,
-    ReportGridViewComponent
+    ReportGridViewComponent,
+    RecentSearchesComponent
   ],
   imports: [
     AppRoutingModule,

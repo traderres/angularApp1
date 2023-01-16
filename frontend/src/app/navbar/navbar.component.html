@@ -180,6 +180,19 @@
             </a>
           </div>
         </mat-list-item>
+
+
+        <!-- Recent Searches Page -->
+        <mat-list-item class="navItem"  [routerLink]="constants.RECENT_SEARCHES_ROUTE" routerLinkActive="active"
+                       *ngIf="userInfo.pageRoutes.get(constants.RECENT_SEARCHES_ROUTE)">
+          <a title="Recent Searches">Recent Searches</a>
+          <div fxFlex fxLayoutAlign="end end" >
+            <a [routerLink]="constants.RECENT_SEARCHES_ROUTE" target="_blank">
+              <i class="fas fa-external-link-alt navItemIcon" title="Open 'Recent Searches' in a new window"></i>
+            </a>
+          </div>
+        </mat-list-item>
+
       </div>  <!-- End of Menu Group 2 Items -->
 
     </mat-nav-list>

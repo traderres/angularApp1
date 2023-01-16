@@ -1,0 +1,17 @@
+<div style="padding: 10px">
+
+  <div style="height: 300px">
+
+    <!-- AG-Grid -->
+    <ag-grid-angular
+      style="width: 100%; height: 100%"
+      class="ag-theme-alpine"
+      [rowData]="this.rowData"
+      [defaultColDef]="this.defaultColDefs"
+      [columnDefs]="this.columnDefs"
+      [gridOptions]="this.gridOptions"
+      (gridReady)="this.onGridReady($event)"   >
+    </ag-grid-angular>
+  </div>
+
+</div>
