@@ -1,13 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {
-  ColumnApi,
-  ColumnState,
-  GridApi,
-  GridOptions,
-  IServerSideDatasource,
-  IServerSideGetRowsParams,
-  ServerSideStoreType
-} from "ag-grid-community";
+import {ColumnApi, ColumnState, GridApi, GridOptions, IServerSideDatasource, IServerSideGetRowsParams, ServerSideStoreType} from "ag-grid-community";
 import {GridGetRowsResponseDTO} from "../../models/grid/grid-get-rows-response-dto";
 import {ServerSideGridRowDataDTO} from "../../models/grid/server-side-grid-row-data-dto";
 import {GridService} from "../../services/grid.service";
@@ -20,6 +12,8 @@ import {Constants} from "../../utilities/constants";
 import {debounceTime, switchMap} from "rxjs/operators";
 import {ApplyColumnStateParams} from "ag-grid-community/dist/lib/columnController/columnApi";
 import {GetOnePreferenceDTO} from "../../models/preferences/get-one-preference-dto";
+import {AdvancedSearchDialogComponent} from "../../dialogs/advanced-search/advanced-search-dialog/advanced-search-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-server-side-grid',
@@ -40,6 +34,8 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
   public  totalMatches: number = 0;
   public  rawSearchQuery: string = "";
   public  isValidQuery: boolean = true;
+
+  private timeOfLastShiftEvent: number = 0;
 
 
   public gridOptions: GridOptions = {
@@ -315,6 +311,7 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
   constructor(private gridService: GridService,
               private preferenceService: PreferenceService,
+              private matDialog: MatDialog,
               private themeService: ThemeService) {}
 
   public ngOnInit(): void {
@@ -410,5 +407,32 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
     });
 
   }  // end of onGridReady()
+
+
+  public shiftPressedInSearchBox(): void {
+
+    // Determine the time (in milliseconds) since the user pressed shift last
+    let currentTimeInMilliSeconds: number = new Date().getTime();
+    let differenceInMilliSeconds: number = currentTimeInMilliSeconds - this.timeOfLastShiftEvent;
+
+    // Update the time of last shift event to now
+    this.timeOfLastShiftEvent = currentTimeInMilliSeconds;
+
+    if (differenceInMilliSeconds <= 500) {
+      // User pressed shift TWICE.  So, open the Advanced Search Dialog
+      this.openAdvancedSearchDialog()
+    }
+  }
+
+
+
+  public openAdvancedSearchDialog(): void {
+
+    // Open the advanced search dialog box
+    let dialogRef = this.matDialog.open(AdvancedSearchDialogComponent, {
+      panelClass: 'adv-search-dialog-container'
+    });
+  }
+
 
 }

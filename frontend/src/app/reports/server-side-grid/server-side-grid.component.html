@@ -43,7 +43,10 @@
                                  'dark searchBoxWrapperInvalid fa-border':  this.isValidQuery == false }">
 
             <!-- Search Box -->
-            <input matInput type="text"  #searchBox [(ngModel)]="this.rawSearchQuery" (keyup.enter)="this.runSearch()"
+            <input matInput type="text"  #searchBox [(ngModel)]="this.rawSearchQuery"
+                   (keyup.enter)="this.runSearch()"
+                   (keydown.shift)="this.shiftPressedInSearchBox()"
+
                    [ngClass]="{   'searchBoxValid':   this.isValidQuery == true,
                                   'searchBoxInvalid': this.isValidQuery == false } "
                    placeholder="Enter Criteria..."
