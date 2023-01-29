@@ -1,4 +1,4 @@
-Angular App1 Lesson 42a / Advanced Search Dialog / Open on Shift-Shift
+Angular App1 Lesson 42b / Advanced Search Dialog / Add a Popup Menu to Open Dialog
 ---------------------------------------------
 
 
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson42a/adv-search/open-on-shift-shift
+    unix> git checkout lesson42b/adv-search/add-popup-menu
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
