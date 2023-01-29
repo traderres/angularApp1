@@ -131,15 +131,13 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
 
 
-  /*
-   * User pressed the Reset Button
-   *  1. Clear the grid cache
-   *  2. Clear all sorting
-   *  3. Clear all filters
-   *  4. Empty the search box
-   *  5. Force the grid to invoke the REST endpoint by calling onFilterChanged()
-   */
-  public resetGrid(): void {
+  public resetGrid() {
+    // Reset columns is called *FIRST*  (so the default columns are visible and restored to default)
+    this.gridColumnApi.resetColumnState();
+
+    // Call sizeColumnsToFit *SECOND* (to make sure that all default columns appear and take the full grid width)
+    this.gridApi.sizeColumnsToFit();
+
     // Clear the grid cache and move the vertical scrollbar to the top
     this.clearGridCache();
 
@@ -154,9 +152,6 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
     // Force the grid to invoke the REST endpoint
     this.gridApi.onFilterChanged();
-
-    // Reset columns (so they are visible and restored to default)
-    this.gridColumnApi.resetColumnState();
   }
 
 
