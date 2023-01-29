@@ -411,3 +411,9 @@ https://colorzilla.com/gradient-editor/#ffffff+20,ffffff+40,009ffd+100 */
   font-weight: bold;
   background-color: inherit;   /* Background color is the default dark mode color */
 }
+
+
+.adv-search-dialog-container  .mat-dialog-container {
+  padding: 12px !important;   /* Reduce the default padding on this dialog from 24px to 12px */
+  overflow-y: hidden !important;    /* Hide the veritical scrollbar in the dialog box */
+}

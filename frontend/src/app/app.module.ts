@@ -94,6 +94,10 @@ import {AddBannerDialogComponent} from "./admin/manage-banners/add-banner-dialog
 import {DeleteBannerDialogComponent} from "./admin/manage-banners/delete-banner-dialog/delete-banner-dialog.component";
 import { ManageBannersGridActionRendererComponent } from './admin/manage-banners/manage-banners-grid-action-renderer/manage-banners-grid-action-renderer.component';
 import { AdvancedSearchDialogComponent } from './dialogs/advanced-search/advanced-search-dialog/advanced-search-dialog.component';
+import { TabAdvancedSearchComponent } from './dialogs/advanced-search/tab-advanced-search/tab-advanced-search.component';
+import { TabRecentSearchesComponent } from './dialogs/advanced-search/tab-recent-searches/tab-recent-searches.component';
+import { TabHelpComponent } from './dialogs/advanced-search/tab-help/tab-help.component';
+import { TabSettingsComponent } from './dialogs/advanced-search/tab-settings/tab-settings.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -192,7 +196,11 @@ const appRoutes: Routes = [
     AddBannerDialogComponent,
     DeleteBannerDialogComponent,
     ManageBannersGridActionRendererComponent,
-    AdvancedSearchDialogComponent
+    AdvancedSearchDialogComponent,
+    TabAdvancedSearchComponent,
+    TabRecentSearchesComponent,
+    TabHelpComponent,
+    TabSettingsComponent
   ],
   imports: [
     AppRoutingModule,

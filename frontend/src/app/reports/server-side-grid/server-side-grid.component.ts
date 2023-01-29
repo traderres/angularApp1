@@ -422,7 +422,6 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   public openAdvancedSearchDialog(): void {
-
     // Open the advanced search dialog box
     let dialogRef = this.matDialog.open(AdvancedSearchDialogComponent, {
       panelClass: 'adv-search-dialog-container'
