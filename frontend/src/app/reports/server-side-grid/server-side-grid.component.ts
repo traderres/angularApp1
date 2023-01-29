@@ -435,4 +435,21 @@ export class ServerSideGridComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
 
+  public resetSearch(): void {
+    // Clear the grid cache and move the vertical scrollbar to the top
+    this.clearGridCache();
+
+    // Clear all sorting
+    this.clearGridSorting();
+
+    // Clear the filters
+    this.gridApi.setFilterModel(null);
+
+    // Clear the search box
+    this.rawSearchQuery = "";
+
+    // Force the grid to invoke the REST endpoint
+    this.gridApi.onFilterChanged();
+  }
+
 }

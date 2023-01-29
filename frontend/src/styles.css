@@ -399,3 +399,15 @@ https://colorzilla.com/gradient-editor/#ffffff+20,ffffff+40,009ffd+100 */
   background: linear-gradient(135deg,  #19134b 0%,#bcdffb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#19134b', endColorstr='#bcdffb',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
+
+
+.grid-actions-menu .light   .mat-menu-item:hover {
+  background-color: #e8f4fe !important;   /* Background color is a light blue */
+  color: inherit;
+}
+
+.grid-actions-menu .dark  .mat-menu-item:hover {
+  color: #e8f4fe;             /* Font color is a light blue */
+  font-weight: bold;
+  background-color: inherit;   /* Background color is the default dark mode color */
+}

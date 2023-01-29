@@ -23,13 +23,32 @@
     <div fxFlex  fxLayout="row" fxLayoutGap="5px">
 
       <!-- Left Side of the "button row"  -->
-
-      <!-- Reset Button -->
       <div fxFlex fxLayoutAlign="left end" fxLayout="row" fxLayoutGap="0">
-        <button mat-stroked-button type="button" color="primary" (click)="this.resetGrid()" title="Reset the Grid">
-          Reset
-        </button>
+
+        <!-- G R I D      A C T I O N S      P O P U P      M E N U  -->
+        <button [mat-menu-trigger-for]="gridMenu" type="button" mat-stroked-button color="primary" title="Grid Actions">Grid Actions</button>
+        <mat-menu #gridMenu="matMenu" class="grid-actions-menu">
+
+          <div [ngClass]="{   'light':   this.currentTheme.isLightMode == true,
+                               'dark':   this.currentTheme.isLightMode == false}">
+
+          <button (click)="this.resetSearch()"  mat-menu-item  title="Reset Search" aria-label="Reset Search" >
+              <span>Reset Search</span>
+            </button>
+
+            <button (click)="this.resetGrid()" mat-menu-item title="Reset Grid Columns"  aria-label="Reset Grid Columns">
+              <span>Reset Grid Columns </span>
+            </button>
+
+            <button (click)="this.openAdvancedSearchDialog()" mat-menu-item title="Open Advanced Search"  aria-label="Open Advanced Search">
+              <span>Open Advanced Search</span>
+            </button>
+
+          </div>
+        </mat-menu>
+
       </div>
+
 
 
       <!-- Center of the "button row"  -->
