@@ -98,6 +98,7 @@ import { TabAdvancedSearchComponent } from './dialogs/advanced-search/tab-advanc
 import { TabRecentSearchesComponent } from './dialogs/advanced-search/tab-recent-searches/tab-recent-searches.component';
 import { TabHelpComponent } from './dialogs/advanced-search/tab-help/tab-help.component';
 import { TabSettingsComponent } from './dialogs/advanced-search/tab-settings/tab-settings.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
@@ -216,6 +217,7 @@ const appRoutes: Routes = [
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatDatepickerModule,
     MatDialogModule,
     MatFormFieldModule,

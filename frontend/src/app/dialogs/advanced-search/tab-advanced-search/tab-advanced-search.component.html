@@ -1,1 +1,125 @@
-<p>tab-advanced-search works!</p>
+<form novalidate autocomplete="off" [formGroup]="this.myForm">
+  <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="start stretch" fxFlexFill style="padding-top: 5px">
+
+    <div fxFlex="none" fxLayout="row" fxLayoutGap="0">
+      <!--   F I X E D        S E C T I O N  -->
+
+      <div fxFlex fxLayoutAlign="left center" fxLayoutGap="0">
+            <span style="margin-left: 5px">
+              {{ this.searchingFieldLabel }}
+            </span>
+      </div>
+
+
+      <div fxFlex="250px" fxLayoutAlign="end start" fxLayoutGap="10px">
+        <!-- Right Side of the Top Row -->
+
+        <!-- Clear Button -->
+        <button mat-stroked-button class="standard-button" color="primary" aria-label="Clear" title="Clear">Clear
+        </button>
+
+        <!-- Search Button -->
+        <button mat-raised-button class="standard-button" color="primary" aria-label="Search" title="Search">Search
+        </button>
+      </div>
+
+    </div>  <!-- End of top row -->
+
+
+    <div>
+      <mat-divider style="border-top-width: 2px" [inset]=false></mat-divider>
+    </div>
+
+
+    <mat-form-field appearance="fill" style="width: 100%; background-color: #e8f4fe" class="displayed-query">
+      <!-- Generated Search Query Text Box -->
+      <input style="font-family: courier; font-size: 15px; padding-top: .5em !important;" type="text"
+             placeholder="Generated Search Query" matInput [value]="this.generatedQueriesAsString"
+             aria-label="Generated Search Query"/>
+    </mat-form-field>
+
+    <div>
+      <mat-divider style="border-top-width: 2px" [inset]=false></mat-divider>
+    </div>
+
+
+    <div fxFlex="300px" style="overflow-y: auto">
+      <!--   S C R O L L A B L E       S E C T I O N  -->
+      <!--   NOTE:  the 300px could be be based on an observable as well -->
+
+      <!-- Section 1 Header -->
+      <div class="section-header" style="margin-top: 5px">Section 1</div>
+
+      <!-- Section 1 / chk1 and textField1 -->
+      <div fxLayout="row" fxLayoutAlign="start end">
+        <div fxFlex="200px">
+          <mat-checkbox formControlName="chk1">
+            Report Name
+          </mat-checkbox>
+        </div>
+        <div fxFlex>
+          <mat-form-field appearance="standard">
+            <input formControlName="textField1" matInput type="text"  aria-label="Report Name" title="Report Name"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Section 1 / chk2 and textField2 -->
+      <div fxLayout="row" fxLayoutAlign="start end">
+        <div fxFlex="200px">
+          <mat-checkbox formControlName="chk2">
+            Description
+          </mat-checkbox>
+        </div>
+        <div fxFlex>
+          <mat-form-field appearance="standard">
+            <input formControlName="textField2" matInput type="text"  aria-label="Description" title="Description"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <!-- Section 2 Header -->
+      <div class="section-header">Section 2</div>
+
+      <!-- Section 2 / chk3 and dropdownField 3 -->
+      <div fxLayout="row" fxLayoutAlign="start end">
+        <div fxFlex="200px">
+          <mat-checkbox formControlName="chk3">
+            Priority
+          </mat-checkbox>
+        </div>
+        <div fxFlex>
+          <mat-form-field appearance="standard">
+            <mat-select  formControlName="dropdownField3">
+              <mat-option [value]="'low'">Low</mat-option>
+              <mat-option [value]="'medium'">Medium</mat-option>
+              <mat-option [value]="'high'">High</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Section 2 / chk4 and dropdownField 4 -->
+      <div fxLayout="row" fxLayoutAlign="start end">
+        <div fxFlex="200px">
+          <mat-checkbox formControlName="chk4">
+            Is Administrator?
+          </mat-checkbox>
+        </div>
+        <div fxFlex>
+          <mat-form-field appearance="standard">
+            <mat-select  formControlName="dropdownField4">
+              <mat-option [value]="'no'">No</mat-option>
+              <mat-option [value]="'yes'">Yes</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+    </div>  <!-- End of Scrollable Section -->
+
+
+  </div>
+</form>
