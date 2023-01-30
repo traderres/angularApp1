@@ -15,7 +15,8 @@
         <!-- Right Side of the Top Row -->
 
         <!-- Clear Button -->
-        <button mat-stroked-button class="standard-button" color="primary" aria-label="Clear" title="Clear">Clear
+        <button mat-stroked-button (click)="this.clearForm()"
+                class="standard-button" color="primary" aria-label="Clear" title="Clear">Clear
         </button>
 
         <!-- Search Button -->
@@ -53,13 +54,15 @@
       <!-- Section 1 / chk1 and textField1 -->
       <div fxLayout="row" fxLayoutAlign="start end">
         <div fxFlex="200px">
-          <mat-checkbox formControlName="chk1">
+          <mat-checkbox formControlName="chk1" (change)="this.removeIfUnchecked('chk1', 'textField1')">
             Report Name
           </mat-checkbox>
         </div>
         <div fxFlex>
           <mat-form-field appearance="standard">
-            <input formControlName="textField1" matInput type="text"  aria-label="Report Name" title="Report Name"/>
+            <input formControlName="textField1" matInput type="text"
+                   (input)="this.updatedGeneratedQuery('chk1', $event.target.value)"
+                   aria-label="Report Name" title="Report Name"/>
           </mat-form-field>
         </div>
       </div>
@@ -67,13 +70,15 @@
       <!-- Section 1 / chk2 and textField2 -->
       <div fxLayout="row" fxLayoutAlign="start end">
         <div fxFlex="200px">
-          <mat-checkbox formControlName="chk2">
+          <mat-checkbox formControlName="chk2"  (change)="this.removeIfUnchecked('chk2', 'textField2')">
             Description
           </mat-checkbox>
         </div>
         <div fxFlex>
           <mat-form-field appearance="standard">
-            <input formControlName="textField2" matInput type="text"  aria-label="Description" title="Description"/>
+            <input formControlName="textField2" matInput type="text"
+                   (input)="this.updatedGeneratedQuery('chk2', $event.target.value)"
+                   aria-label="Description" title="Description"/>
           </mat-form-field>
         </div>
       </div>
@@ -85,13 +90,13 @@
       <!-- Section 2 / chk3 and dropdownField 3 -->
       <div fxLayout="row" fxLayoutAlign="start end">
         <div fxFlex="200px">
-          <mat-checkbox formControlName="chk3">
+          <mat-checkbox formControlName="chk3"  (change)="this.removeIfUnchecked('chk3', 'dropdownField3')">
             Priority
           </mat-checkbox>
         </div>
         <div fxFlex>
           <mat-form-field appearance="standard">
-            <mat-select  formControlName="dropdownField3">
+            <mat-select  formControlName="dropdownField3" (selectionChange)="this.updatedGeneratedQuery('chk3',  $event.value)">
               <mat-option [value]="'low'">Low</mat-option>
               <mat-option [value]="'medium'">Medium</mat-option>
               <mat-option [value]="'high'">High</mat-option>
@@ -103,13 +108,13 @@
       <!-- Section 2 / chk4 and dropdownField 4 -->
       <div fxLayout="row" fxLayoutAlign="start end">
         <div fxFlex="200px">
-          <mat-checkbox formControlName="chk4">
-            Is Administrator?
+          <mat-checkbox formControlName="chk4"  (change)="this.removeIfUnchecked('chk4', 'dropdownField4')">
+          Is Administrator?
           </mat-checkbox>
         </div>
         <div fxFlex>
           <mat-form-field appearance="standard">
-            <mat-select  formControlName="dropdownField4">
+            <mat-select  formControlName="dropdownField4"  (selectionChange)="this.updatedGeneratedQuery('chk4',  $event.value)">
               <mat-option [value]="'no'">No</mat-option>
               <mat-option [value]="'yes'">Yes</mat-option>
             </mat-select>
