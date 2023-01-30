@@ -1,4 +1,4 @@
-Angular App1 Lesson 42d:  Advanced Search Dialog / Fill in Advanced Search
+Angular App1 Lesson 42e:  Advanced Search Dialog / Fill in "Recent Searches" tab
 --------------------------------------------------------------------------
 
 
@@ -9,7 +9,7 @@ To Get started From Project Setup
  2. Clone the project
     unix> git clone https://github.com/traderres/angularApp1Lessons.git angularApp1
     unix> cd angularApp1
-    unix> git checkout lesson42d/adv-search/fill-in-adv-search
+    unix> git checkout lesson42e/adv-search/fill-in-recent-searches
 
  3. Verify that the webapp works
     a. Compile the project (into an executable JAR)
