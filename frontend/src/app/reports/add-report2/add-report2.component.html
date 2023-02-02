@@ -14,6 +14,38 @@
 
     <mat-card-content>
 
+
+<pre>
+this.myForm.controls.phoneNumberCallingCode.value={{this.myForm.controls.phoneNumberCallingCode.value | json}}
+this.selectedItem={{ this.selectedItem | json }}
+</pre>
+
+      <mat-form-field>
+        <mat-label>Country Calling Code</mat-label>
+
+        <mat-select  [value]="this.selectedItem"
+                     (selectionChange)="this.selectedItem=$event.value"
+                     formControlName="phoneNumberCallingCode" title="Select a calling code" aria-label="Select a calling code">
+          <ng-container *ngIf="(this.countryCallingCodesObs | async ) as callingCodes">
+            <mat-option *ngFor="let callingCode of callingCodes"
+                        [value]="callingCode">
+              {{callingCode.longCountryName}} ({{callingCode.callingCode}})
+            </mat-option>
+          </ng-container>
+          <mat-select-trigger>
+            <!--Change what is visible when user selects an option-->
+            {{this.selectedItem?.shortCountryName}} {{this.selectedItem?.callingCode}}
+          </mat-select-trigger>
+        </mat-select>
+
+      </mat-form-field>
+
+      <br/>
+
+
+
+
+
       <mat-form-field>
         <mat-label>Enter Report Name</mat-label>
 

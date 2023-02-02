@@ -4,6 +4,7 @@ import {EMPTY, Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {catchError, map, shareReplay} from "rxjs/operators";
+import {GetCountryCallingCodesDto} from "../models/get-country-calling-codes-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -115,5 +116,33 @@ export class UserService {
       }));
 
   }
+
+
+  public getCountryCodesForPhoneNumber() : Observable<GetCountryCallingCodesDto[]>{
+
+    let data: GetCountryCallingCodesDto[] = [
+      {
+        shortCountryName: "USA",
+        longCountryName: "United States of America",
+        callingCode: "+1",
+        countryId: 188
+      },
+      {
+        shortCountryName: "RUS",
+        longCountryName: "Russia",
+        callingCode: "+55",
+        countryId: 2
+      },
+      {
+        shortCountryName: "CHN",
+        longCountryName: "Peoples Republic of China",
+        callingCode: "+2 589",
+        countryId: 3
+      },
+
+    ]
+    return of(data)
+  }
+
 
 }

@@ -7,6 +7,10 @@ import {LookupService} from "../../services/lookup.service";
 import {Observable} from "rxjs";
 import {ReportDTO} from "../../models/report-dto";
 import {ReportService} from "../../services/report.service";
+import {GetCountryCallingCodesDto} from "../../models/get-country-calling-codes-dto";
+import {UserService} from "../../services/user.service";
+import {tap} from "rxjs/operators";
+import {GetServerSideGroupKey} from "ag-grid-community/dist/lib/entities/gridOptions";
 
 @Component({
   selector: 'app-add-report2',
@@ -19,16 +23,36 @@ export class AddReport2Component implements OnInit {
   public authorsObs: Observable<LookupDTO[]>;
   public reportSourceObs: Observable<LookupDTO[]>;
   public prioritiesObs: Observable<LookupDTO[]>;
+  public countryCallingCodesObs: Observable<GetCountryCallingCodesDto[]>;
 
-
+  public selectedItem: GetCountryCallingCodesDto;
 
   constructor(private messageService: MessageService,
               private formBuilder: FormBuilder,
+              private userService: UserService,
               private lookupService: LookupService,
               private reportService: ReportService) { }
 
 
   public ngOnInit(): void {
+
+
+    this.countryCallingCodesObs = this.userService.getCountryCodesForPhoneNumber().pipe(
+      tap( (aData: GetCountryCallingCodesDto[]) => {
+        for (let i=0; i<aData.length; i++) {
+          let dto: GetCountryCallingCodesDto = aData[i];
+
+          if (dto.countryId == 188) {
+            // I found the default value.  So, set it in the form
+            this.myForm.controls.phoneNumberCallingCode.setValue(dto);
+
+            // Show the selected value on the web page
+            this.selectedItem = dto;
+          }
+        }
+      }));
+
+
 
     // Get the observable to the List of LookupDTO objects
     // NOTE:  The AsyncPipe will subscribe and unsubscribe automatically
@@ -43,6 +67,9 @@ export class AddReport2Component implements OnInit {
 
 
     this.myForm = this.formBuilder.group({
+
+      phoneNumberCallingCode: [null, null],
+
       report_name: [null,
         [
           Validators.required,
@@ -96,7 +123,5 @@ export class AddReport2Component implements OnInit {
         console.log('REST call finally block');
     });
   }
-
-
 
 }
