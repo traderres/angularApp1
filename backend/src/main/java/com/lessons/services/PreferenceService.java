@@ -34,7 +34,9 @@ public class PreferenceService {
         SqlRowSet rs = jt.queryForRowSet(sql, aUserid);
         if (! rs.next() ) {
             // No records were found in the database for this user.  So, return default values
-            dto = new GetPreferenceDTO(true);
+
+            // By default.  Do not show the banner
+            dto = new GetPreferenceDTO(false);
         }
         else {
             // one record was found in the database
