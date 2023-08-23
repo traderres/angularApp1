@@ -36,6 +36,17 @@
             "scripts": []
           },
           "configurations": {
+            "dev": {
+              "optimization": false,
+              "outputHashing": "none",
+              "sourceMap": true,
+              "extractCss": false,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": false
+            },
             "production": {
               "index": {
                 "input": "src/index.prod.html",
@@ -78,6 +89,9 @@
           "configurations": {
             "production": {
               "browserTarget": "frontend:build:production"
+            },
+            "dev": {
+              "browserTarget": "frontend:build:dev"
             }
           }
         },
