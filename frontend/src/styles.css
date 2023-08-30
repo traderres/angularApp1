@@ -175,3 +175,15 @@ pre {
 .page-container {
   margin: 10px;
 }
+
+.user-login-over-1-year-ago {
+  background-color: red !important;
+}
+
+.user-login-over-6-months-ago {
+  background-color: yellow !important;
+}
+
+.user-login-less-6-months-ago {
+  background-color: green !important;
+}

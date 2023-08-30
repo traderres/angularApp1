@@ -54,9 +54,12 @@ import {Constants} from "./utilities/constants";
 import {AgGridModule} from "ag-grid-angular";
 import { ReportGridViewComponent } from './reports/report-grid-view/report-grid-view.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ClientGridPage1Component } from './client-grid-page1/client-grid-page1.component';
+import { LoginDateCellRendererComponent } from './client-grid-page1/login-date-cell-renderer/login-date-cell-renderer.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
+  { path: 'page/client-grid-1',           component: ClientGridPage1Component },
   { path: Constants.ADD_REPORTS_ROUTE,    component: AddReportComponent,  canActivate: [PageGuard] },
   { path: Constants.REPORTS_GRID_VIEW_ROUTE,    component: ReportGridViewComponent,  canActivate: [PageGuard] },
   { path: Constants.ADD_REPORTS2_ROUTE,    component: AddReport2Component,  canActivate: [PageGuard] },
@@ -102,7 +105,9 @@ const appRoutes: Routes = [
     SearchBoxComponent,
     SearchBoxDetailsComponent,
     ForbiddenComponent,
-    ReportGridViewComponent
+    ReportGridViewComponent,
+    ClientGridPage1Component,
+    LoginDateCellRendererComponent
   ],
   imports: [
     AppRoutingModule,

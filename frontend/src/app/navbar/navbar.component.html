@@ -102,6 +102,16 @@
             </div>
           </mat-list-item>
 
+          <!-- Scroll Into View -->
+          <mat-list-item class="navItem" [routerLink]="'page/client-grid-1'" routerLinkActive="active">
+            <a title="Client Grid Page 1">Client Grid Page 1</a>
+            <div fxFlex fxLayoutAlign="end end">
+              <a [routerLink]="'page/scroll-into-view'" target="_blank">
+                <i class="fas fa-external-link-alt navItemIcon" title="Open 'Client Grid Page 1' in a new window"></i>
+              </a>
+            </div>
+          </mat-list-item>
+
         </div>  <!-- End of navMenuGroup -->
       </ng-container>
 
