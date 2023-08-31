@@ -1,0 +1,11 @@
+<div style="padding: 5px">
+  <div [ngClass]="{
+   		'report-pending':    this.statusId == 1,
+   		'report-open':  	   this.statusId == 2,
+   		'report-approved':   this.statusId == 3
+    	}">
+
+    <!-- Display the status label -->
+    {{params.value}}
+  </div>
+</div>
