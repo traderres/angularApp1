@@ -59,11 +59,13 @@ import { LoginDateCellRendererComponent } from './client-grid-page1/login-date-c
 import { ClientGridPage3Component } from './client-grid-page3/client-grid-page3.component';
 import { StatusCellRendererComponent } from './status-cell-renderer/status-cell-renderer.component';
 import { Grid3ActionCellRendererComponent } from './grid3-action-cell-renderer/grid3-action-cell-renderer.component';
+import { ClientGridPage4Component } from './client-grid-page4/client-grid-page4.component';
 
 // Setup the routes.  If no route is found, then take the user to the NotFoundComponent
 const appRoutes: Routes = [
   { path: 'page/client-grid-1',           component: ClientGridPage1Component },
   { path: 'page/client-grid-3',           component: ClientGridPage3Component },
+  { path: 'page/client-grid-4',           component: ClientGridPage4Component },
   { path: Constants.ADD_REPORTS_ROUTE,    component: AddReportComponent,  canActivate: [PageGuard] },
   { path: Constants.REPORTS_GRID_VIEW_ROUTE,    component: ReportGridViewComponent,  canActivate: [PageGuard] },
   { path: Constants.ADD_REPORTS2_ROUTE,    component: AddReport2Component,  canActivate: [PageGuard] },
@@ -114,7 +116,8 @@ const appRoutes: Routes = [
     LoginDateCellRendererComponent,
     ClientGridPage3Component,
     StatusCellRendererComponent,
-    Grid3ActionCellRendererComponent
+    Grid3ActionCellRendererComponent,
+    ClientGridPage4Component
   ],
   imports: [
     AppRoutingModule,

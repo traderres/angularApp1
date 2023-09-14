@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ColumnApi, GridApi, GridOptions} from "ag-grid-community";
+import {ColDef, Column, ColumnApi, GridApi, GridOptions} from "ag-grid-community";
 import {GridService} from "../services/grid.service";
 import {GetReportRowDTO} from "../models/get-report-row-dto";
 import {StatusCellRendererComponent} from "../status-cell-renderer/status-cell-renderer.component";
@@ -21,16 +21,18 @@ export class ClientGridPage3Component implements OnInit {
 
 
   public gridOptions: GridOptions = {
-    debug: true,                     // Tell ag-grid to show console logging
+    debug: false,                     // Tell ag-grid to show console logging
     rowModelType: 'clientSide',      // Tell ag-grid that this is a client-grid
     domLayout: 'normal',
-    suppressCellSelection: true
+    suppressCellSelection: true,
+    suppressContextMenu: true
   };
 
-  public columnDefs: any = [
+  public columnDefs: ColDef[] = [
     {
       headerName: "Action",
       cellRenderer: 'actionCellRenderer',
+      cellClass: 'vertically-align-icon-buttons',
     },
     {
       field: 'id',
@@ -46,7 +48,7 @@ export class ClientGridPage3Component implements OnInit {
       field: 'status_label',
       headerName: "Status",
       cellRenderer: 'statusCellRenderer',
-      autoHeight: true             // Need this to fix the margins around the StatusCellRenderer
+      autoHeight: true
     },
     {
       field: 'created_date',
@@ -58,6 +60,8 @@ export class ClientGridPage3Component implements OnInit {
   public defaultColDefs: any = {
     sortable: true,
     resizable: true,
+    floatingFilter: true,
+    filter: 'agTextColumnFilter',
   };
 
 

@@ -220,5 +220,14 @@ pre {
   font-size: 1.1em;
   font-weight: 400;
 
-  margin-top: .25em;	/* Fixes the bug with autoHeight not working in the ag-grid */
+  display: flex !important;
+  align-items: center;
 }
+
+.vertically-align-icon-buttons {
+  display: flex !important;
+  align-items: center !important;
+  height: 100%
+}
+
+
